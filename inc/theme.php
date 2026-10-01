@@ -46,16 +46,97 @@ add_filter('bcn_pick_post_term', function ($term, $id, $type, $taxonomy) {
         }
     }
 
+    if ($type === 'person' && $taxonomy === 'person_group') {
+        $personGroups = get_the_terms($id, 'person_group');
+        if (is_array($personGroups)) {
+            $priority = [
+                'collaborators',
+                'ppie-strategy-group',
+                'team',
+                'senior-leadership-team',
+                'scientific-advisory-board',
+                'unit-executive-group',
+            ];
+            foreach ($priority as $slug) {
+                foreach ($personGroups as $personGroup) {
+                    if ($personGroup->slug === $slug) {
+                        return $personGroup;
+                    }
+                }
+            }
+        }
+    }
+
     return $term;
 }, 10, 4);
 
-add_filter('bcn_breadcrumb_title', function ($title, $type) {
+function getPersonGroupLandingPage($term): ?\WP_Post
+{
+    if (is_numeric($term)) {
+        $term = get_term((int) $term, 'person_group');
+    }
+    if (!$term instanceof \WP_Term || $term->taxonomy !== 'person_group') {
+        return null;
+    }
+
+    $pageSlugs = [
+        'collaborators' => 'our-collaborators',
+        'ppie-strategy-group' => 'our-ppie-strategy-group-members',
+        'team' => 'our-team',
+        'senior-leadership-team' => 'our-team',
+        'scientific-advisory-board' => 'scientific-advisory-board',
+        'unit-executive-group' => 'management-board',
+    ];
+    if (!isset($pageSlugs[$term->slug])) {
+        return null;
+    }
+
+    $pages = get_posts([
+        'post_type' => 'page',
+        'post_status' => 'publish',
+        'posts_per_page' => 1,
+        'name' => $pageSlugs[$term->slug],
+    ]);
+    return $pages[0] ?? null;
+}
+
+function getPersonGroupBreadcrumbPage(array $type, $id): ?\WP_Post
+{
+    if (!in_array('taxonomy', $type, true) || !in_array('person_group', $type, true)) {
+        return null;
+    }
+    return getPersonGroupLandingPage($id);
+}
+
+add_filter('bcn_breadcrumb_url', function ($url, $type, $id) {
+    $page = is_array($type) ? getPersonGroupBreadcrumbPage($type, $id) : null;
+    return $page ? get_permalink($page) : $url;
+}, 10, 3);
+
+add_filter('bcn_breadcrumb_title', function ($title, $type, $id) {
     if (is_array($type) && in_array('home', $type, true)) {
         return __('Home', 'flynt');
     }
 
+    $page = is_array($type) ? getPersonGroupBreadcrumbPage($type, $id) : null;
+    if ($page) {
+        return get_the_title($page);
+    }
+
     return $title;
-}, 10, 2);
+}, 10, 3);
+
+add_action('template_redirect', function (): void {
+    if (!is_tax('person_group')) {
+        return;
+    }
+
+    $page = getPersonGroupLandingPage(get_queried_object());
+    if ($page) {
+        wp_safe_redirect(get_permalink($page), 301, 'NIHR PRU');
+        exit;
+    }
+}, 1);
 
 // add_action('pre_get_posts', function ($query) {
 //     if (!is_admin() && $query->is_main_query()) {

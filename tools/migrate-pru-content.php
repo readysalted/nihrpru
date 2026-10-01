@@ -558,10 +558,14 @@ function pruPersonMeta(string $html): array
         }
     }
     $firstParagraph = $xpath->query('//p[normalize-space()]')->item(0);
+    $institution = $firstParagraph ? pruDecode($firstParagraph->textContent) : '';
+    $looksLikeInstitution = $institution !== ''
+        && mb_strlen($institution) <= 160
+        && preg_match('/\b(?:University|Institute|College|School|Centre|Department)\b/iu', $institution);
     return [
         'email' => $emailNode ? sanitize_email(str_replace('mailto:', '', $emailNode->getAttribute('href'))) : '',
         'website' => $website,
-        'institution' => $firstParagraph ? mb_substr(pruDecode($firstParagraph->textContent), 0, 240) : '',
+        'institution' => $looksLikeInstitution ? $institution : '',
     ];
 }
 
