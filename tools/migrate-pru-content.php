@@ -1162,8 +1162,22 @@ function pruMigratePages(array $rows, array $peopleGroups, array $projectData, a
             'ppie-activities',
         ];
         if ($content !== '' && !in_array($slug, $gridOnlySlugs, true)) {
-            $portraitSlugs = ['our-objectives', 'our-research'];
+            $portraitSlugs = ['our-objectives', 'our-research', 'ppie-strategic-group-training'];
             $portraitComponent = in_array($slug, $portraitSlugs, true) ? pruPortraitImageText($content) : null;
+            if ($slug === 'ppie-strategic-group-training' && $portraitComponent) {
+                $portraitComponent['contentHtml'] = preg_replace(
+                    '/<p>\s*(We have a dedicated training programme.*?)<\/p>/is',
+                    '<p><strong class="blue-bold-text">$1</strong></p>',
+                    $portraitComponent['contentHtml'],
+                    1
+                );
+                $portraitComponent['contentHtml'] = preg_replace(
+                    '/<p>\s*Some of our previous offerings include:\s*<\/p>/i',
+                    '<h2>Previous training topics</h2>',
+                    $portraitComponent['contentHtml'],
+                    1
+                );
+            }
             $components[] = $portraitComponent ?? pruWysiwyg($content);
         }
 
