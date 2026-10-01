@@ -1,0 +1,139 @@
+.projectSingle {
+  --project-content-width: 920px;
+  --project-image-width: 1200px;
+
+  .projectSingle-featuredImage {
+    margin-block: clamp(24px, 4vw, 56px) clamp(36px, 5vw, 72px);
+
+    flynt-component[name='BlockImage'] {
+      margin: 0;
+    }
+
+    .figure {
+      aspect-ratio: 16 / 9;
+      background: var(--nihr-putty);
+      margin-block: 0;
+      margin-inline: auto;
+      max-inline-size: var(--project-image-width);
+      overflow: hidden;
+    }
+
+    .figure-image,
+    .figure-image-svg {
+      block-size: 100%;
+      inline-size: 100%;
+      object-fit: cover;
+    }
+
+    .caption {
+      background: var(--color-white);
+      margin: 0;
+      padding-block-start: 8px;
+    }
+  }
+
+  .projectSingle-meta {
+    border-block-start: 1px solid rgba(28, 40, 94, 0.18);
+    color: var(--nihr-navy);
+    margin-block-end: clamp(36px, 5vw, 64px);
+    padding-block-start: 24px;
+
+    > * {
+      margin: 0;
+    }
+
+    > * + * {
+      margin-block-start: 12px;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+
+    .projectSingle-team {
+      align-items: baseline;
+      display: flex;
+      gap: 6px;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  .projectSingle-content {
+    color: var(--nihr-navy);
+
+    flynt-component[name='BlockWysiwyg'] {
+      margin-block: 0 clamp(48px, 6vw, 80px);
+
+      .content {
+        max-inline-size: var(--project-content-width);
+      }
+
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: var(--nihr-coral);
+        font-family: var(--font-family-heading);
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        font-weight: 700;
+        line-height: 1.3;
+        margin-block-start: clamp(36px, 5vw, 64px);
+      }
+
+      h2:first-child,
+      h3:first-child,
+      h4:first-child,
+      h5:first-child,
+      h6:first-child {
+        margin-block-start: 0;
+      }
+
+      p,
+      li {
+        font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+        line-height: 1.65;
+      }
+
+      ul,
+      ol {
+        margin-block: 24px;
+      }
+
+      img {
+        block-size: auto !important;
+        clear: both;
+        display: block;
+        float: none !important;
+        inline-size: auto !important;
+        margin-block: clamp(28px, 4vw, 48px);
+        margin-inline: auto;
+        max-block-size: 680px;
+        max-inline-size: 100% !important;
+        object-fit: contain;
+      }
+
+      a {
+        overflow-wrap: anywhere;
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile-horizontal) {
+    .projectSingle-featuredImage {
+      .figure {
+        aspect-ratio: 4 / 3;
+      }
+    }
+
+    .projectSingle-meta {
+      .projectSingle-team {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  }
+}

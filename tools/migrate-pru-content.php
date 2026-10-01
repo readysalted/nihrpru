@@ -290,35 +290,145 @@ function pruRewriteHtml(string $html, int $parentId = 0): string
     return $body ? pruInnerHtml($body) : $html;
 }
 
+function pruProjectNodeText(DOMNode $node): string
+{
+    return trim((string) preg_replace('/\s+/u', ' ', pruDecode($node->textContent)));
+}
+
+function pruProjectFieldFromText(string $text): array
+{
+    if (!preg_match('/^(lead researcher|research team(?: members)?)(?:\s*:)?\s*(.*)$/iu', $text, $matches)) {
+        return ['', ''];
+    }
+
+    $label = strtolower(trim($matches[1]));
+    $field = str_starts_with($label, 'lead researcher') ? 'lead' : 'team';
+    $value = trim($matches[2]);
+    if (preg_match('/^research team(?: members)?\s*:?$/iu', $value)) {
+        $value = '';
+    }
+
+    return [$field, $value];
+}
+
+function pruProjectSectionLabel(DOMXPath $xpath, DOMNode $node): string
+{
+    $emphasis = $xpath->query('.//strong[1] | .//b[1]', $node)->item(0);
+    $candidate = $emphasis ? pruProjectNodeText($emphasis) : pruProjectNodeText($node);
+    return strtolower(trim(rtrim($candidate, ':')));
+}
+
+function pruLooksLikeProjectTeam(string $text): bool
+{
+    if ($text === '' || mb_strlen($text) > 2000) {
+        return false;
+    }
+
+    if (preg_match('/[,;&]/u', $text) || preg_match('/\b(?:Dr|Prof|Professor)\b/u', $text)) {
+        return true;
+    }
+
+    $words = preg_split('/\s+/u', $text, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    return count($words) >= 2 && count($words) <= 8 && !preg_match('/[.!?]$/u', $text);
+}
+
 function pruExtractProjectFields(string $html): array
 {
     $dom = pruDom($html);
     $xpath = new DOMXPath($dom);
     $lead = '';
     $team = '';
-    $summary = '';
     $summaryNodes = [];
-    $collectSummary = false;
-    $stopLabels = ['background', 'research questions', 'methods', 'what are our methods?', 'project outline / summary'];
+    $stopLabels = [
+        'background',
+        'research questions',
+        'methods',
+        'what are our methods?',
+        'project outline',
+        'project outline / summary',
+        'design and methods',
+        'overview',
+        'introduction',
+        'outputs',
+        'outputs from this work',
+    ];
 
     $bodyNodes = [];
     foreach ($xpath->query('//body/*') as $bodyNode) {
         $bodyNodes[] = $bodyNode;
     }
-    foreach ($bodyNodes as $node) {
-        $strong = $xpath->query('.//strong[1]', $node)->item(0);
-        $label = $strong ? strtolower(trim(rtrim(pruDecode($strong->textContent), ':'))) : '';
-        $text = trim(preg_replace('/\s+/u', ' ', pruDecode($node->textContent)));
-        if ($label === 'lead researcher') {
-            $lead = trim((string) preg_replace('/^lead researcher\s*:\s*/iu', '', $text));
-            $node->parentNode?->removeChild($node);
+
+    foreach ($bodyNodes as $index => $node) {
+        if (!$node->parentNode) {
             continue;
         }
-        if (in_array($label, ['research team', 'research team members'], true)) {
-            $team = trim((string) preg_replace('/^research team(?: members)?\s*:\s*/iu', '', $text));
-            $node->parentNode?->removeChild($node);
+
+        $text = pruProjectNodeText($node);
+        [$field, $value] = pruProjectFieldFromText($text);
+        if ($field === '') {
             continue;
         }
+
+        $nodesToRemove = [$node];
+        if ($value === '') {
+            for ($candidateIndex = $index + 1; $candidateIndex < count($bodyNodes); $candidateIndex++) {
+                $candidate = $bodyNodes[$candidateIndex];
+                if (!$candidate->parentNode) {
+                    continue;
+                }
+                $candidateText = pruProjectNodeText($candidate);
+                if ($candidateText === '') {
+                    continue;
+                }
+
+                [$candidateField, $candidateValue] = pruProjectFieldFromText($candidateText);
+                if ($candidateField === $field && $candidateValue === '') {
+                    $nodesToRemove[] = $candidate;
+                    continue;
+                }
+
+                $tagName = strtolower($candidate->nodeName);
+                $sectionLabel = pruProjectSectionLabel($xpath, $candidate);
+                if (preg_match('/^h[1-6]$/', $tagName) || in_array($sectionLabel, $stopLabels, true)) {
+                    break;
+                }
+
+                $isUsable = $field === 'lead'
+                    ? mb_strlen($candidateText) <= 300
+                    : pruLooksLikeProjectTeam($candidateText);
+                if ($isUsable) {
+                    $value = $candidateText;
+                    $nodesToRemove[] = $candidate;
+                    break;
+                }
+            }
+        }
+
+        if ($value === '') {
+            continue;
+        }
+
+        if ($field === 'lead' && $lead === '') {
+            $lead = $value;
+        }
+        if ($field === 'team' && $team === '') {
+            $team = $value;
+        }
+        foreach ($nodesToRemove as $nodeToRemove) {
+            $nodeToRemove->parentNode?->removeChild($nodeToRemove);
+        }
+    }
+
+    $collectSummary = false;
+    $remainingNodes = [];
+    foreach ($xpath->query('//body/*') as $bodyNode) {
+        $remainingNodes[] = $bodyNode;
+    }
+    foreach ($remainingNodes as $node) {
+        if (!$node->parentNode) {
+            continue;
+        }
+        $label = pruProjectSectionLabel($xpath, $node);
         if ($label === 'project title') {
             $node->parentNode?->removeChild($node);
             continue;
@@ -344,6 +454,72 @@ function pruExtractProjectFields(string $html): array
         'summary' => implode('', $summaryNodes),
         'content' => $body ? pruInnerHtml($body) : $html,
     ];
+}
+
+function pruMediaFingerprint(string $url): string
+{
+    $path = urldecode((string) wp_parse_url($url, PHP_URL_PATH));
+    $extension = strtolower((string) pathinfo($path, PATHINFO_EXTENSION));
+    $filename = (string) pathinfo($path, PATHINFO_FILENAME);
+    $filename = (string) preg_replace('/-\d+x\d+(?:-\d+)?$/i', '', $filename);
+    return strtolower($filename . ($extension !== '' ? '.' . $extension : ''));
+}
+
+function pruStripFeaturedImage(string $html, int $featuredId): string
+{
+    if ($html === '' || !$featuredId) {
+        return $html;
+    }
+
+    $featuredFingerprints = [];
+    $featuredUrl = (string) wp_get_attachment_url($featuredId);
+    if ($featuredUrl !== '') {
+        $featuredFingerprints[] = pruMediaFingerprint($featuredUrl);
+    }
+    $legacyUrl = (string) get_post_meta($featuredId, '_pru_legacy_media_url', true);
+    if ($legacyUrl !== '') {
+        $featuredFingerprints[] = pruMediaFingerprint($legacyUrl);
+    }
+    $featuredFingerprints = array_values(array_unique(array_filter($featuredFingerprints)));
+
+    $dom = pruDom($html);
+    $xpath = new DOMXPath($dom);
+    $images = [];
+    foreach ($xpath->query('//img[@src]') as $image) {
+        $images[] = $image;
+    }
+
+    foreach ($images as $image) {
+        $class = $image->getAttribute('class');
+        preg_match('/(?:^|\s)wp-image-(\d+)(?:\s|$)/', $class, $matches);
+        $imageId = isset($matches[1]) ? (int) $matches[1] : 0;
+        $fingerprint = pruMediaFingerprint($image->getAttribute('src'));
+        if ($imageId !== $featuredId && !in_array($fingerprint, $featuredFingerprints, true)) {
+            continue;
+        }
+
+        $parent = $image->parentNode;
+        $nextSibling = $image->nextSibling;
+        $parent?->removeChild($image);
+        if ($nextSibling && strtolower($nextSibling->nodeName) === 'br') {
+            $nextSibling->parentNode?->removeChild($nextSibling);
+        }
+
+        while ($parent && strtolower($parent->nodeName) === 'a' && pruProjectNodeText($parent) === '') {
+            $wrapper = $parent;
+            $parent = $wrapper->parentNode;
+            $parent?->removeChild($wrapper);
+        }
+        if ($parent && $parent->nodeType === XML_ELEMENT_NODE && pruProjectNodeText($parent) === '') {
+            $hasMedia = $xpath->query('.//img | .//video | .//iframe', $parent)->length > 0;
+            if (!$hasMedia) {
+                $parent->parentNode?->removeChild($parent);
+            }
+        }
+    }
+
+    $body = $dom->getElementsByTagName('body')->item(0);
+    return $body ? pruInnerHtml($body) : $html;
 }
 
 function pruRoleMap(string $path): array
@@ -911,6 +1087,7 @@ function pruFinalizeProjectContent(): void
     ]);
     foreach ($projects as $project) {
         $content = pruRewriteHtml((string) get_post_meta($project->ID, '_pru_legacy_html', true), $project->ID);
+        $content = pruStripFeaturedImage($content, (int) get_post_thumbnail_id($project->ID));
         $summary = pruRewriteHtml((string) get_field('projectSummary', $project->ID), $project->ID);
         wp_update_post(['ID' => $project->ID, 'post_content' => wp_slash($content)]);
         update_field('projectSummary', $summary, $project->ID);
@@ -1094,21 +1271,23 @@ function pruVerifyMigration(): void
     }
 }
 
-try {
-    pruLog('NIHR PRU migration started');
-    $pages = pruFetch('/wp-json/wp/v2/pages?per_page=100&_fields=id,parent,slug,link,title,featured_media,menu_order,date,modified');
-    $peopleGroups = pruMigratePeople();
-    $projectData = pruMigrateProjects();
-    $resourceData = pruMigrateResources($pages);
-    pruMigratePublications($pages);
-    $pageData = pruMigratePages($pages, $peopleGroups, $projectData, $resourceData);
-    pruFinalizeProjectContent();
-    pruBuildNavigation($pageData);
-    pruUpdateThemeOptions($pageData);
-    flush_rewrite_rules(false);
-    pruVerifyMigration();
-    pruLog('NIHR PRU migration complete');
-} catch (Throwable $exception) {
-    fwrite(STDERR, 'Migration failed: ' . $exception->getMessage() . PHP_EOL);
-    exit(1);
+if (!defined('PRU_MIGRATION_LIBRARY_ONLY')) {
+    try {
+        pruLog('NIHR PRU migration started');
+        $pages = pruFetch('/wp-json/wp/v2/pages?per_page=100&_fields=id,parent,slug,link,title,featured_media,menu_order,date,modified');
+        $peopleGroups = pruMigratePeople();
+        $projectData = pruMigrateProjects();
+        $resourceData = pruMigrateResources($pages);
+        pruMigratePublications($pages);
+        $pageData = pruMigratePages($pages, $peopleGroups, $projectData, $resourceData);
+        pruFinalizeProjectContent();
+        pruBuildNavigation($pageData);
+        pruUpdateThemeOptions($pageData);
+        flush_rewrite_rules(false);
+        pruVerifyMigration();
+        pruLog('NIHR PRU migration complete');
+    } catch (Throwable $exception) {
+        fwrite(STDERR, 'Migration failed: ' . $exception->getMessage() . PHP_EOL);
+        exit(1);
+    }
 }

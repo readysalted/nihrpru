@@ -1,20 +1,22 @@
 {% extends 'templates/_document.twig' %}
 
 {% block content %}
-  <article>
+  <article class="projectSingle">
     <header>
-      {{ renderComponent('BlockPostHeader', {type: 'custom' , title: post.title, subtitle: post.excerpt}) }}
+      {{ renderComponent('BlockPostHeader', {type: 'custom', title: post.title}) }}
     </header>
     {% if post.thumbnail %}
-      {{ renderComponent('BlockImage', {image: post.thumbnail, options: {size: 'wide'}, noComponentSpacing: true}) }}
+      <div class="projectSingle-featuredImage">
+        {{ renderComponent('BlockImage', {image: post.thumbnail, options: {size: 'wide'}, noComponentSpacing: true}) }}
+      </div>
     {% endif %}
     {% if post.meta('projectLead') or post.meta('projectTeam') %}
-      <section class="container" data-size="medium">
+      <section class="container projectSingle-meta" data-size="medium" aria-label="{{ function('__', 'Project team', 'flynt') }}">
         {% if post.meta('projectLead') %}
           <p><strong>{{ function('__', 'Lead researcher:', 'flynt') }}</strong> {{ post.meta('projectLead') }}</p>
         {% endif %}
         {% if post.meta('projectTeam') %}
-          <p><strong>{{ function('__', 'Research team:', 'flynt') }}</strong> {{ post.meta('projectTeam') }}</p>
+          <div class="projectSingle-team"><strong>{{ function('__', 'Research team:', 'flynt') }}</strong> {{ post.meta('projectTeam')|e('wp_kses_post') }}</div>
         {% endif %}
       </section>
     {% endif %}
@@ -25,9 +27,11 @@
         'options': {'theme': 'putty'}
       }) }}
     {% endif %}
-    {% for component in post.meta('pageComponents') %}
-      {{ renderComponent(component) }}
-    {% endfor %}
+    <div class="projectSingle-content">
+      {% for component in post.meta('pageComponents') %}
+        {{ renderComponent(component) }}
+      {% endfor %}
+    </div>
     {% if post.res_accordion_panels %}
       {{ renderComponent({
         'acf_fc_layout': 'AccordionDefault',
