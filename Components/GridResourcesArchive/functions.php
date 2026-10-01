@@ -196,7 +196,7 @@ function getACFLayout(): array
                 'save_terms' => 0,
                 'load_terms' => 0,
                 'return_format' => 'object',
-                'instructions' => __('Optional. Leave empty to show every resource type currently used by published Resources.', 'flynt'),
+                'instructions' => __('Optional. Leave empty to show every resource type currently used by published Resources. The filter is hidden when only one type is available.', 'flynt'),
             ],
             [
                 'label' => __('Options', 'flynt'),

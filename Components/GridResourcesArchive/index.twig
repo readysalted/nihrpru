@@ -6,7 +6,7 @@
       </div>
     {% endif %}
 
-    {% if terms|length %}
+    {% if terms|length > 1 %}
       <nav class="resourcesArchive-filter" aria-label="{{ filterLabel|e('html_attr') }}">
         <p class="resourcesArchive-filterLabel">{{ filterLabel }}</p>
         <div class="resourcesArchive-filterItems">
