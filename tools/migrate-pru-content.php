@@ -1018,6 +1018,23 @@ function pruHero(string $title): array
     ];
 }
 
+function pruResolveLegacyLegalPlaceholders(string $html): string
+{
+    return str_replace(
+        [
+            '<?php echo $email; ?>',
+            '<!--?php echo $address; ?-->',
+            '<?php echo $company_name; ?>',
+        ],
+        [
+            '<a href="mailto:NIHRPRU.BehSocSci@newcastle.ac.uk">NIHRPRU.BehSocSci@newcastle.ac.uk</a>',
+            'Newcastle University, Baddiley-Clark Building, Richardson Road, Newcastle upon Tyne, NE2 4AX',
+            'NIHR PRU Behavioural and Social Sciences',
+        ],
+        $html
+    );
+}
+
 function pruPortraitImageText(string $html): ?array
 {
     if ($html === '') {
@@ -1146,7 +1163,11 @@ function pruMigratePages(array $rows, array $peopleGroups, array $projectData, a
         }
         $pageId = $ids[$legacyId];
         $title = get_the_title($pageId);
-        $content = pruRewriteHtml(pruPageMain((string) $row['link']), $pageId);
+        $directContentSlugs = ['privacy', 'terms-and-conditions', 'accessibility'];
+        $sourceContent = in_array($slug, $directContentSlugs, true)
+            ? (string) ($row['content']['rendered'] ?? '')
+            : pruPageMain((string) $row['link']);
+        $content = pruRewriteHtml(pruResolveLegacyLegalPlaceholders($sourceContent), $pageId);
         update_post_meta($pageId, '_pru_legacy_html', $content);
         wp_update_post(['ID' => $pageId, 'post_content' => wp_slash($content)]);
         $components = [pruHero($title)];
@@ -1453,7 +1474,7 @@ function pruVerifyMigration(): void
 if (!defined('PRU_MIGRATION_LIBRARY_ONLY')) {
     try {
         pruLog('NIHR PRU migration started');
-        $pages = pruFetch('/wp-json/wp/v2/pages?per_page=100&_fields=id,parent,slug,link,title,featured_media,menu_order,date,modified');
+        $pages = pruFetch('/wp-json/wp/v2/pages?per_page=100&_fields=id,parent,slug,link,title,content,featured_media,menu_order,date,modified');
         $peopleGroups = pruMigratePeople();
         $projectData = pruMigrateProjects();
         $resourceData = pruMigrateResources($pages);
