@@ -18,6 +18,100 @@ flynt-component[name='BlockWysiwyg'] {
       border-color: var(--nihr-navy);
     }
   }
+
+  .accessibilityTools {
+    background: rgba(28, 40, 94, 0.06);
+    border: 1px solid rgba(28, 40, 94, 0.18);
+    border-radius: 12px;
+    margin-block: 1.5rem;
+    padding: 1rem;
+
+    .a11y-toolbar-widget ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .a11y-toolbar-widget li {
+      margin: 0;
+    }
+
+    .a11y-toolbar-widget button {
+      align-items: center;
+      background: var(--nihr-navy);
+      border: 2px solid var(--nihr-navy);
+      border-radius: 999px;
+      color: var(--color-white);
+      cursor: pointer;
+      display: inline-flex;
+      font: inherit;
+      font-weight: 700;
+      gap: 0.5rem;
+      min-block-size: 44px;
+      padding-block: 0.6rem;
+      padding-inline: 1rem;
+
+      &:hover,
+      &:focus-visible,
+      &.active {
+        background: var(--nihr-coral);
+        border-color: var(--nihr-coral);
+        color: var(--nihr-navy);
+      }
+    }
+
+    .a11y-toolbar-widget .offscreen {
+      block-size: auto;
+      clip: auto;
+      clip-path: none;
+      inline-size: auto;
+      margin: 0;
+      overflow: visible;
+      position: static !important;
+      white-space: normal;
+    }
+  }
+}
+
+.a11y-toolbar.ltr.reversed {
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+
+  ul {
+    box-shadow: 0 6px 24px rgba(28, 40, 94, 0.22);
+  }
+
+  ul li button {
+    background: var(--nihr-navy);
+    border-color: rgba(255, 255, 255, 0.22);
+    color: var(--color-white);
+    min-block-size: 44px;
+    min-inline-size: 44px;
+  }
+
+  ul li button:hover,
+  ul li button:focus-visible,
+  ul li button.active {
+    background: var(--nihr-coral);
+    color: var(--nihr-navy);
+  }
+}
+
+@media (max-width: $breakpoint-mobile-horizontal) {
+  .a11y-toolbar.ltr.reversed {
+    inset-block-end: 1rem;
+    inset-block-start: auto;
+
+    ul li button {
+      font-size: 18px !important;
+      min-block-size: 42px;
+      min-inline-size: 42px;
+      padding: 8px;
+    }
+  }
 }
 
 flynt-component[name='BlockWysiwyg'][data-display-style='homepageIntro'] {

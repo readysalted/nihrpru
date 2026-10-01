@@ -1035,6 +1035,74 @@ function pruResolveLegacyLegalPlaceholders(string $html): string
     );
 }
 
+function pruAccessibilityStatement(): string
+{
+    return <<<'HTML'
+<p>This accessibility statement applies to the NIHR PRU Behavioural and Social Sciences website.</p>
+<p>NIHR PRU Behavioural and Social Sciences is committed to making this website accessible to the widest possible audience, regardless of technology or ability.</p>
+<h2>Accessibility tools</h2>
+<p>Use the controls below to increase the text size or switch to a high-contrast view. Your preference is saved in your browser and can be reset by selecting the same control again.</p>
+<div class="accessibilityTools">[wpa_toolbar]</div>
+<p>You can also change text size, colours and contrast using your browser or device settings.</p>
+<h2>Using this website</h2>
+<p>We aim to make sure you can:</p>
+<ul>
+<li>zoom in without text becoming difficult to read;</li>
+<li>navigate the website using a keyboard;</li>
+<li>use the website with a screen reader or speech-recognition software;</li>
+<li>understand links and headings without relying on their visual presentation.</li>
+</ul>
+<p>The website uses structured, semantic HTML, visible keyboard focus styles, descriptive link text and responsive layouts. We also review alternative text when images are added to the media library.</p>
+<h2>How accessible this website is</h2>
+<p>This is a newly redeveloped website and a formal assessment against the Web Content Accessibility Guidelines (WCAG) 2.2 AA standard has not yet been completed. We are reviewing the site and will update this statement after testing.</p>
+<p>Some documents inherited from the previous website, including older PDF files, may not be fully accessible. If you need any information in another format, please contact us.</p>
+<h2>Feedback and contact information</h2>
+<p>If you find an accessibility problem, need information in a different format, or think we are not meeting accessibility requirements, please contact us:</p>
+<ul>
+<li>Email: <a href="mailto:NIHRPRU.BehSocSci@newcastle.ac.uk">NIHRPRU.BehSocSci@newcastle.ac.uk</a></li>
+<li>Telephone: <a href="tel:+441912083463">0191 208 3463</a></li>
+<li>Address: Newcastle University, Baddiley-Clark Building, Richardson Road, Newcastle upon Tyne, NE2 4AX</li>
+</ul>
+<p>We will consider your request and respond as soon as possible.</p>
+<h2>Enforcement procedure</h2>
+<p>The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018. If you are not happy with how we respond to your complaint, contact the <a href="https://www.equalityadvisoryservice.com/">Equality Advisory and Support Service (EASS)</a>.</p>
+<h2>Technical information</h2>
+<p>NIHR PRU Behavioural and Social Sciences is committed to making its website accessible in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.</p>
+<h2>Preparation of this statement</h2>
+<p>This statement was prepared and last reviewed on 1 October 2026. It will be reviewed following the website's first formal accessibility assessment and after significant changes to the site.</p>
+HTML;
+}
+
+function pruConfigureAccessibilityPlugin(): void
+{
+    $options = [
+        'asl_enable' => '',
+        'wpa_toolbar' => 'on',
+        'wpa_toolbar_size' => '20',
+        'wpa_font_factor' => '1.4',
+        'wpa_widget_toolbar' => 'on',
+        'wpa_toolbar_gs' => 'off',
+        'wpa_toolbar_fs' => 'on',
+        'wpa_toolbar_ct' => 'on',
+        'wpa_toolbar_default' => '',
+        'wpa_toolbar_right' => 'on',
+        'wpa_toolbar_mobile' => '',
+        'wpa_focus' => 'on',
+        'wpa_focus_color' => 'fc5d5d',
+        'wpa_viewport' => 'on',
+        'wpa_labels' => 'on',
+        'wpa_remove_titles' => 'on',
+        'wpa_search' => 'on',
+        'wpa_videos' => 'on',
+        'wpa_search_alt' => 'on',
+        'wpa_track_stats' => 'off',
+    ];
+
+    foreach ($options as $name => $value) {
+        update_option($name, $value);
+    }
+}
+
 function pruPortraitImageText(string $html): ?array
 {
     if ($html === '') {
@@ -1163,10 +1231,14 @@ function pruMigratePages(array $rows, array $peopleGroups, array $projectData, a
         }
         $pageId = $ids[$legacyId];
         $title = get_the_title($pageId);
-        $directContentSlugs = ['privacy', 'terms-and-conditions', 'accessibility'];
-        $sourceContent = in_array($slug, $directContentSlugs, true)
-            ? (string) ($row['content']['rendered'] ?? '')
-            : pruPageMain((string) $row['link']);
+        $directContentSlugs = ['privacy', 'terms-and-conditions'];
+        if ($slug === 'accessibility') {
+            $sourceContent = pruAccessibilityStatement();
+        } else {
+            $sourceContent = in_array($slug, $directContentSlugs, true)
+                ? (string) ($row['content']['rendered'] ?? '')
+                : pruPageMain((string) $row['link']);
+        }
         $content = pruRewriteHtml(pruResolveLegacyLegalPlaceholders($sourceContent), $pageId);
         update_post_meta($pageId, '_pru_legacy_html', $content);
         wp_update_post(['ID' => $pageId, 'post_content' => wp_slash($content)]);
@@ -1483,6 +1555,7 @@ if (!defined('PRU_MIGRATION_LIBRARY_ONLY')) {
         pruFinalizeProjectContent();
         pruBuildNavigation($pageData);
         pruUpdateThemeOptions($pageData);
+        pruConfigureAccessibilityPlugin();
         flush_rewrite_rules(false);
         pruVerifyMigration();
         pruLog('NIHR PRU migration complete');

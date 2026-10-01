@@ -1,0 +1,83 @@
+@media print {
+  * {
+    color: #000 !important;
+  }
+}
+
+@media screen {
+  html,
+  body,
+  body *:not(img):not(picture):not(svg):not(path):not(video) {
+    background-color: #000 !important;
+    background-image: none !important;
+    border-color: #fff !important;
+    box-shadow: none !important;
+    color: #fff !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a * {
+    color: #ffeb3b !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 0.12em !important;
+    text-underline-offset: 0.18em !important;
+  }
+
+  button,
+  .button,
+  .search-link,
+  input,
+  select,
+  textarea {
+    background: #000 !important;
+    border: 2px solid #fff !important;
+    color: #fff !important;
+  }
+
+  button:hover,
+  button:focus-visible,
+  a:hover,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 3px solid #ffeb3b !important;
+    outline-offset: 3px !important;
+  }
+
+  img,
+  picture,
+  svg,
+  video {
+    background-color: transparent !important;
+  }
+
+  .logo-image {
+    filter: grayscale(1) brightness(0) invert(1) !important;
+  }
+
+  mark,
+  ::selection {
+    background: #ffeb3b !important;
+    color: #000 !important;
+  }
+
+  .a11y-toolbar ul,
+  .a11y-toolbar-widget ul {
+    border: 1px solid #fff !important;
+  }
+
+  .a11y-toolbar button.active,
+  .a11y-toolbar-widget button.active {
+    background: #ffeb3b !important;
+    color: #000 !important;
+  }
+
+  .a11y-toolbar button.active *,
+  .a11y-toolbar-widget button.active * {
+    background-color: transparent !important;
+    color: #000 !important;
+  }
+}
