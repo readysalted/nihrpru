@@ -33,7 +33,45 @@ add_filter('Flynt/addComponentData?name=GridPeople', function (array $data): arr
         }
     }
 
-    $data['people'] = Timber::get_posts($query);
+    $people = Timber::get_posts($query);
+    $roleGroupCounts = [];
+    foreach ($people as $person) {
+        $terms = get_the_terms($person->ID, CustomPostTypes\PERSON_ROLE_GROUP_TAXONOMY);
+        if (!is_array($terms)) {
+            continue;
+        }
+        foreach ($terms as $term) {
+            $roleGroupCounts[$term->slug] = ($roleGroupCounts[$term->slug] ?? 0) + 1;
+        }
+    }
+
+    $roleGroups = [];
+    $roleGroupOrder = [
+        'leadership',
+        'co-investigators',
+        'operations',
+        'research-team',
+        'ppie',
+        'collaborators',
+    ];
+    foreach ($roleGroupOrder as $slug) {
+        if (empty($roleGroupCounts[$slug])) {
+            continue;
+        }
+        $term = get_term_by('slug', $slug, CustomPostTypes\PERSON_ROLE_GROUP_TAXONOMY);
+        if ($term instanceof \WP_Term) {
+            $roleGroups[] = [
+                'name' => $term->name,
+                'slug' => $term->slug,
+                'count' => $roleGroupCounts[$slug],
+            ];
+        }
+    }
+
+    $data['people'] = $people;
+    $data['roleGroups'] = $roleGroups;
+    $data['showDirectoryTools'] = count($people) >= 8 && count($roleGroups) > 1;
+    $data['directoryId'] = wp_unique_id('people-directory-');
     return $data;
 });
 

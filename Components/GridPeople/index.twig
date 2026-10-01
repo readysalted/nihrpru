@@ -4,9 +4,65 @@
       <div class="peopleGrid-intro">{{ preContentHtml|e('wp_kses_post') }}</div>
     {% endif %}
     {% if people|length %}
-      <div class="peopleGrid-items">
+      {% if showDirectoryTools %}
+        <div class="peopleGrid-directory" data-ref="directory">
+          <div class="peopleGrid-controls">
+            <div class="peopleGrid-field peopleGrid-search">
+              <label for="{{ directoryId }}-search">{{ function('__', 'Search people', 'flynt') }}</label>
+              <input id="{{ directoryId }}-search" type="search" data-ref="search" placeholder="{{ function('__', 'Search by name or role', 'flynt') }}" autocomplete="off">
+            </div>
+            <div class="peopleGrid-field peopleGrid-sort">
+              <label for="{{ directoryId }}-sort">{{ function('__', 'Sort by', 'flynt') }}</label>
+              <select id="{{ directoryId }}-sort" data-ref="sort">
+                <option value="recommended">{{ function('__', 'Recommended order', 'flynt') }}</option>
+                <option value="name-asc">{{ function('__', 'Name A–Z', 'flynt') }}</option>
+                <option value="name-desc">{{ function('__', 'Name Z–A', 'flynt') }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="peopleGrid-filterSelect peopleGrid-field">
+            <label for="{{ directoryId }}-group">{{ function('__', 'Filter by role', 'flynt') }}</label>
+            <select id="{{ directoryId }}-group" data-ref="filterSelect">
+              <option value="all">{{ function('__', 'All people', 'flynt') }}</option>
+              {% for group in roleGroups %}
+                <option value="{{ group.slug|e('html_attr') }}">{{ group.name }} ({{ group.count }})</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="peopleGrid-filterButtons" role="group" aria-label="{{ function('__', 'Filter by role', 'flynt') }}">
+            <button class="peopleGrid-filter is-active" type="button" data-ref="filter" data-group="all" aria-pressed="true">
+              {{ function('__', 'All people', 'flynt') }} <span>{{ people|length }}</span>
+            </button>
+            {% for group in roleGroups %}
+              <button class="peopleGrid-filter" type="button" data-ref="filter" data-group="{{ group.slug|e('html_attr') }}" aria-pressed="false">
+                {{ group.name }} <span>{{ group.count }}</span>
+              </button>
+            {% endfor %}
+          </div>
+
+          <p class="peopleGrid-results" aria-live="polite">
+            <span data-ref="resultCount">{{ people|length }}</span>
+            <span
+              data-ref="resultLabel"
+              data-singular="{{ function('__', 'person shown', 'flynt')|e('html_attr') }}"
+              data-plural="{{ function('__', 'people shown', 'flynt')|e('html_attr') }}">{{ function('__', 'people shown', 'flynt') }}</span>
+          </p>
+        </div>
+      {% endif %}
+
+      <div class="peopleGrid-items" data-ref="items">
         {% for person in people %}
-          <article class="peopleGrid-card">
+          {% set roleGroups = person.terms('person_role_group') %}
+          {% set searchableText = person.title ~ ' ' ~ person.meta('personRole') ~ ' ' ~ person.meta('personInstitution') %}
+          <article
+            class="peopleGrid-card"
+            data-ref="person"
+            data-person-order="{{ loop.index0 }}"
+            data-person-name="{{ person.title|lower|e('html_attr') }}"
+            data-person-search="{{ searchableText|lower|e('html_attr') }}"
+            data-person-groups="{{ roleGroups|map(term => term.slug)|join(' ')|e('html_attr') }}">
             <a href="{{ person.link|e('esc_url') }}">
               {% if person.thumbnail %}
                 <div class="peopleGrid-image">
@@ -15,15 +71,17 @@
               {% endif %}
               <div class="peopleGrid-content">
                 <h2>{{ person.title }}</h2>
-                {% if person.meta('personRole') %}<p>{{ person.meta('personRole') }}</p>{% endif %}
+                {% if person.meta('personRole') %}<p class="peopleGrid-role">{{ person.meta('personRole') }}</p>{% endif %}
               </div>
             </a>
           </article>
         {% endfor %}
       </div>
+      {% if showDirectoryTools %}
+        <p class="peopleGrid-empty" data-ref="empty" hidden>{{ function('__', 'No people match your search and filter.', 'flynt') }}</p>
+      {% endif %}
     {% else %}
       <p>{{ function('__', 'No people were found.', 'flynt') }}</p>
     {% endif %}
   </div>
 </flynt-component>
-

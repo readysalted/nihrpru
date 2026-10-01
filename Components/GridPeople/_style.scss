@@ -4,6 +4,79 @@ flynt-component[name='GridPeople'] {
     max-inline-size: 800px;
   }
 
+  .peopleGrid-directory {
+    background: var(--color-background-secondary);
+    border-radius: 16px;
+    margin-block-end: 32px;
+    padding-block: 24px;
+    padding-inline: 24px;
+  }
+
+  .peopleGrid-controls {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: minmax(0, 2fr) minmax(210px, 1fr);
+  }
+
+  .peopleGrid-field label {
+    display: block;
+    font-weight: 700;
+    margin-block-end: 8px;
+  }
+
+  .peopleGrid-field input,
+  .peopleGrid-field select {
+    background-color: var(--color-background);
+    border-color: var(--color-border);
+    border-radius: 8px;
+    inline-size: 100%;
+  }
+
+  .peopleGrid-filterButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-block-start: 20px;
+  }
+
+  .peopleGrid-filter {
+    background: transparent;
+    border: 1px solid var(--color-text);
+    border-radius: 999px;
+    color: var(--color-text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    padding-block: 8px;
+    padding-inline: 16px;
+  }
+
+  .peopleGrid-filter span {
+    font-weight: 400;
+    margin-inline-start: 4px;
+  }
+
+  .peopleGrid-filter:hover,
+  .peopleGrid-filter:focus-visible,
+  .peopleGrid-filter.is-active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-background);
+  }
+
+  .peopleGrid-filterSelect {
+    display: none;
+    margin-block-start: 20px;
+  }
+
+  .peopleGrid-results {
+    color: var(--color-text-muted);
+    font-size: 15px;
+    margin-block: 18px 0;
+    margin-inline: 0;
+  }
+
   .peopleGrid-items {
     display: grid;
     gap: 24px;
@@ -54,6 +127,39 @@ flynt-component[name='GridPeople'] {
   .peopleGrid-content p {
     margin-block: 0;
     margin-inline: 0;
+  }
+
+  .peopleGrid-role {
+    color: var(--color-text-muted);
+    line-height: 1.45;
+  }
+
+  .peopleGrid-empty {
+    background: var(--color-background-secondary);
+    border-radius: 12px;
+    margin-block: 0;
+    padding-block: 24px;
+    padding-inline: 24px;
+    text-align: center;
+  }
+
+  @media (max-width: 767px) {
+    .peopleGrid-directory {
+      padding-block: 20px;
+      padding-inline: 20px;
+    }
+
+    .peopleGrid-controls {
+      grid-template-columns: 1fr;
+    }
+
+    .peopleGrid-filterButtons {
+      display: none;
+    }
+
+    .peopleGrid-filterSelect {
+      display: block;
+    }
   }
 }
 

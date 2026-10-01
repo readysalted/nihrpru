@@ -39,8 +39,14 @@
       "_helpers-CJiaW3rk.js"
     ]
   },
+  "Components/GridPeople/script.js": {
+    "file": "assets/script-CZiVa4Q3.js",
+    "name": "script",
+    "src": "Components/GridPeople/script.js",
+    "isDynamicEntry": true
+  },
   "Components/GridPostsArchive/script.js": {
-    "file": "assets/script-B4CUlmeL.js",
+    "file": "assets/script-CZHEGtyi.js",
     "name": "script",
     "src": "Components/GridPostsArchive/script.js",
     "isDynamicEntry": true,
@@ -74,7 +80,7 @@
     ]
   },
   "Components/GridResearchLanding/script.js": {
-    "file": "assets/script-CZHEGtyi.js",
+    "file": "assets/script-B4CUlmeL.js",
     "name": "script",
     "src": "Components/GridResearchLanding/script.js",
     "isDynamicEntry": true,
@@ -150,9 +156,9 @@
     "file": "assets/index-20P1wsSQ.js",
     "name": "index"
   },
-  "_navigation-!~{00k}~.js": {
+  "_navigation-!~{00l}~.js": {
     "file": "assets/navigation-DZOz2bw6.css",
-    "src": "_navigation-!~{00k}~.js"
+    "src": "_navigation-!~{00l}~.js"
   },
   "_navigation-B1f22J6g.js": {
     "file": "assets/navigation-B1f22J6g.js",
@@ -386,7 +392,7 @@
     "src": "assets/images/wp-admin-brand.jpg"
   },
   "assets/main.js": {
-    "file": "assets/main-BN6XwobD.js",
+    "file": "assets/main-DwJD3ZZs.js",
     "name": "main",
     "src": "assets/main.js",
     "isEntry": true,
@@ -396,6 +402,7 @@
       "Components/BlockPostTabs/script.js",
       "Components/BlockTwoPages/script.js",
       "Components/BlockVideoOembed/script.js",
+      "Components/GridPeople/script.js",
       "Components/GridPostsArchive/script.js",
       "Components/GridPublicationArchive/script.js",
       "Components/GridResearchArchive/script.js",
@@ -409,7 +416,7 @@
     ]
   },
   "assets/main.scss": {
-    "file": "assets/main-CJYu9K-K.css",
+    "file": "assets/main-CaeC1sxc.css",
     "src": "assets/main.scss",
     "isEntry": true
   },

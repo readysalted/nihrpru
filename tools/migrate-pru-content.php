@@ -529,7 +529,7 @@ function pruRoleMap(string $path): array
     $xpath = new DOMXPath($dom);
     $roles = [];
     foreach ($xpath->query('//*[contains(concat(" ", normalize-space(@class), " "), " staff-item ")]') as $card) {
-        $link = $xpath->query('.//a[@href]', $card)->item(0);
+        $link = $xpath->query('self::a[@href] | .//a[@href]', $card)->item(0);
         $name = $xpath->query('.//*[contains(concat(" ", normalize-space(@class), " "), " staff-item-info-name ")]', $card)->item(0);
         $role = $xpath->query('.//*[contains(concat(" ", normalize-space(@class), " "), " staff-item-info-position ")]', $card)->item(0);
         if (!$link || !$name) {
@@ -542,6 +542,93 @@ function pruRoleMap(string $path): array
         ];
     }
     return $roles;
+}
+
+function pruPersonRoleGroupSlug(string $role, string $sourceType): string
+{
+    if ($sourceType === 'collaborators') {
+        return 'collaborators';
+    }
+    if (stripos($role, 'PPIE') !== false) {
+        return 'ppie';
+    }
+    if (preg_match('/^(?:Co-)?Director\b/i', $role)) {
+        return 'leadership';
+    }
+    if (stripos($role, 'Co-Investigator') !== false) {
+        return 'co-investigators';
+    }
+    if (stripos($role, 'Manager') !== false || stripos($role, 'Operations') !== false) {
+        return 'operations';
+    }
+    return 'research-team';
+}
+
+function pruPersonRoleGroupTerms(): array
+{
+    $definitions = [
+        'leadership' => 'Leadership',
+        'co-investigators' => 'Co-Investigators',
+        'operations' => 'Operations',
+        'research-team' => 'Research team',
+        'ppie' => 'PPIE',
+        'collaborators' => 'Collaborators',
+    ];
+    $terms = [];
+    foreach ($definitions as $slug => $name) {
+        $terms[$slug] = pruTerm('person_role_group', $name, $slug);
+    }
+    return $terms;
+}
+
+function pruPersonDirectoryOrder(string $role, string $sourceType, int $sourcePosition): int
+{
+    $priority = [
+        'leadership' => 1,
+        'co-investigators' => 2,
+        'operations' => 3,
+        'research-team' => 4,
+        'ppie' => 5,
+        'collaborators' => 6,
+    ];
+    $roleGroupSlug = pruPersonRoleGroupSlug($role, $sourceType);
+    return (($priority[$roleGroupSlug] ?? 9) * 1000) + ($sourcePosition * 10);
+}
+
+function pruSyncPersonDirectoryData(): int
+{
+    $roleGroupTerms = pruPersonRoleGroupTerms();
+    $sources = [
+        'staff' => '/about/staff/',
+        'collaborators' => '/about/our-collaborators/',
+    ];
+    $updated = 0;
+    foreach ($sources as $sourceType => $path) {
+        $position = 0;
+        foreach (pruRoleMap($path) as $slug => $personData) {
+            $person = get_page_by_path($slug, OBJECT, 'person');
+            if (!$person instanceof WP_Post) {
+                pruLog('  Missing person: ' . $slug);
+                continue;
+            }
+            $role = (string) ($personData['role'] ?? '');
+            $roleGroupSlug = pruPersonRoleGroupSlug($role, $sourceType);
+            update_field('personRole', $role, $person->ID);
+            wp_set_object_terms(
+                $person->ID,
+                [$roleGroupTerms[$roleGroupSlug]],
+                'person_role_group',
+                false
+            );
+            wp_update_post([
+                'ID' => $person->ID,
+                'post_excerpt' => $role,
+                'menu_order' => pruPersonDirectoryOrder($role, $sourceType, ++$position),
+            ]);
+            $updated++;
+        }
+    }
+    return $updated;
 }
 
 function pruPersonMeta(string $html): array
@@ -598,13 +685,18 @@ function pruMigratePeople(): array
         'staff' => pruFetch('/wp-json/wp/v2/staff?per_page=100&_fields=id,slug,link,title,content,featured_media,profile_types'),
         'collaborators' => pruFetch('/wp-json/wp/v2/collaborators?per_page=100&_fields=id,slug,link,title,content,featured_media,profile_types'),
     ];
+    $roleGroupTerms = pruPersonRoleGroupTerms();
     $ids = [];
     $ppie = ['stu-edwards-2', 'kate-hawley', 'bill-wilson', 'debbie-smith'];
     foreach ($sets as $sourceType => $rows) {
+        $roleMap = $sourceType === 'staff' ? $staffRoles : $collaboratorRoles;
+        $rolePositions = array_flip(array_keys($roleMap));
         foreach ($rows as $row) {
             $title = pruDecode($row['title']['rendered'] ?? '');
-            $roleMap = $sourceType === 'staff' ? $staffRoles : $collaboratorRoles;
             $role = $roleMap[$row['slug']]['role'] ?? '';
+            $sourcePosition = isset($rolePositions[$row['slug']])
+                ? ((int) $rolePositions[$row['slug']] + 1)
+                : 999;
             $postId = pruUpsert([
                 'post_type' => 'person',
                 'post_status' => 'publish',
@@ -612,6 +704,7 @@ function pruMigratePeople(): array
                 'post_name' => sanitize_title($row['slug']),
                 'post_content' => (string) ($row['content']['rendered'] ?? ''),
                 'post_excerpt' => $role,
+                'menu_order' => pruPersonDirectoryOrder($role, $sourceType, $sourcePosition),
             ], $sourceType, (int) $row['id']);
             $ids[$sourceType . ':' . $row['id']] = $postId;
             update_post_meta($postId, '_pru_legacy_path', pruLegacyPath((string) $row['link']));
@@ -629,6 +722,13 @@ function pruMigratePeople(): array
                 $personGroups[] = $groups['ppie-strategy-group'];
             }
             wp_set_object_terms($postId, array_values(array_unique($personGroups)), 'person_group');
+            $roleGroupSlug = pruPersonRoleGroupSlug($role, $sourceType);
+            wp_set_object_terms(
+                $postId,
+                [$roleGroupTerms[$roleGroupSlug]],
+                'person_role_group',
+                false
+            );
             pruSetFeatured($postId, (int) ($row['featured_media'] ?? 0), $title);
             pruLog('  ' . $title);
         }

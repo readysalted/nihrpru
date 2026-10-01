@@ -4,6 +4,7 @@ namespace Flynt\CustomPostTypes;
 
 const PERSON_POST_TYPE = 'person';
 const PERSON_GROUP_TAXONOMY = 'person_group';
+const PERSON_ROLE_GROUP_TAXONOMY = 'person_role_group';
 
 add_action('init', function (): void {
     register_post_type(PERSON_POST_TYPE, [
@@ -53,6 +54,26 @@ add_action('init', function (): void {
         'show_admin_column' => true,
         'show_in_rest' => true,
         'query_var' => true,
+        'rewrite' => false,
+    ]);
+
+    register_taxonomy(PERSON_ROLE_GROUP_TAXONOMY, [PERSON_POST_TYPE], [
+        'labels' => [
+            'name' => __('Role Groups', 'flynt'),
+            'singular_name' => __('Role Group', 'flynt'),
+            'menu_name' => __('Role Groups', 'flynt'),
+            'all_items' => __('All Role Groups', 'flynt'),
+            'edit_item' => __('Edit Role Group', 'flynt'),
+            'add_new_item' => __('Add Role Group', 'flynt'),
+        ],
+        'description' => __('Broad role categories used to filter the people directory.', 'flynt'),
+        'hierarchical' => true,
+        'public' => false,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'show_in_rest' => true,
+        'meta_box_cb' => false,
+        'query_var' => false,
         'rewrite' => false,
     ]);
 });
