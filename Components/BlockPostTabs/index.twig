@@ -1,0 +1,77 @@
+<flynt-component load:on="visible" name="BlockPostTabs" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }} data-display-style="{{ options.displayStyle|default('default') }}">
+  <div class="container" data-flow="layout">
+    <!-- Tab links -->
+    {% if contentType %}
+      <div class="post-tabs" role="region" aria-roledescription="carousel" aria-label="{{ text ?: 'Latest News and Events' }}" {{ relationship|length > 1 ? 'tabindex="0"' }}>
+        {% for value in relationship %}
+          <div id="tab-{{ loop.index }}-quote" class="tabcontent {{ loop.index == 1 ? 'active' : '' }}" role="group" aria-roledescription="slide" aria-label="{{ loop.index }} of {{ relationship|length }}" data-tab-content>
+            <h2>{{ text }}</h2>
+            <div class="tab-wrap">
+              {% if value.thumbnail.src %}
+                <div class="tab-image-wrap">
+                  <img class="tab-image" src="{{ value.thumbnail.src }}" alt="Latest news and events"/>
+                </div>
+              {% elseif options.displayStyle == 'homepage' %}
+                <div class="tab-image-wrap">
+                  <img class="tab-image" src="{{ fallbackImage }}" alt="Latest news and events"/>
+                </div>
+              {% endif %}
+              <div class="tab-text-wrap">
+                {% if value.post_title %}
+                  <div class="tab-title">
+                    {{ value.post_title }}
+                  </div>
+                {% endif %}
+
+                {% if value.post_content %}
+                  <div class="tab-content">
+                    {{ value.excerpt.read_more(false) }}
+                  </div>
+                {% endif %}
+
+                {% if value.link %}
+                  <a class="tab-link{{ options.displayStyle == 'homepage' ? '' : ' button' }}" href="{{ value.link }}">
+                    {% if options.displayStyle == 'homepage' %}
+                      <img class="tab-link-icon" src="{{ homepageCtaIcon }}" alt="" aria-hidden="true">
+                      <span class="tab-link-label">{{ buttonLabel|default('Read the full news story') }}</span>
+                    {% else %}
+                      {{ buttonLabel|default('Read more') }}
+                    {% endif %}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% if relationship|length > 1 %}
+      <div class="tab">
+        {% for value in relationship %}
+          <button class="tab__link {{ loop.index == 1 ? 'active' : '' }}" type="button" data-index="tab-{{ loop.index }}-quote"
+                  aria-label="Show slide {{ loop.index }} of {{ relationship|length }}" aria-controls="tab-{{ loop.index }}-quote" data-tab-link></button>
+        {% endfor %}
+      </div>
+      {% endif %}
+    {% else %}
+      <div class="post-tabs quotes">
+      {% for quote in quotes %}
+          <div id="tab-{{ loop.index }}-quote" class="tabcontent quote {{ loop.index == 1 ? 'active' : '' }}" data-tab-content>
+              <div class="tab-text-wrap quote-wrap">
+                  <div class="tab-content">
+                    {{ quote.quoteHtml|e('wp_kses_post') }}
+                  </div>
+              </div>
+          </div>
+        {% endfor %}
+      </div>
+      {% if quotes|length > 1 %}
+      <div class="tab">
+        {% for quote in quotes %}
+          <button class="tab__link {{ loop.index == 1 ? 'active' : '' }}" type="button" data-index="tab-{{ loop.index }}-quote"
+                  aria-label="Show quote {{ loop.index }} of {{ quotes|length }}" aria-controls="tab-{{ loop.index }}-quote" data-tab-link></button>
+        {% endfor %}
+      </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</flynt-component>

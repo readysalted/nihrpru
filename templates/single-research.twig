@@ -1,0 +1,56 @@
+{% extends 'templates/_document.twig' %}
+
+{% block content %}
+  <article>
+    <header>
+      {{ renderComponent('BlockPostHeader', {type: 'custom' , title: post.title, subtitle: post.excerpt}) }}
+    </header>
+    {% for component in post.meta('pageComponents') %}
+      {{ renderComponent(component) }}
+    {% endfor %}
+    {% if post.res_accordion_panels %}
+      {{ renderComponent({
+        'acf_fc_layout': 'AccordionDefault',
+        'preContentHtml': post.res_accordion_heading ? '<h2>' ~ post.res_accordion_heading ~ '</h2>' : '',
+        'accordionPanels': post.res_accordion_panels
+      }) }}
+    {% endif %}
+    {% if post.res_posts %}
+      <div class="container" data-size="medium">
+      {% if post.res_label %}
+        <h2 style="color: #1C285E;">{{ post.res_label }}</h2>
+      {% endif %}
+        {% set transformedItems = [] %}
+        {% for relatedPost in post.res_posts %}
+          {% set transformedItems = transformedItems|merge([{
+            'image': relatedPost.thumbnail ? {
+              'src': relatedPost.thumbnail.src('medium_large'),
+              'alt': relatedPost.thumbnail.alt ?: relatedPost.title
+            } : null,
+            'contentHtml': '<h3>' ~ relatedPost.title ~ '</h3>',
+            'link': {
+              'url': relatedPost.link,
+              'target': '_self'
+            }
+          }]) %}
+        {% endfor %}
+      
+        {{ renderComponent({
+          'acf_fc_layout': 'GridImageText',
+          'options': {
+            'maxColumns': 2,
+          },
+          'items': transformedItems
+        }) }}
+      </div>
+    {% endif %}
+    {% if post.res_cta_text %}
+    <div class="container" data-size="medium">
+      <div class="resources-cta">
+        <h3>{{ post.res_cta_label }}</h3>
+        {{ post.res_cta_text }}
+      </div>
+    </div>
+    {% endif %}
+  </article>
+{% endblock %}

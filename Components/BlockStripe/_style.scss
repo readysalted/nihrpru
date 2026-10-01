@@ -1,0 +1,82 @@
+flynt-component[name='BlockStripe'] {
+  .stripe-container {
+    background-color: #fc5d5d;
+    padding: 12px 0;
+    
+    @media (max-width: $breakpoint-mobile-horizontal) {
+      padding: 10px 0;
+    }
+  }
+
+  .stripe-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    @media (max-width: $breakpoint-tablet) {
+      gap: 12px;
+    }
+
+    @media (max-width: $breakpoint-mobile-horizontal) {
+      gap: 10px;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+  }
+
+  .stripe-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--color-white);
+
+    svg {
+      width: 32px;
+      height: 32px;
+
+      @media (max-width: $breakpoint-tablet) {
+        width: 28px;
+        height: 28px;
+      }
+
+      @media (max-width: $breakpoint-mobile-horizontal) {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  .stripe-text {
+    color: var(--color-white);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+
+    @media (max-width: $breakpoint-tablet) {
+      font-size: 16px;
+    }
+
+    @media (max-width: $breakpoint-mobile-horizontal) {
+      font-size: 14px;
+      width: 100%;
+    }
+
+    p {
+      margin: 0;
+      display: inline;
+    }
+
+    a {
+      color: var(--color-white);
+      text-decoration: underline;
+      font-weight: 700;
+      transition: opacity 0.3s ease;
+
+      &:hover {
+        opacity: 0.8;
+        text-decoration: none;
+      }
+    }
+  }
+}

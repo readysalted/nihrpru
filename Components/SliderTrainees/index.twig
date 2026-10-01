@@ -1,0 +1,22 @@
+<flynt-component name="SliderTrainees" load:on="visible" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <script type="application/json">{{ jsonData|json_encode }}</script>
+  <div class="container">
+      <div data-ref="slider" class="slider swiper-container" data-align="center">
+        <div class="swiper-wrapper">
+          {% for post in items %}
+            <div class="slider-item swiper-slide">
+                <a href="{{ post.link['url'] }}" class="team__member">
+                  <div class="team__photo" style="background: url('{{ post.image.src }}')"></div>
+                  <div class="team-wrap">
+                    <p class="team__name">{{ post.title }}</p>
+                    <p class="team__role">{{ post.subtitle }}</p>
+                  </div>
+                </a>
+            </div>
+          {% endfor %}
+        </div>
+        <button type="button" data-ref="prev" class="slider-button slider-button--prev" aria-label="{{ sliderOptions.a11y.prevSlideMessage|e }}"></button>
+        <button type="button" data-ref="next" class="slider-button slider-button--next" aria-label="{{ sliderOptions.a11y.nextSlideMessage|e }}"></button>
+      </div>
+  </div>
+</flynt-component>

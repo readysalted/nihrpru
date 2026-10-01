@@ -1,0 +1,106 @@
+.resourceCard {
+  background: var(--color-white);
+  border-radius: 8px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  min-block-size: 345px;
+  min-inline-size: 0;
+  overflow: hidden;
+  transition: box-shadow 180ms ease, transform 180ms ease;
+
+  &:hover,
+  &:focus-within {
+    box-shadow: 0 10px 24px rgba(28, 40, 94, 0.2);
+    transform: translateY(-4px);
+  }
+
+  &-link {
+    color: var(--nihr-navy);
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-block-size: 345px;
+    text-decoration: none;
+
+    &:focus-visible {
+      outline: 3px solid var(--nihr-blue-flame);
+      outline-offset: -3px;
+    }
+  }
+
+  &-figure {
+    aspect-ratio: 3 / 2;
+    background: var(--nihr-lilac);
+    flex: 0 0 auto;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  &-image {
+    block-size: 100%;
+    inline-size: 100%;
+    object-fit: cover;
+    transition: transform 240ms ease;
+  }
+
+  &:hover &-image,
+  &:focus-within &-image {
+    transform: scale(1.025);
+  }
+
+  &-placeholder {
+    align-items: center;
+    block-size: 100%;
+    color: var(--nihr-navy);
+    display: flex;
+    font-family: var(--font-family-heading);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 700;
+    inline-size: 100%;
+    justify-content: center;
+  }
+
+  &-content {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    margin-block-start: 0;
+    min-block-size: 84px;
+    padding-block: 18px;
+    padding-inline: 24px;
+    text-align: center;
+  }
+
+  &-title {
+    color: var(--nihr-navy);
+    font-family: var(--font-family-text);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0;
+  }
+}
+
+@media (max-width: $breakpoint-tablet-horizontal - 1) {
+  .resourceCard {
+    min-block-size: 0;
+
+    &-link {
+      min-block-size: 0;
+    }
+
+    &-content {
+      min-block-size: 76px;
+      padding-block: 16px;
+      padding-inline: 20px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resourceCard,
+  .resourceCard-image {
+    transition: none;
+  }
+}

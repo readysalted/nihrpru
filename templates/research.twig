@@ -1,0 +1,12 @@
+{% extends 'templates/_document.twig' %}
+
+{% block content %}
+  <header>
+      {{ renderComponent('BlockPostHeader', { type: 'custom', title:'Research', subtitle: hero_research_text } ) }}
+  </header>
+  {{ renderComponent('GridResearchLanding', {posts: posts, research_tiles: research_tiles }) }}
+  {% for component in post.meta('pageComponents') %}
+    {{ renderComponent(component) }}
+  {% endfor %}
+    {{ renderComponent('BlockMailingList', {image: footer_cta_img, contentHtml: footer_cta_text, backgroundColor: footer_cta_bg, imagePosition: 'right', spacing: 'spacing-fix'  }) }}
+{% endblock %}

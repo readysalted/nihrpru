@@ -1,0 +1,7 @@
+{% extends 'templates/_document.twig' %}
+
+{% block content %}
+  {% for component in components %}
+    {{ renderComponent(component) }}
+  {% endfor %}
+{% endblock %}

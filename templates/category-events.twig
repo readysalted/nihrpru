@@ -1,0 +1,16 @@
+{% extends 'templates/_document.twig' %}
+{% block content %}
+    <div class="hero-section">
+        <div class="container">
+        <h1 class="hero-title">{{ category.name }}</h1>
+        </div>
+    </div>
+    {% if function('function_exists', 'bcn_display') %}
+    <div class="container">
+        <div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/">
+            {{ function('bcn_display') }}
+        </div>
+    </div>
+    {% endif %}
+    {{ renderComponent('GridEventsArchive', {posts: posts, events: events}) }}
+{% endblock %}

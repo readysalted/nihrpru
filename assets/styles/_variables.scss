@@ -1,0 +1,143 @@
+:root,
+[data-theme="reset"] {
+  --color-accent: #1c285e;
+  --nihr-red: #fc5d5d;
+  --color-background: hsla(0, 0%, 100%, 1);
+  --color-background-secondary: hsla(0, 0%, 19%, 0.08);
+  --color-border: hsl(0, 0%, 90%);
+  --color-border-secondary: hsl(0, 0%, 19%, 0.68);
+  --color-text: hsl(0, 0%, 19%, 1);
+  --color-text-muted: hsla(0, 0%, 19%, 0.8);
+  --color-error: hsl(343, 98%, 46%);
+  --color-white: #fff;
+  --dark-blue: #1c285e;
+  --nihr-blue-flame: #0051c2;
+  --nihr-brand-blue: #193e72;
+  --nihr-putty: #faf4eb;
+  --nihr-navy: #1c285e;
+  --nihr-slate-grey: #2d2d2d;
+  --nihr-coral: #fc5d5d;
+  --nihr-twilight: #3e439c;
+  --nihr-lilac: #c4c5ff;
+  --nihr-glove-blue: #c7e9ff;
+  --nihr-pink-quartz: #ffd1e0;
+  --nihr-sunshine-yellow: #ffe626;
+}
+
+[data-theme="light"] {
+  --color-background: #DDECEE;
+  --color-text: hsla(212, 100%, 15%, 1);
+  --color-border: hsla(212, 100%, 15%, 0.7);
+  --color-border-secondary: var(--color-border);
+}
+
+[data-theme="dark"] {
+  --color-accent: #f29330;
+  //--color-background: hsla(212, 100%, 15%, 1);
+  --color-background: #1c285e;
+  --color-background-secondary: hsl(228, 56%, 98%, 0.06);
+  --color-border-secondary: hsl(0, 0%, 90%, 0.68);
+  --color-text: hsla(0, 0%, 100%, 1);
+  --color-text-muted: hsl(0, 0%, 100%, 0.8);
+}
+
+[data-theme="gridPostLatest"] {
+  --color-background: #E1EEF0;
+  --color-text: hsla(212, 100%, 15%, 1);
+  --color-border: hsla(212, 100%, 15%, 0.7);
+  --color-border-secondary: var(--color-border);
+}
+
+[data-theme="purple"] {
+  --color-background: #c4c5ff;
+  --color-text: hsla(212, 100%, 15%, 1);
+  --color-border: hsla(212, 100%, 15%, 0.7);
+  --color-border-secondary: var(--color-border);
+}
+
+[data-theme="white"],
+[data-theme="pink-quartz"],
+[data-theme="uniform-lilac"],
+[data-theme="glove-blue"],
+[data-theme="sunshine-yellow"],
+[data-theme="putty"] {
+  --color-accent: var(--nihr-coral);
+  --color-background-secondary: rgba(28, 40, 94, 0.08);
+  --color-border: rgba(28, 40, 94, 0.35);
+  --color-border-secondary: rgba(28, 40, 94, 0.68);
+  --color-text: var(--nihr-navy);
+  --color-text-muted: rgba(28, 40, 94, 0.8);
+}
+
+[data-theme="white"] {
+  --color-background: var(--color-white);
+}
+
+[data-theme="pink-quartz"] {
+  --color-background: var(--nihr-pink-quartz);
+}
+
+[data-theme="uniform-lilac"] {
+  --color-background: var(--nihr-lilac);
+}
+
+[data-theme="glove-blue"] {
+  --color-background: var(--nihr-glove-blue);
+}
+
+[data-theme="blue-flame"] {
+  --color-accent: var(--nihr-blue-flame);
+  --color-background: var(--nihr-blue-flame);
+  --color-background-secondary: rgba(255, 255, 255, 0.08);
+  --color-border: rgba(255, 255, 255, 0.7);
+  --color-border-secondary: rgba(255, 255, 255, 0.68);
+  --color-text: var(--color-white);
+  --color-text-muted: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="navy"] {
+  --color-accent: var(--nihr-sunshine-yellow);
+  --color-background: var(--nihr-navy);
+  --color-background-secondary: rgba(255, 255, 255, 0.08);
+  --color-border: rgba(255, 255, 255, 0.7);
+  --color-border-secondary: rgba(255, 255, 255, 0.68);
+  --color-text: var(--color-white);
+  --color-text-muted: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="sunshine-yellow"] {
+  --color-background: var(--nihr-sunshine-yellow);
+}
+
+[data-theme="putty"] {
+  --color-background: var(--nihr-putty);
+}
+
+$breakpoint-mobile-horizontal: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-tablet-horizontal: 1024px;
+$breakpoint-desktop: 1280px;
+
+:root {
+  /**
+   * FOUC can be reduced with good matching fallback font.
+   * https://meowni.ca/font-style-matcher/ or
+   * https://github.com/pixel-point/fontpie
+   */
+  --font-family-heading: "Archia", sans-serif;
+  --font-family-text: "Inclusive Sans", sans-serif;
+  --font-family-editorial: "Lato", var(--font-family-text);
+  --font-size-body: 1.125rem;
+  --font-size-body-small: 1rem;
+  --flow-space: 1.5625rem;
+  --column-gap: clamp(2.5rem, 2.5vw + 1.75rem, 3.75rem);
+
+  --content-max-width: 920px;
+  --content-max-width-wide: 1200px;
+  --content-max-width-full: 1480px;
+
+  --box-spacing: clamp(1rem, 2.50vw + 0.25rem, 2.25rem);
+  --container-spacing: clamp(1rem, 2.5vw + 0.25rem, 2.25rem);
+  //--component-spacing: clamp(3rem, 6.5vw + 1.05rem, 6.25rem);
+  --component-spacing: clamp(1.5rem, 3.25vw + 0.525rem, 3.125rem);
+}

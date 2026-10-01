@@ -1,0 +1,64 @@
+<flynt-component name="SliderImageGallery" load:on="visible" class="componentSpacing" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <script type="application/json">{{ jsonData|json_encode }}</script>
+  <div class="container" data-size="full" data-flow="layout">
+    {% if preContentHtml %}
+      <div data-size="medium" data-align="center" data-text-align="center">
+        {{ preContentHtml|e('wp_kses_post') }}
+      </div>
+    {% endif %}
+    <div class="sliders">
+      <div data-ref="sliderMain" data-slider="main" class="swiper-container sliderMain boxPadding">
+        <div class="swiper-wrapper">
+          {% for image in images %}
+            <div class="swiper-slide sliderMain-slide">
+              {# <figure class="figure">
+                <img class="figure-image lazyload"
+                  src="{{ image.src|resizeDynamic(0, 683) }}"
+                  width="{{ (683 * image.aspect)|round }}"
+                  height="{{ 683 }}"
+                  srcset="{{ placeholderImage((600 * image.aspect)|round, 683, 'rgba(125, 125, 125, 0.1)') }}"
+                  data-srcset="
+                    {{ image.src|resizeDynamic(0, 1300) }} {{ (image.aspect * 1300)|round }}w,
+                    {{ image.src|resizeDynamic(0, 1024) }} {{ (image.aspect * 1024)|round }}w,
+                    {{ image.src|resizeDynamic(0, 750) }} {{ (image.aspect * 750)|round }}w,
+                    {{ image.src|resizeDynamic(0, 683) }} {{ (image.aspect * 683)|round }}w,
+                    {{ image.src|resizeDynamic(0, 512) }} {{ (image.aspect * 512)|round }}w,
+                    {{ image.src|resizeDynamic(0, 385) }} {{ (image.aspect * 385)|round }}w,
+                    {{ image.src|resizeDynamic(0, 250) }} {{ (image.aspect * 250)|round }}w"
+                  data-sizes="auto"
+                  alt="{{ image.alt|e }}">
+                {% if image.caption %}
+                  <figcaption class="figure-caption">{{ image.caption|e }}</figcaption>
+                {% endif %}
+              </figure> #}
+              <div class="figure">
+                <img class="figure-image" src="{{image.src}}" alt="{{ image.alt|e }}">
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <button type="button" data-ref="prev" class="sliderMain-button sliderMain-button--prev" aria-label="{{ sliderOptions.a11y.prevSlideMessage|e }}"></button>
+        <button type="button" data-ref="next" class="sliderMain-button sliderMain-button--next" aria-label="{{ sliderOptions.a11y.nextSlideMessage|e }}"></button>
+      </div>
+      <div data-ref="sliderThumb" data-slider="thumb" class="swiper-container sliderThumb">
+        <div class="swiper-wrapper">
+          {% for image in images %}
+            <div class="swiper-slide sliderThumb-slide" style="width: {{ (image.aspect * 65)|round }}px">
+              <figure class="figure">
+                <img class="figure-image lazyload"
+                  src="{{ image.src|resizeDynamic(0, 65) }}"
+                  width="{{ (65 * image.aspect)|round }}"
+                  height="{{ 65 }}"
+                  srcset="{{ placeholderImage((65 * image.aspect)|round, 65, 'rgba(125, 125, 125, 0.1)') }}"
+                  data-srcset="
+                    {{ image.src|resizeDynamic(0, 65) }} {{ (image.aspect * 65)|round }}w,
+                    {{ image.src|resizeDynamic(0, 130) }} {{ (image.aspect * 130)|round }}w"
+                  alt="{{ image.alt|e }}">
+              </figure>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</flynt-component>

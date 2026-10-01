@@ -1,0 +1,27 @@
+<flynt-component name="AccordionDefault" load:on="visible" class="componentSpacing" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }} data-display-style="{{ options.displayStyle|default('default') }}">
+  <div class="container">
+    {% if preContentHtml %}
+      <div data-size="medium" data-align="center">
+        {{ preContentHtml|e('wp_kses_post')}}
+      </div>
+    {% endif %}
+    <div data-size="medium" data-align="center">
+      <ul class="items">
+        {% for panel in accordionPanels %}
+          <li class="item">
+            <h3 class="h5 title">
+              <button data-refs="trigger" class="trigger" type="button" aria-expanded="false" aria-controls="content-{{ uuid ~ '-' ~ loop.index }}">
+                {{ panel.title|e }}
+              </button>
+            </h3>
+            <div class="content" aria-hidden="true" id="content-{{ uuid ~ '-' ~ loop.index }}">
+              <div class="content-inner">
+                {{ panel.contentHtml|e('wp_kses_post') }}
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</flynt-component>

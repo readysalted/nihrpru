@@ -1,0 +1,85 @@
+{% if posts|length > 0 %}
+  <flynt-component name="GridPostsLatest" class="componentSpacing" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+    <div class="container" data-flow="layout">
+      {% if preContentHtml %}
+        <div data-size="medium">
+          {{ preContentHtml|e('wp_kses_post') }}
+        </div>
+      {% endif %}
+      <ul
+        class="{{ isEventsLayout ? 'events' : 'grid' }}"
+        {{ not isEventsLayout and options.maxColumns ? 'data-max-columns="' ~ options.maxColumns ~ '"' }}
+        {{ not isEventsLayout and options.maxPosts ? 'data-max-posts="' ~ options.maxPosts ~ '"' }}>
+        {% for post in posts %}
+          {% set aria_labelledby_id = uuid ~ '-' ~ loop.index %}
+          <li class="{{ isEventsLayout ? 'event' : 'post' }} boxCard {{ isEventsLayout and post.isPastEvent ? 'event--past' }}" id="{{ aria_labelledby_id }}" data-theme="reset">
+            <a class="link" href="{{ post.link|e('esc_url') }}" aria-labelledby="{{ aria_labelledby_id }}">
+              <figure class="figure">
+                {% if isEventsLayout and post.eventDate %}
+                  <div class="event-date-label">
+                    <span class="event-date-day">{{ post.eventDate.day }}</span>
+                    <span class="event-date-month">{{ post.eventDate.month }}</span>
+                    <span class="event-date-year">{{ post.eventDate.year }}</span>
+                  </div>
+                {% endif %}
+
+                {% if post.thumbnail %}
+                  <img
+                    class="{{ isEventsLayout ? 'event-image' : 'post-image' }} figure-image"
+                    src="{{ post.thumbnail.src }}"
+                    loading="lazy"
+                    alt="{{ post.thumbnail.alt|e ?: post.title }}">
+                {% elseif isEventsLayout %}
+                  <div class="event-placeholder-image">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                  </div>
+                {% endif %}
+
+                {% if isEventsLayout and post.isPastEvent %}
+                  <span class="event-past-badge">{{ labels.pastEvent }}</span>
+                {% endif %}
+              </figure>
+              <div class="content boxPadding">
+                <h2 class="h5">{{ post.title }}</h2>
+                {% if isEventsLayout and post.eventDate %}
+                  <p class="event-time">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span class="event-time-range">
+                      <span class="event-time-start">{{ post.eventDate.time }}</span>
+                      {% if post.eventDate.endTime %}
+                        <span class="event-time-separator">-</span>
+                        <span class="event-time-end">{{ post.eventDate.endTime }}</span>
+                      {% endif %}
+                    </span>
+                  </p>
+                {% else %}
+                  {# <p>{{ post.excerpt.read_more(false) }}</p> #}
+                {% endif %}
+              </div>
+              {% if isEventsLayout %}
+                <footer class="footer">
+                  <span>{{ labels.viewEvent }}</span>
+                </footer>
+              {% endif %}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+      {% if button %}
+        <div data-size="medium" data-align="center" data-text-align="center">
+          <a class="button button--primary" href="{{ button.url|e('esc_url') }}" target="{{ button.target|e('esc_attr') }}">
+            {{ button.title }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </flynt-component>
+{% endif %}

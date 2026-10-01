@@ -1,0 +1,54 @@
+<flynt-component name="BlockResourceDetails" class="componentSpacing">
+  <div class="container" data-size="wide">
+    <div class="resourceDetails{{ resource.post.thumbnail ? ' resourceDetails--hasImage' }}">
+      {% if resource.post.thumbnail %}
+        <figure class="resourceDetails-figure">
+          <img
+            class="resourceDetails-image lazyload"
+            src="{{ resource.post.thumbnail.src|resizeDynamic(768, 512, 'center') }}"
+            width="768"
+            height="512"
+            srcset="{{ placeholderImage(768, 512, 'rgba(28, 40, 94, 0.08)') }}"
+            data-srcset="
+              {{ resource.post.thumbnail.src|resizeDynamic(1200, 800, 'center') }} 1200w,
+              {{ resource.post.thumbnail.src|resizeDynamic(768, 512, 'center') }} 768w"
+            data-sizes="auto"
+            alt="{{ resource.post.thumbnail.alt|e ?: resource.post.title|e }}">
+        </figure>
+      {% endif %}
+
+      <div class="resourceDetails-content">
+        {% if resource.researchAreas|length %}
+          <ul class="resourceDetails-themes" aria-label="{{ function('__', 'Research themes', 'flynt') }}">
+            {% for term in resource.researchAreas %}
+              <li>{{ term.name }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if resource.descriptionHtml %}
+          <div class="resourceDetails-description">
+            {{ resource.descriptionHtml|e('wp_kses_post') }}
+          </div>
+        {% endif %}
+
+        {% if resource.destination.url %}
+          {% if resource.destination.type == 'file' and (resource.destination.fileName or resource.destination.fileSize) %}
+            <p class="resourceDetails-fileMeta">
+              {% if resource.destination.fileName %}<span>{{ resource.destination.fileName }}</span>{% endif %}
+              {% if resource.destination.fileSize %}<span>{{ resource.destination.fileSize }}</span>{% endif %}
+            </p>
+          {% endif %}
+          <a
+            class="button resourceDetails-button"
+            href="{{ resource.destination.url|e('esc_url') }}"
+            target="{{ resource.destination.target|e('html_attr') }}"
+            aria-label="{{ resource.destination.label|e('html_attr') }}{{ resource.destination.target == '_blank' ? ' – ' ~ function('__', 'opens in a new tab', 'flynt') }}"
+            {{ resource.destination.rel ? 'rel="' ~ resource.destination.rel|e('html_attr') ~ '"' }}>
+            {{ resource.destination.label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</flynt-component>

@@ -1,0 +1,30 @@
+<flynt-component name="BlockStripe" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <div class="stripe-container">
+    <div class="container">
+      <div class="stripe-content">
+        {% if text %}
+          <div class="stripe-icon">
+            <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_375_334)">
+            <path d="M17.2364 33.1549L19.4383 36.6243" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M29.4125 17.7028L37.7812 30.8864" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M37.3409 30.1925L18.9979 35.932L17.6768 33.8487L29.8529 18.3966L37.3409 30.1925Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22.9612 34.6905L24.1264 36.478C24.3117 36.7835 24.5556 37.0495 24.844 37.2604C25.1325 37.4714 25.4598 37.6232 25.8072 37.7072C26.1545 37.7912 26.5151 37.8056 26.868 37.7497C27.221 37.6938 27.5594 37.5687 27.8639 37.3815L27.9987 37.2953C28.6197 36.848 29.0464 36.1802 29.1914 35.4287C29.3363 34.6772 29.1887 33.8986 28.7787 33.2523L28.5626 32.9387" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17.4688 25.5938H3.65625C3.00978 25.5937 2.3898 25.3369 1.93268 24.8798C1.47556 24.4227 1.21875 23.8027 1.21875 23.1562V3.65625C1.21875 3.00978 1.47556 2.3898 1.93268 1.93268C2.3898 1.47556 3.00978 1.21875 3.65625 1.21875H32.9062C33.5527 1.21875 34.1727 1.47556 34.6298 1.93268C35.0869 2.3898 35.3438 3.00978 35.3438 3.65625V16.25" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M34.7929 2.11249L21.5589 12.2915C20.6193 13.0146 19.4669 13.4068 18.2813 13.4068C17.0956 13.4068 15.9432 13.0146 15.0037 12.2915L1.76965 2.11249" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_375_334">
+            <rect width="39" height="39" fill="white"/>
+            </clipPath>
+            </defs>
+            </svg>
+          </div>
+          <div class="stripe-text">
+            {{ text|e('wp_kses_post') }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</flynt-component>

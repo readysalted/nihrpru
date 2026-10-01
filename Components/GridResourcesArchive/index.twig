@@ -1,0 +1,57 @@
+<flynt-component name="GridResourcesArchive" class="componentSpacing" data-theme="{{ options.theme ?: 'putty' }}">
+  <div class="container" data-size="wide">
+    {% if preContentHtml %}
+      <div class="resourcesArchive-intro" data-size="medium">
+        {{ preContentHtml|e('wp_kses_post') }}
+      </div>
+    {% endif %}
+
+    {% if terms|length %}
+      <nav class="resourcesArchive-filter" aria-label="{{ filterLabel|e('html_attr') }}">
+        <p class="resourcesArchive-filterLabel">{{ filterLabel }}</p>
+        <div class="resourcesArchive-filterItems">
+          <a class="resourcesArchive-filterItem{{ activeSlug ? '' : ' is-active' }}" href="{{ allUrl|e('esc_url') }}" {{ activeSlug ? '' : 'aria-current="page"' }}>
+            {{ allLabel }}
+          </a>
+          {% for term in terms %}
+            <a class="resourcesArchive-filterItem{{ term.isActive ? ' is-active' }}" href="{{ term.url|e('esc_url') }}" {{ term.isActive ? 'aria-current="page"' }}>
+              {{ term.name }}
+            </a>
+          {% endfor %}
+        </div>
+      </nav>
+    {% endif %}
+
+    {% if resources|length %}
+      <div class="resourcesArchive-grid">
+        {% for resource in resources %}
+          {{ renderComponent('ResourceCard', {resource: resource}) }}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="resourcesArchive-empty">{{ function('__', 'No resources were found for this selection.', 'flynt') }}</p>
+    {% endif %}
+
+    {% if pagination.pages %}
+      <nav class="resourcesArchive-pagination" aria-label="{{ function('__', 'Resources pagination', 'flynt') }}">
+        {% if pagination.previous %}
+          <a class="resourcesArchive-pageLink resourcesArchive-pageLink--direction" href="{{ pagination.previous|e('esc_url') }}">
+            {{ function('__', 'Previous', 'flynt') }}
+          </a>
+        {% endif %}
+        {% for page in pagination.pages %}
+          {% if page.isCurrent %}
+            <span class="resourcesArchive-pageLink is-current" aria-current="page">{{ page.number }}</span>
+          {% else %}
+            <a class="resourcesArchive-pageLink" href="{{ page.url|e('esc_url') }}">{{ page.number }}</a>
+          {% endif %}
+        {% endfor %}
+        {% if pagination.next %}
+          <a class="resourcesArchive-pageLink resourcesArchive-pageLink--direction" href="{{ pagination.next|e('esc_url') }}">
+            {{ function('__', 'Next', 'flynt') }}
+          </a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  </div>
+</flynt-component>

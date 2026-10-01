@@ -1,0 +1,19 @@
+<nav class="pagination-numbers" aria-label="Pagination">
+  {% if pagination.prev %}
+    <a href="{{ pagination.prev.link|e('esc_url') }}" class="pagination-numbers__link pagination-numbers__prev" aria-label="Previous page">&laquo; Prev</a>
+  {% endif %}
+
+  {% for page in pagination.pages %}
+    {% if page.current %}
+      <span class="pagination-numbers__link pagination-numbers__current" aria-current="page">{{ page.title }}</span>
+    {% elseif page.link %}
+      <a href="{{ page.link|e('esc_url') }}" class="pagination-numbers__link">{{ page.title }}</a>
+    {% else %}
+      <span class="pagination-numbers__link pagination-numbers__dots">{{ page.title }}</span>
+    {% endif %}
+  {% endfor %}
+
+  {% if pagination.next %}
+    <a href="{{ pagination.next.link|e('esc_url') }}" class="pagination-numbers__link pagination-numbers__next" aria-label="Next page">Next &raquo;</a>
+  {% endif %}
+</nav>

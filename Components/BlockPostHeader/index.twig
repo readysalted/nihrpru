@@ -1,0 +1,105 @@
+{% if page_option.name is same as('category-child') %}
+  <flynt-component name="BlockPostHeader">
+    <div class="container">
+      <div class="content">
+        <div class="text">
+          <h1>{{ category_data.data.name }}</h1>
+          {% if acf_fields.category_subtitle %}
+            <h3>{{ acf_fields.category_subtitle }}</h3>
+          {% endif %}
+        </div>
+        <div class="image"><img src="{{ theme.parent.link }}/assets/images/post-hero-image.png" alt=""></div>
+      </div>
+    </div>
+  </flynt-component>
+  <div class="container">
+    <div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/">
+      {% if function('function_exists', 'bcn_display') %}
+        {{ function('bcn_display') }}
+      {% endif %}
+    </div>
+  </div>
+{% elseif post_title %}
+  <flynt-component name="BlockPostHeader" {{ not post.thumbnail ? 'data-thumbnail="false"' }}>
+    <div class="container">
+      <div class="content">
+        <div class="text">
+          <h1>{{ post_title }}</h1>
+          {% if post.post_excerpt %}
+            <h3>{{ post.post_excerpt }}</h3>
+          {% endif %}
+          {% if description %}
+            <p class="h3">{{ description }}</p>
+          {% endif %}
+        </div>
+        <div class="image"><img src="{{ theme.parent.link }}/assets/images/post-hero-image.png" alt=""></div>
+      </div>
+    </div>
+  </flynt-component>
+  <div class="container">
+    <div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/">
+      {% if function('function_exists', 'bcn_display') %}
+        {{ function('bcn_display') }}
+      {% endif %}
+    </div>
+  </div>
+{% elseif type == 'custom' %}
+  <flynt-component name="BlockPostHeader" {{ not post.thumbnail ? 'data-thumbnail="false"' }}>
+    <div class="container">
+      <div class="content">
+        <div class="text custom">
+          {% if title %}
+            <h1>{{ title }}</h1>
+          {% endif %}
+          {% if post.post_excerpt %}
+            <h3>{{ post.post_excerpt }}</h3>
+          {% endif %}
+          {% if description %}
+            <p class="h3">{{ description }}</p>
+          {% endif %}
+        </div>
+        {# <div class="image"><img src="{{ theme.parent.link }}/assets/images/icon_research.svg" alt=""></div> #}
+      </div>
+    </div>
+  </flynt-component>
+  <div class="container">
+    <div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/">
+      {% if function('function_exists', 'bcn_display') %}
+        {{ function('bcn_display') }}
+      {% endif %}
+    </div>
+  </div>
+{% else %}
+  <flynt-component name="BlockPostHeader" {{ not post.thumbnail ? 'data-thumbnail="false"' }}>
+    <div class="container">
+      <div class="content">
+        <div class="text">
+          {% if category.name %}
+            <h1>{{ category.name }}</h1>
+          {% elseif post.title %}
+            {% if type == 'research' %}
+              <h2 class="h1">Research</h2>
+            {% else %}
+            <h1>{{ post.title }}</h1>
+            {% endif %}
+          {% endif %}
+          {% if post.post_excerpt %}
+            <h3>{{ post.post_excerpt }}</h3>
+          {% endif %}
+        </div>
+        {% if type == 'research' %}
+        <div class="image"><img src="{{ theme.parent.link }}/assets/images/icon_research.svg" alt=""></div>
+        {% else %}
+        <div class="image"><img src="{{ theme.parent.link }}/assets/images/icon_else.svg" alt=""></div>
+        {% endif %}
+      </div>
+    </div>
+  </flynt-component>
+  <div class="container">
+    <div class="breadcrumbs" typeof="BreadcrumbList" vocab="http://schema.org/">
+      {% if function('function_exists', 'bcn_display') %}
+        {{ function('bcn_display') }}
+      {% endif %}
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,67 @@
+{% extends 'templates/_document.twig' %}
+
+{% block content %}
+  <header>
+      {{ renderComponent('BlockPostHeader', { type: 'custom' , title: name, description: description }) }}
+  </header>
+
+  {% if research_tags|length > 0 %}
+    <div class="research-filter" id="research-tag-filter">
+      <div class="container">
+        <span class="research-filter__label">Theme filter:</span>
+        <ul class="research-filter__list">
+          <li class="research-filter__item">
+            <button type="button" class="research-filter__button is-active" data-tag="all">All</button>
+          </li>
+          {% for tag in research_tags %}
+            <li class="research-filter__item">
+              <button type="button" class="research-filter__button" data-tag="{{ tag.slug|e }}">{{ tag.name }}</button>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+
+  {{ renderComponent('GridResearchArchive', {posts: posts, style: 'grid'}) }}
+  {% for component in post.meta('pageComponents') %}
+    {{ renderComponent(component) }}
+  {% endfor %}
+  {{ renderComponent('BlockMailingList', {image: footer_cta_img, contentHtml: footer_cta_text, backgroundColor: footer_cta_bg, imagePosition: 'right', spacing: 'spacing-fix'  }) }}
+
+  {% if research_tags|length > 0 %}
+    <script>
+      (function () {
+        var filterEl = document.getElementById('research-tag-filter');
+        if (!filterEl) return;
+        var buttons = filterEl.querySelectorAll('.research-filter__button');
+        var postsRoot = document.querySelector('[name="GridResearchArchive"] [data-ref="posts"]');
+        var tableBody = document.querySelector('[name="GridResearchArchive"] [data-ref="posts-table"]');
+        if (!postsRoot) return;
+        var gridPosts = Array.prototype.slice.call(postsRoot.querySelectorAll('.post'));
+        var tableRows = tableBody ? Array.prototype.slice.call(tableBody.querySelectorAll('tr[data-tags]')) : [];
+        var allItems = gridPosts.concat(tableRows);
+
+        function setActive(btn) {
+          buttons.forEach(function (b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+        }
+
+        function applyFilter(tag) {
+          allItems.forEach(function (p) {
+            if (tag === 'all') { p.style.display = ''; return; }
+            var tags = (p.getAttribute('data-tags') || '').split(' ').filter(Boolean);
+            p.style.display = tags.indexOf(tag) !== -1 ? '' : 'none';
+          });
+        }
+
+        buttons.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            setActive(btn);
+            applyFilter(btn.getAttribute('data-tag'));
+          });
+        });
+      })();
+    </script>
+  {% endif %}
+{% endblock %}

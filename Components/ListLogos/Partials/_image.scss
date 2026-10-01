@@ -1,0 +1,45 @@
+.figure {
+  align-items: center;
+  block-size: 100%;
+  display: flex;
+  inline-size: 100%;
+  justify-content: center;
+
+  &-image {
+    block-size: 100%;
+    inline-size: 100%;
+    object-fit: contain;
+  }
+
+  &-caption {
+    align-items: center;
+    block-size: 100%;
+    color: var(--color-text);
+    display: flex;
+    font-weight: 700;
+    inline-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    justify-content: center;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    transition: opacity 0.3s ease-in-out;
+    will-change: opacity;
+    z-index: 0;
+
+    &::after {
+      background-color: var(--color-background);
+      block-size: 100%;
+      content: '';
+      display: block;
+      inline-size: 100%;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      opacity: 0.95;
+      position: absolute;
+      z-index: -1;
+    }
+  }
+}

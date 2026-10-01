@@ -1,0 +1,89 @@
+flynt-component[name='BlockHero'] {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  padding: 60px 0;
+  @media (max-width: $breakpoint-tablet-horizontal) {
+    padding: 40px 0;
+  }
+
+  h1, h2 {
+    display: inline-block;
+    position: relative;
+
+    &:after {
+      content: '';
+      max-width: 180px;
+      width: 100%;
+      height: 8px;
+      bottom: -15px;
+      left: 0;
+      position: absolute;
+      background-color: #fc5d5d;
+      display: inline-block;
+    }
+    &.no-line {
+      &:after {
+        display: none;
+      }
+    }
+  }
+
+  .content {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .text {
+    flex-basis: 75%;
+    @media (max-width: $breakpoint-desktop) {
+      flex-basis: 100%;
+    }
+
+    .excerpt {
+      line-height: 100%;
+
+      p {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .image {
+    flex-basis: 20%;
+    max-width: 265px;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+
+    @media (max-width: $breakpoint-desktop) {
+      display: none;
+    }
+
+    img {
+      border-radius: 8px;
+      align-self: center;
+    }
+  }
+}
+
+.breadcrumbs {
+  padding: 20px 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: 0.25s;
+    &:hover {
+      color: #fc5d5d;
+    }
+  }
+
+  .current-item {
+    color: #fc5d5d;
+  }
+}

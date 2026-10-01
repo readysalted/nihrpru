@@ -1,0 +1,23 @@
+<figure class="figure">
+  {% if image.post_mime_type == 'image/svg+xml' %}
+    <img class="image lazyload"
+      src="{{ placeholderImage(768, (768 / image.aspect)|round, 'rgba(125, 125, 125, 0.1)') }}"
+      width="{{ 768 }}"
+      height="{{ (768 / image.aspect)|round }}"
+      data-src="{{ image.src }}"
+      alt="{{ image.alt|e }}">
+  {% else %}
+    <img class="figure-image lazyload"
+      src="{{ image.src|resizeDynamic(280) }}"
+      width="{{ 280 }}"
+      height="{{ (280 / image.aspect)|round }}"
+      srcset="{{ placeholderImage(140, (140 / image.aspect)|round, 'rgba(125, 125, 125, 0.1)') }}"
+      data-srcset="
+        {{ image.src|resizeDynamic(640) }} 640w,
+        {{ image.src|resizeDynamic(420) }} 420w,
+        {{ image.src|resizeDynamic(280) }} 280w,
+        {{ image.src|resizeDynamic(140) }} 140w"
+      data-sizes="auto"
+      alt="{{ image.alt|e }}">
+  {% endif %}
+</figure>

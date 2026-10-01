@@ -1,0 +1,421 @@
+{
+  "Components/AccordionDefault/script.js": {
+    "file": "assets/script-D-qMxW2S.js",
+    "name": "script",
+    "src": "Components/AccordionDefault/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_helpers-CJiaW3rk.js"
+    ]
+  },
+  "Components/BlockHero/script.js": {
+    "file": "assets/script-M7LxuyN4.js",
+    "name": "script",
+    "src": "Components/BlockHero/script.js",
+    "isDynamicEntry": true
+  },
+  "Components/BlockPostTabs/script.js": {
+    "file": "assets/script-Bk2qJbB6.js",
+    "name": "script",
+    "src": "Components/BlockPostTabs/script.js",
+    "isDynamicEntry": true
+  },
+  "Components/BlockTwoPages/script.js": {
+    "file": "assets/script-B4CUlmeL.js",
+    "name": "script",
+    "src": "Components/BlockTwoPages/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-20P1wsSQ.js",
+      "_helpers-CJiaW3rk.js"
+    ]
+  },
+  "Components/BlockVideoOembed/script.js": {
+    "file": "assets/script-DkVkcVIo.js",
+    "name": "script",
+    "src": "Components/BlockVideoOembed/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_helpers-CJiaW3rk.js"
+    ]
+  },
+  "Components/GridPostsArchive/script.js": {
+    "file": "assets/script-CZHEGtyi.js",
+    "name": "script",
+    "src": "Components/GridPostsArchive/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-20P1wsSQ.js",
+      "_helpers-CJiaW3rk.js"
+    ]
+  },
+  "Components/GridPublicationArchive/Screenshot 2026-06-18 at 18.14.50.png": {
+    "file": "assets/Screenshot 2026-06-18 at 18.14.50-Dv3Qt1Ph.png",
+    "src": "Components/GridPublicationArchive/Screenshot 2026-06-18 at 18.14.50.png"
+  },
+  "Components/GridPublicationArchive/script.js": {
+    "file": "assets/script-B8LKGFDf.js",
+    "name": "script",
+    "src": "Components/GridPublicationArchive/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-20P1wsSQ.js",
+      "_helpers-CJiaW3rk.js"
+    ]
+  },
+  "Components/GridResearchArchive/script.js": {
+    "file": "assets/script-CxeMHRQD.js",
+    "name": "script",
+    "src": "Components/GridResearchArchive/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-20P1wsSQ.js",
+      "_helpers-CJiaW3rk.js"
+    ]
+  },
+  "Components/GridResearchLanding/script.js": {
+    "file": "assets/script-BRWonjcF.js",
+    "name": "script",
+    "src": "Components/GridResearchLanding/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-20P1wsSQ.js",
+      "_helpers-CJiaW3rk.js"
+    ]
+  },
+  "Components/ListLogos/script.js": {
+    "file": "assets/script-0BS1LgjH.js",
+    "name": "script",
+    "src": "Components/ListLogos/script.js",
+    "isDynamicEntry": true
+  },
+  "Components/NavigationBurger/script.js": {
+    "file": "assets/script-DraBIJCP.js",
+    "name": "script",
+    "src": "Components/NavigationBurger/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-20P1wsSQ.js",
+      "_helpers-CJiaW3rk.js"
+    ]
+  },
+  "Components/SliderImageGallery/script.js": {
+    "file": "assets/script-cCat4SDE.js",
+    "name": "script",
+    "src": "Components/SliderImageGallery/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_helpers-CJiaW3rk.js",
+      "_navigation-B1f22J6g.js"
+    ]
+  },
+  "Components/SliderImages/script.js": {
+    "file": "assets/script-BFn3dhTA.js",
+    "name": "script",
+    "src": "Components/SliderImages/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_helpers-CJiaW3rk.js",
+      "_navigation-B1f22J6g.js"
+    ]
+  },
+  "Components/SliderImagesCentered/script.js": {
+    "file": "assets/script-DZJ3xrEm.js",
+    "name": "script",
+    "src": "Components/SliderImagesCentered/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_helpers-CJiaW3rk.js",
+      "_navigation-B1f22J6g.js"
+    ],
+    "css": [
+      "assets/script-BoW6ihGT.css"
+    ]
+  },
+  "Components/SliderTrainees/script.js": {
+    "file": "assets/script-CeUnG-Xz.js",
+    "name": "script",
+    "src": "Components/SliderTrainees/script.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_helpers-CJiaW3rk.js",
+      "_navigation-B1f22J6g.js"
+    ]
+  },
+  "_helpers-CJiaW3rk.js": {
+    "file": "assets/helpers-CJiaW3rk.js",
+    "name": "helpers"
+  },
+  "_index-20P1wsSQ.js": {
+    "file": "assets/index-20P1wsSQ.js",
+    "name": "index"
+  },
+  "_navigation-!~{00k}~.js": {
+    "file": "assets/navigation-DZOz2bw6.css",
+    "src": "_navigation-!~{00k}~.js"
+  },
+  "_navigation-B1f22J6g.js": {
+    "file": "assets/navigation-B1f22J6g.js",
+    "name": "navigation",
+    "css": [
+      "assets/navigation-DZOz2bw6.css"
+    ]
+  },
+  "assets/admin.js": {
+    "file": "assets/admin-CRVAU9Ix.js",
+    "name": "admin",
+    "src": "assets/admin.js",
+    "isEntry": true
+  },
+  "assets/admin.scss": {
+    "file": "assets/admin-HWFdEiYZ.css",
+    "src": "assets/admin.scss",
+    "isEntry": true
+  },
+  "assets/editor-style.scss": {
+    "file": "assets/editor-style-Dnfn_nBu.css",
+    "src": "assets/editor-style.scss",
+    "isEntry": true
+  },
+  "assets/fonts/Archia-Bold.woff2": {
+    "file": "assets/Archia-Bold-Tiwsk8Vh.woff2",
+    "src": "assets/fonts/Archia-Bold.woff2"
+  },
+  "assets/fonts/Archia-Regular.woff2": {
+    "file": "assets/Archia-Regular-DSCd8lh6.woff2",
+    "src": "assets/fonts/Archia-Regular.woff2"
+  },
+  "assets/fonts/Archia-SemiBold.woff2": {
+    "file": "assets/Archia-SemiBold-CC1_Tl3Q.woff2",
+    "src": "assets/fonts/Archia-SemiBold.woff2"
+  },
+  "assets/images/capacity-development/community-practitioner-awards.webp": {
+    "file": "assets/community-practitioner-awards-COi3gbeN.webp",
+    "src": "assets/images/capacity-development/community-practitioner-awards.webp"
+  },
+  "assets/images/capacity-development/emerging-leads.webp": {
+    "file": "assets/emerging-leads-CJATG5ab.webp",
+    "src": "assets/images/capacity-development/emerging-leads.webp"
+  },
+  "assets/images/capacity-development/phd-studentships.webp": {
+    "file": "assets/phd-studentships-BrTLIRcl.webp",
+    "src": "assets/images/capacity-development/phd-studentships.webp"
+  },
+  "assets/images/capacity-development/post-doctoral-fellows.webp": {
+    "file": "assets/post-doctoral-fellows-eCE-c_37.webp",
+    "src": "assets/images/capacity-development/post-doctoral-fellows.webp"
+  },
+  "assets/images/capacity-development/pre-application-support.webp": {
+    "file": "assets/pre-application-support-C44fLUVS.webp",
+    "src": "assets/images/capacity-development/pre-application-support.webp"
+  },
+  "assets/images/capacity-development/transdisciplinary-placements.webp": {
+    "file": "assets/transdisciplinary-placements-CjXcV09S.webp",
+    "src": "assets/images/capacity-development/transdisciplinary-placements.webp"
+  },
+  "assets/images/home/feature-capacity.jpg": {
+    "file": "assets/feature-capacity-BjvnRuCd.jpg",
+    "src": "assets/images/pru/audience-policy-makers.jpg"
+  },
+  "assets/images/home/feature-research.jpg": {
+    "file": "assets/feature-research-CR-zbhOd.jpg",
+    "src": "assets/images/pru/audience-researchers.jpg"
+  },
+  "assets/images/home/header-logo.png": {
+    "file": "assets/header-logo-CtojXYyP.png",
+    "src": "assets/images/home/header-logo.png"
+  },
+  "assets/images/home/news-feature.png": {
+    "file": "assets/news-feature-M3bLrZbC.png",
+    "src": "assets/images/home/news-feature.png"
+  },
+  "assets/images/home/news-link-art.png": {
+    "file": "assets/news-link-art-DzI5mkoo.png",
+    "src": "assets/images/pru/news-link-art.png"
+  },
+  "assets/images/home/newsletter-phone.png": {
+    "file": "assets/newsletter-phone-CkfN7wYx.png",
+    "src": "assets/images/home/newsletter-phone.png"
+  },
+  "assets/images/home/partner-logo-1.png": {
+    "file": "assets/partner-logo-1-C-K-hRnk.png",
+    "src": "assets/images/pru/partner-logo-newcastle.png"
+  },
+  "assets/images/home/partner-logo-2.png": {
+    "file": "assets/partner-logo-2-BgxCCNMS.png",
+    "src": "assets/images/pru/partner-logo-ucl.png"
+  },
+  "assets/images/home/partner-logo-3.png": {
+    "file": "assets/partner-logo-3-BUnzKuGy.png",
+    "src": "assets/images/pru/partner-logo-warwick.png"
+  },
+  "assets/images/home/partner-logo-4.png": {
+    "file": "assets/partner-logo-4-q-I5pbpe.png",
+    "src": "assets/images/pru/partner-logo-lshtm.png"
+  },
+  "assets/images/home/partner-logo-5.png": {
+    "file": "assets/partner-logo-5-B1n0Yx8X.png",
+    "src": "assets/images/pru/partner-logo-nihr.png"
+  },
+  "assets/images/home/research-theme-neonatal.png": {
+    "file": "assets/research-theme-neonatal-6S1GOsLV.png",
+    "src": "assets/images/home/research-theme-neonatal.png"
+  },
+  "assets/images/home/research-theme-preconception.png": {
+    "file": "assets/research-theme-preconception-CWz3Wx-r.png",
+    "src": "assets/images/home/research-theme-preconception.png"
+  },
+  "assets/images/home/research-theme-pregnancy.png": {
+    "file": "assets/research-theme-pregnancy-CJUY8Kby.png",
+    "src": "assets/images/home/research-theme-pregnancy.png"
+  },
+  "assets/images/home/workstream-access.jpg": {
+    "file": "assets/workstream-access-N0EV-3xB.jpg",
+    "src": "assets/images/home/workstream-access.jpg"
+  },
+  "assets/images/home/workstream-community.jpg": {
+    "file": "assets/workstream-community-BNEhrHz_.jpg",
+    "src": "assets/images/home/workstream-community.jpg"
+  },
+  "assets/images/home/workstream-delta.jpg": {
+    "file": "assets/workstream-delta-5eHbB_fk.jpg",
+    "src": "assets/images/home/workstream-delta.jpg"
+  },
+  "assets/images/home/workstream-racism.jpg": {
+    "file": "assets/workstream-racism-dDdtEGGQ.jpg",
+    "src": "assets/images/home/workstream-racism.jpg"
+  },
+  "assets/images/logo-admin.png": {
+    "file": "assets/logo-admin-C6dy3pHl.png",
+    "src": "assets/images/logo-admin.png"
+  },
+  "assets/images/pru/audience-policy-makers.jpg": {
+    "file": "assets/feature-capacity-BjvnRuCd.jpg",
+    "src": "assets/images/pru/audience-policy-makers.jpg"
+  },
+  "assets/images/pru/audience-researchers.jpg": {
+    "file": "assets/feature-research-CR-zbhOd.jpg",
+    "src": "assets/images/pru/audience-researchers.jpg"
+  },
+  "assets/images/pru/covid-response.png": {
+    "file": "assets/covid-response-CWPckniw.png",
+    "src": "assets/images/pru/covid-response.png"
+  },
+  "assets/images/pru/hero.jpg": {
+    "file": "assets/hero-B7dDEtVS.jpg",
+    "src": "assets/images/pru/hero.jpg"
+  },
+  "assets/images/pru/news-feature.png": {
+    "file": "assets/news-feature-BWy70irH.png",
+    "src": "assets/images/pru/news-feature.png"
+  },
+  "assets/images/pru/news-link-art.png": {
+    "file": "assets/news-link-art-DzI5mkoo.png",
+    "src": "assets/images/pru/news-link-art.png"
+  },
+  "assets/images/pru/nihr-service-wordmark.svg": {
+    "file": "assets/nihr-service-wordmark-D_89L02R.svg",
+    "src": "assets/images/pru/nihr-service-wordmark.svg"
+  },
+  "assets/images/pru/partner-logo-lshtm.png": {
+    "file": "assets/partner-logo-4-q-I5pbpe.png",
+    "src": "assets/images/pru/partner-logo-lshtm.png"
+  },
+  "assets/images/pru/partner-logo-newcastle.png": {
+    "file": "assets/partner-logo-1-C-K-hRnk.png",
+    "src": "assets/images/pru/partner-logo-newcastle.png"
+  },
+  "assets/images/pru/partner-logo-nihr.png": {
+    "file": "assets/partner-logo-5-B1n0Yx8X.png",
+    "src": "assets/images/pru/partner-logo-nihr.png"
+  },
+  "assets/images/pru/partner-logo-ucl.png": {
+    "file": "assets/partner-logo-2-BgxCCNMS.png",
+    "src": "assets/images/pru/partner-logo-ucl.png"
+  },
+  "assets/images/pru/partner-logo-warwick.png": {
+    "file": "assets/partner-logo-3-BUnzKuGy.png",
+    "src": "assets/images/pru/partner-logo-warwick.png"
+  },
+  "assets/images/pru/policy-brief-guide.png": {
+    "file": "assets/policy-brief-guide-DkMy3n1w.png",
+    "src": "assets/images/pru/policy-brief-guide.png"
+  },
+  "assets/images/pru/project-bubbles-coal.png": {
+    "file": "assets/project-bubbles-coal-BREakj3j.png",
+    "src": "assets/images/pru/project-bubbles-coal.png"
+  },
+  "assets/images/pru/project-regist-vac.png": {
+    "file": "assets/project-regist-vac-Buc0FVCZ.png",
+    "src": "assets/images/pru/project-regist-vac.png"
+  },
+  "assets/images/pru/public-involvement-graphic.jpg": {
+    "file": "assets/public-involvement-graphic-C8MAe2l8.jpg",
+    "src": "assets/images/pru/public-involvement-graphic.jpg"
+  },
+  "assets/images/pru/public-involvement.png": {
+    "file": "assets/public-involvement--VPDYtSC.png",
+    "src": "assets/images/pru/public-involvement.png"
+  },
+  "assets/images/pru/team-angel-chater.png": {
+    "file": "assets/team-angel-chater-FkxYyi1M.png",
+    "src": "assets/images/pru/team-angel-chater.png"
+  },
+  "assets/images/pru/team-chris-bonell.png": {
+    "file": "assets/team-chris-bonell-BBd8XeQc.png",
+    "src": "assets/images/pru/team-chris-bonell.png"
+  },
+  "assets/images/pru/team-emily-oliver.png": {
+    "file": "assets/team-emily-oliver-VmSvTlGF.png",
+    "src": "assets/images/pru/team-emily-oliver.png"
+  },
+  "assets/images/pru/team-falko-sniehotta.png": {
+    "file": "assets/team-falko-sniehotta-Bo4G06Kp.png",
+    "src": "assets/images/pru/team-falko-sniehotta.png"
+  },
+  "assets/images/pru/team-ivo-vlaev.png": {
+    "file": "assets/team-ivo-vlaev-DUnk5KNk.png",
+    "src": "assets/images/pru/team-ivo-vlaev.png"
+  },
+  "assets/images/pru/team-mike-kelly.png": {
+    "file": "assets/team-mike-kelly-BqPseELB.png",
+    "src": "assets/images/pru/team-mike-kelly.png"
+  },
+  "assets/images/wp-admin-brand.jpg": {
+    "file": "assets/wp-admin-brand-CQsnucYR.jpg",
+    "src": "assets/images/wp-admin-brand.jpg"
+  },
+  "assets/main.js": {
+    "file": "assets/main-BN6XwobD.js",
+    "name": "main",
+    "src": "assets/main.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "Components/AccordionDefault/script.js",
+      "Components/BlockHero/script.js",
+      "Components/BlockPostTabs/script.js",
+      "Components/BlockTwoPages/script.js",
+      "Components/BlockVideoOembed/script.js",
+      "Components/GridPostsArchive/script.js",
+      "Components/GridPublicationArchive/script.js",
+      "Components/GridResearchArchive/script.js",
+      "Components/GridResearchLanding/script.js",
+      "Components/ListLogos/script.js",
+      "Components/NavigationBurger/script.js",
+      "Components/SliderImageGallery/script.js",
+      "Components/SliderImages/script.js",
+      "Components/SliderImagesCentered/script.js",
+      "Components/SliderTrainees/script.js"
+    ]
+  },
+  "assets/main.scss": {
+    "file": "assets/main-CO3On0FG.css",
+    "src": "assets/main.scss",
+    "isEntry": true
+  },
+  "assets/print.scss": {
+    "file": "assets/print-BRPj0MZN.css",
+    "src": "assets/print.scss",
+    "isEntry": true
+  }
+}

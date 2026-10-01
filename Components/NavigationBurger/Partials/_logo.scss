@@ -1,0 +1,15 @@
+.logo {
+  align-items: center;
+  block-size: 100%;
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+  text-decoration: none;
+
+  &-image {
+    block-size: 24px;
+    inline-size: auto;
+    max-inline-size: 92px;
+    object-fit: contain;
+  }
+}

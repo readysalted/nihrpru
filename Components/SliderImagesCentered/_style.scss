@@ -1,0 +1,173 @@
+flynt-component[name='SliderImagesCentered'] {
+  .slider {
+    overflow: hidden;
+    padding-inline: var(--container-spacing);
+
+    &:not(.swiper-initialized) {
+      .swiper-wrapper .swiper-slide:not(:first-child) {
+        display: none;
+      }
+    }
+
+    .swiper-wrapper {
+      display: flex;
+    }
+
+    &-item {
+      margin-inline: auto;
+      max-inline-size: 375px;
+
+      @media (min-width: $breakpoint-tablet) {
+        max-inline-size: 580px;
+      }
+
+      @media (min-width: $breakpoint-tablet-horizontal) {
+        max-inline-size: 870px;
+      }
+
+      .figure {
+        backface-visibility: hidden;
+        margin: 0;
+        overflow: hidden;
+        position: relative;
+        transform: scale(0.9) translate3d(0, 0, 0);
+        transition: transform 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+        will-change: transform;
+
+        &::before {
+          background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+          block-size: 100%;
+          border-radius: var(--box-border-radius);
+          content: '';
+          inline-size: 100%;
+          opacity: 1;
+          position: absolute;
+          transition: opacity 0.3s ease;
+          will-change: opacity;
+          z-index: 2;
+        }
+
+        &-caption {
+          background-color: var(--color-text);
+          border-end-end-radius: var(--box-border-radius);
+          color: var(--color-background);
+          display: inline-block;
+          inset-block-end: 0;
+          inset-inline-end: 0;
+          max-inline-size: 450px;
+          padding: 0.25rem 0.75rem;
+          position: absolute;
+          z-index: 1;
+        }
+      }
+
+      &.swiper-slide-active {
+        .figure {
+          transform: scale(1) translate3d(0, 0, 0);
+
+          &::before {
+            opacity: 0;
+          }
+        }
+      }
+    }
+
+    &-button {
+      align-items: center;
+      block-size: 48px;
+      color: var(--color-background);
+      cursor: pointer;
+      display: none;
+      inline-size: 48px;
+      inset-block-start: 50%;
+      justify-content: center;
+      position: absolute;
+      transform: translateY(-50%);
+      z-index: 10;
+
+      &::before {
+        background-color: var(--color-accent);
+        block-size: 100%;
+        border-radius: 50%;
+        content: '';
+        inline-size: 100%;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        position: absolute;
+        transition: opacity 0.2s ease;
+      }
+
+      @media (min-width: $breakpoint-tablet) {
+        display: flex;
+      }
+
+      &.swiper-button-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      &--prev {
+        inset-inline-start: 15px;
+
+        &::after {
+          block-size: 0.75em;
+          border-block-start: 2px solid currentColor;
+          border-inline-start: 2px solid currentColor;
+          content: '';
+          inline-size: 0.75em;
+          margin-inline-start: calc(0.25em + 2px);
+          transform: rotate(-45deg);
+        }
+
+        @media (min-width: $breakpoint-desktop) {
+          inset-inline-start: 32px;
+        }
+      }
+
+      &--next {
+        inset-inline-end: 15px;
+
+        &::after {
+          block-size: 0.75em;
+          border-block-start: 2px solid currentColor;
+          border-inline-end: 2px solid currentColor;
+          content: '';
+          inline-size: 0.75em;
+          margin-inline-end: calc(0.25em - 2px);
+          transform: rotate(45deg);
+        }
+
+        @media (min-width: $breakpoint-desktop) {
+          inset-inline-end: 32px;
+        }
+      }
+    }
+
+    &-pagination {
+      margin-block-start: 1rem;
+      min-block-size: 27px;
+      text-align: center;
+
+      .swiper-pagination-bullet {
+        background-color: var(--color-accent);
+        block-size: 8px;
+        inline-size: 8px;
+        opacity: 0.2;
+        transition: width 0.2s cubic-bezier(0.215, 0.61, 0.355, 1), opacity 0.3s ease;
+
+        &-active {
+          block-size: 8px;
+          border-radius: 4px;
+          inline-size: 8px;
+          inline-size: 20px;
+          opacity: 1;
+        }
+
+        &:hover,
+        &:focus {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+flynt-component[name='BlockWysiwygTwoCol'] {
+  .content {
+    @media (min-width: $breakpoint-tablet) {
+      column-count: 2;
+      column-gap: var(--column-gap);
+    }
+  }
+}

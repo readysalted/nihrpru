@@ -1,0 +1,52 @@
+<flynt-component name="GridPublicationArchive" load:on="visible" class="componentSpacing" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <script type="text/javascript" src="https://embed.altmetric.com/assets/embed.js"></script>
+
+  <div class="container" data-flow="layout">
+    {% if intro_text_research %}
+      <div class="intro">
+        {{ intro_text_research }}
+      </div>
+    {% endif %}
+
+    {% if posts|length > 0 %}
+      <div class="publicationsArchive" data-ref="posts">
+        {% for post in posts %}
+          {% set aria_labelledby_id = uuid ~ '-' ~ loop.index %}
+          {% set publication_doi = post.meta('publication_doi')|trim %}
+          {% set publication_meta = post.excerpt.read_more(false)|striptags|trim %}
+          {% set _tags = [] %}
+          {% for term in post.terms('publication_tag') %}
+            {% set _tags = _tags|merge([term.slug]) %}
+          {% endfor %}
+
+          <article class="publicationCard" id="{{ aria_labelledby_id }}" data-tags="{{ _tags|join(' ') }}">
+            <div class="publicationCard__content">
+              <h2 class="publicationCard__title">
+                <a href="{{ post.link|e('esc_url') }}">{{ post.title }}</a>
+              </h2>
+
+              {% if publication_meta %}
+                <p class="publicationCard__meta">{{ publication_meta }}</p>
+              {% elseif post.date %}
+                <p class="publicationCard__meta">{{ post.date('Y') }}</p>
+              {% endif %}
+            </div>
+
+            <div class="publicationCard__metrics" aria-label="Altmetric score">
+              {% if publication_doi %}
+                <div class="altmetric-embed" data-badge-type="donut" data-doi="{{ publication_doi|e('html_attr') }}"></div>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="posts-empty">{{ labels.noPostsFound }}</p>
+    {% endif %}
+
+    {% set pagination = pagination %}
+    {% if pagination.pages %}
+      {% include 'Partials/_pagination.twig' %}
+    {% endif %}
+  </div>
+</flynt-component>

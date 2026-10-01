@@ -1,0 +1,16 @@
+<flynt-component load:on="idle" load:on:media="(max-width: 1199px)" name="NavigationBurger">
+  <nav aria-label="{{ labels.ariaLabel|e }}">
+    <div class="container">
+      {% include 'Partials/_logo.twig' with {'logo': logo, 'site': site} only %}
+      {% if menu %}
+        <div class="search-burger">
+          {% include 'Partials/_search.twig' with {'searchIconUrl': searchIconUrl, 'siteUrl': site.link} only %}
+          {% include 'Partials/_hamburger.twig' with {'labels': labels} only %}
+        </div>
+      {% endif %}
+    </div>
+    {% if menu %}
+      {% include 'Partials/_menu.twig' with {'items': menu.items, 'ctaLink': ctaLink, 'siteUrl': site.link} only %}
+    {% endif %}
+  </nav>
+</flynt-component>

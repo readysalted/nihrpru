@@ -1,0 +1,76 @@
+<flynt-component name="ProjectWidget" load:on="visible" class="componentSpacing">
+  <div class="container">
+    <div data-size="wide" data-align="center">
+      <div class="projectWidget">
+        <div class="projectWidget-header" style="background-color: #0A5766;">
+          <div class="projectWidget-meta">
+            {% if projectDatesFormatted %}
+              <div class="projectWidget-dates">Project dates: <strong>{{ projectDatesFormatted }}</strong></div>
+            {% endif %}
+            {% if phase %}
+              <div class="projectWidget-phase">Phase: <strong>{{ phase }}</strong></div>
+            {% endif %}
+          </div>
+          {% if projectId %}
+            {% set projectIdLink = researchPostUrl ? researchPostUrl : projectIdUrl %}
+            {% if projectIdLink %}
+              <div class="project-id">
+                <a href="{{ projectIdLink|e('esc_url') }}"{% if not researchPostUrl %} target="_blank" rel="noopener"{% endif %}>{{ projectId }}</a>
+              </div>
+            {% else %}
+              <div class="project-id"><span>{{ projectId }}</span></div>
+            {% endif %}
+          {% endif %}
+        </div>
+
+        <div class="projectWidget-content">
+          {% if coreTeam %}
+            <div class="projectWidget-section">
+              <h3>Research Team</h3>
+              <ul class="projectWidget-list">
+                {% for member in coreTeam %}
+                  {% if member.link %}
+                    <li><a href="{{member.link}}">{{ member.name }}</a></li>
+                  {% else %}
+                    <li>{{ member.name }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          {% if leadInstitution.logo %}
+            <div class="projectWidget-section">
+              <h3>Lead Institution</h3>
+              <div class="projectWidget-logo">
+                <img
+                  src="{{ leadInstitution.logo.src }}"
+                  alt="{{ leadInstitution.logo.alt|default('Lead Institution Logo') }}"
+                  width="{{ leadInstitution.logo.width }}"
+                  height="{{ leadInstitution.logo.height }}"
+                >
+              </div>
+            </div>
+          {% endif %}
+
+          {% if showPartners %}
+            <div class="projectWidget-section">
+              <ul class="projectWidget-list">
+                {% for partner in partners %}
+                  <li>
+                  <h3>{{ partner.name }}</h3>
+                  {% if partner.link %}
+                    <a href="{{ partner.link|e('esc_url') }}" target="_blank" rel="noopener">{{ partner.subtitle }}</a>
+                  {% else %}
+                    <span>{{ partner.subtitle }}</span>
+                  {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</flynt-component>

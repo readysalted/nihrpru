@@ -1,0 +1,77 @@
+flynt-component[name='BlockTextImageCrop'] {
+  overflow: hidden;
+
+  .container {
+    @media (min-width: $breakpoint-tablet) {
+      display: flex;
+    }
+
+    > * {
+      @media (min-width: $breakpoint-tablet) {
+        flex-basis: 50%;
+        margin-block-start: 0;
+      }
+    }
+
+    &[data-image-position='left'] {
+      flex-direction: row;
+
+      .content {
+        @media (min-width: $breakpoint-tablet) {
+          margin-inline: 0 auto;
+          padding-inline-end: var(--container-spacing);
+          padding-inline-start: var(--column-gap);
+        }
+      }
+    }
+
+    &[data-image-position='right'] {
+      flex-direction: row-reverse;
+
+      .content {
+        @media (min-width: $breakpoint-tablet) {
+          margin-inline: auto 0;
+        }
+      }
+    }
+  }
+
+  .content {
+    margin-block-start: var(--flow-space);
+    max-inline-size: calc(var(--content-max-width) + (var(--container-spacing) * 2));
+    padding-inline-end: var(--column-gap);
+    padding-inline-start: var(--container-spacing);
+
+    @media (min-width: $breakpoint-tablet) {
+      margin-block-start: 0;
+    }
+  }
+
+  .image {
+    margin: 0;
+    max-inline-size: initial;
+    position: relative;
+  }
+
+  .figure {
+    @media (min-width: $breakpoint-tablet) {
+      inset: 0;
+      position: absolute;
+
+      &-image {
+        block-size: 100%;
+        inline-size: 100%;
+        object-fit: cover;
+        object-position: 50% 50%;
+      }
+    }
+  }
+
+  &[data-theme] {
+    padding-block-start: 0;
+
+    @media (min-width: $breakpoint-tablet) {
+      padding-block-start: var(--component-spacing);
+    }
+  }
+}

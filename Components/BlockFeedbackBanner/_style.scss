@@ -1,0 +1,64 @@
+flynt-component[name='BlockFeedbackBanner'] {
+  background: var(--nihr-blue-flame);
+  color: var(--color-white);
+  min-block-size: 79px;
+  padding-block: 0;
+  padding-inline: 0;
+
+  .container {
+    align-items: center;
+    display: flex;
+    gap: 19px;
+    justify-content: flex-start;
+    max-inline-size: calc(1440px + var(--container-spacing) * 2);
+    min-block-size: 79px;
+  }
+
+  .icon {
+    block-size: 54px;
+    flex: 0 0 43px;
+    inline-size: 43px;
+    object-fit: contain;
+  }
+
+  .message {
+    font-family: var(--font-family-text);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+
+    &:hover,
+    &:focus-visible {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile-horizontal) {
+    min-block-size: 0;
+    padding-block: 18px;
+    padding-inline: 0;
+
+    .container {
+      align-items: flex-start;
+      gap: 14px;
+      min-block-size: 0;
+    }
+
+    .icon {
+      block-size: 38px;
+      flex-basis: 38px;
+      inline-size: 38px;
+    }
+
+    .message {
+      font-size: 1rem;
+    }
+  }
+}

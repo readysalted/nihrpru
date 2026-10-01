@@ -1,0 +1,40 @@
+<flynt-component name="GridResearchArchive" load:on="visible" class="componentSpacing" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <div class="container" data-flow="layout">
+    <div class="intro">
+      {{intro_text_research}}
+    </div>
+    {% if research_areas|length > 0 %}
+      <div class="featured-posts-research">
+        {% for post in research_areas %}
+          <div class="featured-post">
+              <a class="link" href="{{post.link}}">
+                <div class="image">
+                  <img src="{{post.img_research_area.src}}" alt="{{post.title}}">
+                </div>
+                <footer class="footer">
+                  <h2 class="h5">{{ post.title }}</h2>
+                </footer>
+              </a>
+          </div>
+        {% endfor %}
+        {% if research_tiles|length > 0 %}
+          {% for tile in research_tiles %}
+            <div class="featured-post">
+                <a class="link" href="{{tile.link}}">
+                  <div class="image">
+                    <img src="{{ tile.thumbnail.src }}" alt="{{ tile.title }}">
+                  </div>
+                  <footer class="footer">
+                    <h2 class="h5">{{ tile.title }}</h2>
+                  </footer>
+                </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    {% endif %}
+    {# {% if terms %}
+      {% include 'Partials/_filter.twig' %}
+    {% endif %} #}
+  </div>
+</flynt-component>

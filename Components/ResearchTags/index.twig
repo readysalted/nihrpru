@@ -1,0 +1,38 @@
+<flynt-component name="ResearchTags" load:on="visible" class="componentSpacing">
+  <div class="container">
+    <div data-size="medium" data-align="center">
+      {% if tags %}
+        <div class="tags">
+          {% if post_tags %}
+            {# Display tags for single research post #}
+{#            <h3 class="tags-title">Research Tags:</h3>#}
+            <ul class="tags-list">
+              {% for tag in post_tags %}
+                <li class="tag-item">
+                  <a href="{{ function('get_term_link', tag) }}" class="tag-link">
+                    {{ tag.name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            {# Display all tags with active state for archive pages #}
+            <h3 class="tags-title">Browse by Tags:</h3>
+            <ul class="tags-list">
+              {% for tag in tags %}
+                <li class="tag-item">
+                  <a href="{{ function('get_term_link', tag) }}"
+                     class="tag-link {{ current_tag and current_tag.term_id == tag.term_id ? 'is-active' }}"
+                  >
+                    {{ tag.name }}
+                    <span class="tag-count">({{ tag.count }})</span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</flynt-component>

@@ -1,0 +1,42 @@
+{
+  "name": "readysalted/nihr-pru",
+  "description": "WordPress theme for the NIHR Policy Research Unit in Behavioural and Social Sciences.",
+  "type": "wordpress-theme",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "Bleech",
+      "email": "flynt@bleech.de"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "flyntwp/acf-field-group-composer": "^1.1",
+    "erusev/parsedown": "^1.7",
+    "timber/timber": "^2.3"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.8"
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/{$vendor}/{$name}/": [
+        "type:wordpress-muplugin",
+        "type:wordpress-plugin",
+        "type:wordpress-theme"
+      ]
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Flynt\\": "lib/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
+  }
+}

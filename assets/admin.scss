@@ -1,0 +1,100 @@
+// stylelint-disable scss/load-no-partial-leading-underscore, scss/at-import-partial-extension-disallowed-list
+@import '../Components/**/_admin.scss';
+
+
+/*
+ * Drop-in adjustments for ACF 6.5 admin layout changes
+ */
+
+/* Search in Add Components Popup */
+
+.acf-fc-popup {
+  .flyntComponentSearch {
+    margin-block: 6px 8px;
+
+    input {
+      background-color: var(--color-background, rgba(0,0,0,0.15));
+      color: var(--color-text, #000);
+
+      &:focus {
+        box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-components-color-accent, var(--wp-admin-theme-color, #3858e9));
+      }
+
+      &::placeholder {
+        color: var(--color-text, #000);
+        opacity: 0.4;
+      }
+    }
+
+    &-noResults {
+      color: var(--color-text, #000);
+      margin-block-start: 8px
+    }
+  }
+}
+
+
+/* Page Components Flexible Content Field */
+
+.acf-field[data-name="pageComponents"],
+.acf-field[data-name="postComponents"] {
+
+  /* component title */
+  .acf-fc-layout-title {
+    min-block-size: 48px;
+  }
+
+  /* screenshot and title size & alignment */
+  .flyntComponentScreenshot {
+    &-label {
+      align-items: center;
+      block-size: calc( 100% - (2 * 4px));
+      display: flex;
+      inset-block: 4px;
+    }
+  }
+
+  /* disabled components */
+  .layout[data-enabled="0"] {
+    opacity: 0.4;
+
+    &:hover {
+      .acf-layout-disabled {
+        opacity: 1;
+      }
+    }
+
+    .acf-layout-disabled {
+      background-color: transparent;
+      inline-size: 100%;
+      justify-content: flex-end;
+      opacity: 0;
+
+      /* eye icon */
+      &::before {
+        background-color: #000;
+        margin-inline-start: 10px;
+      }
+    }
+  }
+
+
+  /* active components */
+  .layout.active-layout {
+
+    /* disabled component */
+    &[data-enabled="0"] {
+      opacity: 1;
+
+      .acf-layout-disabled {
+        color: inherit;
+        opacity: 1;
+
+        /* eye icon */
+        &::before {
+          background-color: currentColor;
+        }
+      }
+    }
+  }
+}

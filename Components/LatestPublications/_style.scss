@@ -1,0 +1,52 @@
+flynt-component[name='LatestPublications'] {
+  &.without-padding {
+    @media (min-width: $breakpoint-tablet) {
+      padding: 0;
+    }
+  }
+
+ ul {
+    list-style: none !important;
+
+    li {
+    position: relative;
+  }
+ } 
+
+  @media (min-width: $breakpoint-tablet-horizontal) {
+    .wrapper {
+      align-items: center;
+      display: flex;
+      gap: var(--column-gap);
+      justify-content: space-around;
+
+      > * {
+        flex-basis: 50%;
+        margin-block-start: 0;
+      }
+
+      &[data-image-position='left'] {
+        flex-direction: row;
+      }
+
+      &[data-image-position='right'] {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+
+  figure {
+    img {
+      margin: 0 auto;
+    }
+  }
+
+  &[data-theme='box'] {
+    .wrapper {
+      border: 1px solid var(--color-border-secondary);
+      border-radius: 8px;
+      padding: 40px;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2); 
+    }
+  }
+}

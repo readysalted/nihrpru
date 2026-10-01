@@ -1,0 +1,38 @@
+<flynt-component name="MeetTheTeam" load:on="visible" data-display-style="{{ options.displayStyle|default('default') }}" style="background-color: {{ backgroundColor ? backgroundColor : '' }};">
+  <div class="container">
+    {% if preContentHtml %}
+      <div class="preContent">
+        {{ preContentHtml|e('wp_kses_post') }}
+      </div>
+    {% endif %}
+    <div class="items">
+      {% for panel in teamMembers %}
+        {% set imageSrc = panel.image.src|default(panel.image.url|default(panel.image.guid)) %}
+        {% if panel.link %}
+          <a class="item" href="{{ panel.link.url }}" target="{{ panel.link.target|default('_self') }}">
+        {% else %}
+          <div class="item">
+        {% endif %}
+            {% if imageSrc %}
+              <div class="image">
+                <img src="{{ imageSrc }}" alt="{{ panel.image.alt|default(panel.title)|e }}" loading="lazy">
+              </div>
+            {% endif %}
+            <div class="content">
+              <h3 class="h5">{{ panel.title|e }}</h3>
+              {% if panel.position %}
+                <div class="content-inner">{{ panel.position|e('wp_kses_post') }}</div>
+              {% endif %}
+            </div>
+        {% if panel.link %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if button.url %}
+      <a class="team-button button" href="{{ button.url }}" target="{{ button.target|default('_self') }}">{{ button.title }}</a>
+    {% endif %}
+  </div>
+</flynt-component>

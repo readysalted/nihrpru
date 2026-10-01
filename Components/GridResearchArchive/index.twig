@@ -1,0 +1,171 @@
+<flynt-component name="GridResearchArchive" load:on="visible" class="componentSpacing" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <div class="container" data-flow="layout">
+    <div class="intro">
+      {{intro_text_research}}
+    </div>
+    {% if featured_posts|length > 0 %}
+      <div class="featured-posts-research">
+        {% for post in featured_posts %}
+          <div class="featured-post">
+              <a class="link" href="{{post.link}}">
+                <div class="image">
+                  <img src="{{post.thumbnail.src}}" alt="{{post.title}}">
+                </div>
+                <footer class="footer">
+                  <h2 class="h5">{{ post.title }}</h2>
+                </footer>
+              </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if posts|length > 0 %}
+    {% if style == 'grid' or style == 'gridOnly' %}
+      {% set gridOnly = style == 'gridOnly' %}
+      {% if not gridOnly %}
+      <div class="view-controls">
+        <div class="view-toggle" role="group" aria-label="Toggle view">
+          <button type="button" class="view-toggle__btn is-active" data-view="grid" aria-label="Grid view">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+            Grid
+          </button>
+          <button type="button" class="view-toggle__btn" data-view="table" aria-label="Table view">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1" y="1" width="14" height="3" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="7" width="14" height="2" rx="0.5" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="12" width="14" height="2" rx="0.5" stroke="currentColor" stroke-width="1.5"/></svg>
+            List
+          </button>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="view-grid">
+        <div class="featured-posts-research" data-ref="posts">
+          {% for post in posts %}
+            {% set aria_labelledby_id = uuid ~ '-' ~ loop.index %}
+            {% set _tags = [] %}
+            {% for t in post.terms('research_tag') %}
+              {% set _tags = _tags|merge([t.slug]) %}
+            {% endfor %}
+            <div class="post grid" id="{{ aria_labelledby_id }}" data-theme="reset" data-tags="{{ _tags|join(' ') }}">
+                <a class="link" href="{{post.link}}">
+                  <div class="image">
+                    <img src="{{post.thumbnail.src}}" alt="{{post.title}}">
+                  </div>
+                  <footer class="footer">
+                    <h2 class="h5">{{ post.title }}</h2>
+                  </footer>
+                </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if not gridOnly %}
+      <div class="view-table" hidden>
+        <div class="research-table-wrapper">
+          <table class="research-table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Phase</th>
+                <th scope="col">Start date</th>
+                <th scope="col">End date</th>
+              </tr>
+            </thead>
+            <tbody data-ref="posts-table">
+              {% for post in postsTableSorted %}
+                {% set _tags = [] %}
+                {% for t in post.terms('research_tag') %}
+                  {% set _tags = _tags|merge([t.slug]) %}
+                {% endfor %}
+                {% set row = postsTableData[post.ID] ?? {} %}
+                <tr data-tags="{{ _tags|join(' ') }}">
+                  <td class="research-table__id">{% if row.id is defined and row.id %}<strong>{{ row.id }}</strong>{% endif %}</td>
+                  <td class="research-table__title"><a href="{{ post.link|e('esc_url') }}">{{ post.title }}</a></td>
+                  <td class="research-table__phase">{{ row.phase is defined ? row.phase : '' }}</td>
+                  <td class="research-table__date">{{ row.startDate is defined ? row.startDate : '' }}</td>
+                  <td class="research-table__date">{{ (row.endDate is defined and row.endDate) ? row.endDate : 'Ongoing' }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if not gridOnly %}
+      <script>
+        (function () {
+          var comp = document.querySelector('[name="GridResearchArchive"]');
+          if (!comp) return;
+          var btns = comp.querySelectorAll('.view-toggle__btn');
+          var gridView = comp.querySelector('.view-grid');
+          var tableView = comp.querySelector('.view-table');
+          var savedView = localStorage.getItem('research-view') || 'grid';
+          setView(savedView);
+          btns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              setView(btn.getAttribute('data-view'));
+            });
+          });
+          function setView(view) {
+            btns.forEach(function (b) {
+              b.classList.toggle('is-active', b.getAttribute('data-view') === view);
+            });
+            gridView.hidden = view !== 'grid';
+            tableView.hidden = view !== 'table';
+            localStorage.setItem('research-view', view);
+          }
+        })();
+      </script>
+      {% endif %}
+    {% else %}
+      <ul data-ref="posts" class="posts">
+        {% for post in posts %}
+          {% set aria_labelledby_id = uuid ~ '-' ~ loop.index %}
+          {% set _tags = [] %}
+          {% for t in post.terms('research_tag') %}
+            {% set _tags = _tags|merge([t.slug]) %}
+          {% endfor %}
+          <li class="post" id="{{ aria_labelledby_id }}" data-theme="reset" data-tags="{{ _tags|join(' ') }}">  
+            <a class="link" href="{{ post.link|e('esc_url') }}" aria-labelledby="{{ aria_labelledby_id }}">
+              {% if post.thumbnail %}
+                <figure class="figure">
+                  <img
+                    class="post-image figure-image lazyload"
+                    src="{{ post.thumbnail.src|resizeDynamic(768, (768 / 3 * 2)|round, 'center') }}"
+                    width="768"
+                    height="{{ (768 / 3 * 2)|round }}"
+                    srcset="{{ placeholderImage(768, (768 / 3 * 2)|round, 'rgba(125, 125, 125, 0.1)') }}"
+                    data-srcset="
+                      {{ post.thumbnail.src|resizeDynamic(1920, (1920 / 3 * 2)|round, 'center') }} 1920w,
+                      {{ post.thumbnail.src|resizeDynamic(1600, (1600 / 3 * 2)|round, 'center') }} 1600w,
+                      {{ post.thumbnail.src|resizeDynamic(1440, (1440 / 3 * 2)|round, 'center') }} 1440w,
+                      {{ post.thumbnail.src|resizeDynamic(1366, (1366 / 3 * 2)|round, 'center') }} 1366w,
+                      {{ post.thumbnail.src|resizeDynamic(1024, (1024 / 3 * 2)|round, 'center') }} 1024w,
+                      {{ post.thumbnail.src|resizeDynamic(768, (768 / 3 * 2)|round, 'center') }} 768w,
+                      {{ post.thumbnail.src|resizeDynamic(640, (640 / 3 * 2)|round, 'center') }} 640w"
+                    data-sizes="auto"
+                    alt="{{ post.thumbnail.alt|e ?: post.title }}">
+                </figure>
+              {% endif %}
+              <div class="content">
+                <h2 class="title">{{ post.title }}</h2>
+                <p>{{ post.excerpt.read_more(false)|slice(0, 80) ~ (post.excerpt.read_more(false)|length > 80 ? '...' : '') }}</p>
+              </div>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% else %}
+      <p class="posts-empty">{{ labels.noPostsFound }}</p>
+    {% endif %}
+
+    {% set pagination = pagination %}
+    {% if pagination.pages %}
+      {% include 'Partials/_pagination.twig' %}
+    {% endif %}
+  </div>
+</flynt-component>

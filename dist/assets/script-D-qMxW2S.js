@@ -1,0 +1,1 @@
+import{b as n}from"./helpers-CJiaW3rk.js";function s(e){n(e,!0).trigger.forEach(r=>r.addEventListener("click",a))}function a(e){const t=e.target,r=document.getElementById(t.getAttribute("aria-controls")),i=t.getAttribute("aria-expanded")==="true";t.setAttribute("aria-expanded",!i),r.setAttribute("aria-hidden",i)}export{s as default};

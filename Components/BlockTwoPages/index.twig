@@ -1,0 +1,25 @@
+<flynt-component name="BlockTwoPages" load:on="visible" class="componentSpacing" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <div class="container">
+    {% if text %}
+      <h2 class="title">
+        {{text}}
+      </h2>
+    {% endif %}
+    {% if relationship|length > 0 %}
+      <div class="featured-posts-research">
+        {% for post in relationship %}
+          <div class="featured-post">
+              <a class="link" href="{{post.link}}">
+                <div class="image">
+                  <img src="{{post.thumbnail.src}}" alt="{{post.title}}">
+                </div>
+                <footer class="footer">
+                  <h2 class="h5">{{ post.title }}</h2>
+                </footer>
+              </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</flynt-component>

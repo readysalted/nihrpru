@@ -1,0 +1,78 @@
+<flynt-component name="NavigationFooter">
+  <div class="container">
+    <div class="footer-wrapper">
+    {% if text %}
+      <h2 class="title">{{ text }}</h2>
+    {% endif %}
+
+    {% if contentHtml or column_two or column_three or column_social %}
+    <div class="menu-wrap">
+      {% if contentHtml %}
+      <div class="menu-column-one">
+        <div class="content">{{ contentHtml|e('wp_kses_post') }}</div>
+      </div>
+      {% endif %}
+
+      {% if column_two %}
+      <div class="menu-column-two">
+        {% if column_two_title %}<h4>{{ column_two_title }}</h4>{% endif %}
+        <ul>
+          {% for value in column_two %}
+            <li><a href="{{ value.link.url }}" {{ value.link.target == '_blank' ? 'target="_blank" rel="noreferrer noopener"' }}>{{ value.link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {% if column_three %}
+      <div class="menu-column-three">
+        {% if column_three_title %}<h4>{{ column_three_title }}</h4>{% endif %}
+        <ul>
+          {% for value in column_three %}
+            <li><a href="{{ value.link.url }}" {{ value.link.target == '_blank' ? 'target="_blank" rel="noreferrer noopener"' }}>{{ value.link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {% if column_social %}
+      <div class="menu-column-social">
+        {% if column_social_title %}<h4>{{ column_social_title }}</h4>{% endif %}
+        <ul>
+          {% for value in column_social %}
+            <li>
+              <a href="{{ value.link.url }}" {{ value.link.target == '_blank' ? 'target="_blank" rel="noreferrer noopener"' }}>
+                {% if value.image %}<img src="{{ value.image.src }}" alt="{{ value.image.alt }}">{% endif %}
+                {{ value.link.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if funded_by_logo or funded_by_text %}
+      <div class="funded-by">
+        {% if funded_by_logo %}<img src="{{ funded_by_logo.src }}" alt="{{ funded_by_logo.alt }}">{% endif %}
+        {% if funded_by_text %}<div>{{ funded_by_text|e('wp_kses_post') }}</div>{% endif %}
+      </div>
+    {% endif %}
+
+    {% if copyright_text or copyright_menu or custom_link.url or custom_link.title %}
+    <div class="copyright-wrap">
+      <ul>
+        {% if copyright_text %}<li>{{ copyright_text }}</li>{% endif %}
+        {% for value in copyright_menu %}
+          <li><a href="{{ value.link.url }}" {{ value.link.target == '_blank' ? 'target="_blank" rel="noreferrer noopener"' }}>{{ value.link.title }}</a></li>
+        {% endfor %}
+      </ul>
+      {% if custom_link.url or custom_link.title %}
+        <a class="copyright-wrap__custom-link" href="{{ custom_link.url }}">{{ custom_link.title }}</a>
+      {% endif %}
+    </div>
+    {% endif %}
+    </div>
+  </div>
+</flynt-component>

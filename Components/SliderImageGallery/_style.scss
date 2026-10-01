@@ -1,0 +1,169 @@
+flynt-component[name='SliderImageGallery'] {
+  .figure {
+    margin: 0;
+  }
+
+  .sliderMain {
+    margin-inline: var(--container-spacing);
+    max-inline-size: calc(var(--content-max-width-full) + var(--container-spacing) * 2);
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+
+    @media (min-width: $breakpoint-tablet-horizontal) {
+      margin-inline: auto;
+    }
+
+    &:not(.swiper-initialized) {
+      .swiper-wrapper .swiper-slide:not(:first-child) {
+        display: none;
+      }
+    }
+
+    &-slide {
+      block-size: 0;
+      display: flex;
+      overflow: hidden;
+      padding-block-end: calc((2/3) * 100%);
+
+      @media (min-width: $breakpoint-tablet-horizontal) {
+        block-size: calc((2/3) * #{$breakpoint-tablet-horizontal});
+        padding-block-end: 0;
+      }
+    }
+
+    &-button {
+      align-items: center;
+      block-size: 48px;
+      color: var(--color-background);
+      cursor: pointer;
+      display: flex;
+      inline-size: 48px;
+      inset-block-start: 50%;
+      justify-content: center;
+      position: absolute;
+      transform: translateY(-50%);
+      z-index: 10;
+
+      &::before {
+        background-color: var(--color-accent);
+        block-size: 100%;
+        border-radius: 50%;
+        content: '';
+        inline-size: 100%;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        position: absolute;
+        transition: opacity 0.2s ease;
+        will-change: opacity;
+      }
+
+      @media (min-width: $breakpoint-tablet-horizontal) {
+        &:hover,
+        &:focus {
+          &::before {
+            opacity: 1;
+          }
+        }
+      }
+
+      &.swiper-button-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      &--prev {
+        inset-inline-start: var(--container-spacing);
+
+        &::after {
+          block-size: 0.75em;
+          border-block-start: 2px solid currentColor;
+          border-inline-start: 2px solid currentColor;
+          content: '';
+          inline-size: 0.75em;
+          margin-inline-start: calc(0.25em + 2px);
+          transform: rotate(-45deg);
+        }
+      }
+
+      &--next {
+        inset-inline-end: var(--container-spacing);
+
+        &::after {
+          block-size: 0.75em;
+          border-block-start: 2px solid currentColor;
+          border-inline-end: 2px solid currentColor;
+          content: '';
+          inline-size: 0.75em;
+          margin-inline-end: calc(0.25em - 2px);
+          transform: rotate(45deg);
+        }
+      }
+    }
+
+    .figure {
+      block-size: 100%;
+      inline-size: auto;
+      inset: 0;
+      margin: 0 auto;
+      position: absolute;
+
+      @media (min-width: $breakpoint-tablet-horizontal) {
+        position: relative;
+      }
+
+      &-image {
+        block-size: 100%;
+        inline-size: auto;
+        margin: 0 auto;
+        object-fit: cover;
+      }
+
+      &-caption {
+        background-color: var(--color-accent);
+        border-end-end-radius: var(--box-border-radius);
+        color: var(--color-background);
+        display: inline-block;
+        inset-block-end: 0;
+        inset-inline-end: 0;
+        margin: 0;
+        max-inline-size: 450px;
+        padding: 0.25rem 0.75rem;
+        position: absolute;
+        z-index: 2;
+      }
+    }
+  }
+
+  .sliderThumb {
+    overflow: hidden;
+    padding: 1rem 0 0;
+
+    &:not(.swiper-initialized) .swiper-wrapper {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    &-slide {
+      block-size: 65px;
+      cursor: pointer;
+      inline-size: auto;
+      opacity: 0.5;
+      transition: opacity 0.2s ease-out;
+      will-change: opacity;
+
+      @media (min-width: $breakpoint-desktop) {
+        &:hover,
+        &:focus {
+          opacity: 1;
+        }
+      }
+
+      &.swiper-slide-active {
+        cursor: default;
+        opacity: 1;
+      }
+    }
+  }
+}

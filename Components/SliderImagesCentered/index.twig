@@ -1,0 +1,38 @@
+<flynt-component name="SliderImagesCentered" load:on="visible" class="componentSpacing" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <script type="application/json">{{ jsonData|json_encode }}</script>
+  <div class="container" data-size="full" data-flow="layout">
+    {% if preContentHtml %}
+        <div data-size="medium" data-align="center" data-text-align="center">
+          {{ preContentHtml|e('wp_kses_post') }}
+        </div>
+    {% endif %}
+    <div data-ref="slider" data-slider class="slider swiper-container">
+        <div class="swiper-wrapper">
+          {% for image in images %}
+            <div class="slider-item swiper-slide {{- loop.index == 1 ? ' swiper-slide-active' -}}">
+              <figure class="figure">
+                <img class="figure-image lazyload"
+                  src="{{ image.src|resizeDynamic(870, 580) }}"
+                  srcset="{{ placeholderImage(870, 580, 'rgba(125, 125, 125, 0.1)') }}"
+                  width="{{ 870 }}"
+                  height="{{ 580 }}"
+                  data-srcset="
+                    {{ image.src|resizeDynamic(1740, 1160) }} 1160w,
+                    {{ image.src|resizeDynamic(870, 580) }} 870w,
+                    {{ image.src|resizeDynamic(580, 385) }} 580w,
+                    {{ image.src|resizeDynamic(375, 246) }} 375w"
+                  data-sizes="auto"
+                  alt="{{ image.alt|e }}">
+                {% if image.caption %}
+                  <figcaption class="figure-caption">{{ image.caption|e }}</figcaption>
+                {% endif %}
+              </figure>
+            </div>
+          {% endfor %}
+        </div>
+        <div data-ref="pagination" data-slider-pagination class="slider-pagination"></div>
+        <button type="button" data-ref="prev" class="slider-button slider-button--prev" aria-label="{{ sliderOptions.a11y.prevSlideMessage|e }}"></button>
+        <button type="button" data-ref="next" class="slider-button slider-button--next" aria-label="{{ sliderOptions.a11y.nextSlideMessage|e }}"></button>
+    </div>
+  </div>
+</flynt-component>

@@ -1,0 +1,23 @@
+.logo {
+  align-items: center;
+  display: inline-flex;
+  flex-shrink: 0;
+  gap: 16px;
+  margin-block-end: 10px;
+  text-decoration: none;
+
+  &-image {
+    block-size: 43px;
+    inline-size: auto;
+    object-fit: contain;
+  }
+
+  @media (max-width: $breakpoint-tablet-horizontal - 1) {
+    margin-block-end: 0;
+
+    &-image {
+      block-size: 24px;
+      max-inline-size: 92px;
+    }
+  }
+}

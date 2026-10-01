@@ -1,0 +1,33 @@
+<flynt-component name="GridHomepageResearch">
+  <div class="container">
+    {% if themesHeading %}<h2>{{ themesHeading }}</h2>{% endif %}
+    <ul class="cards cards--themes">
+      {% for item in themes %}
+        <li class="card">
+          {% if item.image %}
+            <img class="card-image" src="{{ item.image.src }}" alt="{{ item.image.alt|e }}" loading="lazy">
+          {% endif %}
+          <div class="card-title">{{ item.title }}</div>
+          {% if item.link.url %}
+            <a class="card-link" href="{{ item.link.url|e('esc_url') }}" {{ item.link.target == '_blank' ? 'target="_blank" rel="noreferrer noopener"' }} aria-label="{{ item.link.title ?: item.title }}"></a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if workstreamsHeading %}<h2 class="workstreams-heading">{{ workstreamsHeading }}</h2>{% endif %}
+    <ul class="cards cards--workstreams">
+      {% for item in workstreams %}
+        <li class="card">
+          {% if item.image %}
+            <img class="card-image" src="{{ item.image.src }}" alt="{{ item.image.alt|e }}" loading="lazy">
+          {% endif %}
+          <div class="card-title">{{ item.title }}</div>
+          {% if item.link.url %}
+            <a class="card-link" href="{{ item.link.url|e('esc_url') }}" {{ item.link.target == '_blank' ? 'target="_blank" rel="noreferrer noopener"' }} aria-label="{{ item.link.title ?: item.title }}"></a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</flynt-component>

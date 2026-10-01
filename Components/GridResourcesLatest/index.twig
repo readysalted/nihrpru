@@ -1,0 +1,21 @@
+<flynt-component name="GridResourcesLatest" class="componentSpacing" data-theme="{{ options.theme ?: 'pink-quartz' }}">
+  <div class="container" data-size="wide">
+    <h2 class="resourcesLatest-title">{{ title }}</h2>
+    {% if resources|length %}
+      <div class="resourcesGrid" data-resource-count="{{ resources|length }}">
+        {% for resource in resources %}
+          {{ renderComponent('ResourceCard', {resource: resource}) }}
+        {% endfor %}
+      </div>
+    {% elseif emptyMessage %}
+      <p class="resourcesLatest-empty">{{ emptyMessage }}</p>
+    {% endif %}
+    {% if button %}
+      <div class="resourcesLatest-action">
+        <a class="button" href="{{ button.url|e('esc_url') }}" target="{{ button.target|default('_self')|e('html_attr') }}">
+          {{ button.title }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</flynt-component>

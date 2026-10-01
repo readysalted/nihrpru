@@ -1,0 +1,49 @@
+<flynt-component name="InFocus" class="componentSpacing {{ options.withoutPadding ? 'without-padding' : '' }}" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <div class="container">
+    <div class="wrapper" {{ imagePosition ? 'data-image-position="' ~ imagePosition ~ '"' }}>
+      {% set displayImage = image ?: (post ? post.thumbnail : null) %}
+      {% if displayImage %}
+        <figure class="figure" data-size="medium" data-align="center">
+          {% if displayImage.post_mime_type == 'image/svg+xml' %}
+            <img
+              class="figure-image-svg lazyload"
+              src="{{ placeholderImage(displayImage.width, displayImage.height, 'rgba(125, 125, 125, 0.1)') }}"
+              width="{{ displayImage.width }}"
+              height="{{ displayImage.height }}"
+              data-src="{{ displayImage.src }}"
+              alt="{{ displayImage.alt|e }}">
+          {% else %}
+            <img
+              class="figure-image lazyload"
+              src="{{ displayImage.src|resizeDynamic(768) }}"
+              width="{{ displayImage.width }}"
+              height="{{ displayImage.height }}"
+              srcset="{{ placeholderImage(displayImage.width, displayImage.height, 'rgba(125, 125, 125, 0.1)') }}"
+              data-srcset="
+                {{ displayImage.src|resizeDynamic(1920) }} 1920w,
+                {{ displayImage.src|resizeDynamic(1600) }} 1600w,
+                {{ displayImage.src|resizeDynamic(1440) }} 1440w,
+                {{ displayImage.src|resizeDynamic(1366) }} 1366w,
+                {{ displayImage.src|resizeDynamic(1024) }} 1024w,
+                {{ displayImage.src|resizeDynamic(768) }} 768w,
+                {{ displayImage.src|resizeDynamic(640) }} 640w"
+              data-sizes="auto"
+              alt="{{ displayImage.alt|e }}">
+          {% endif %}
+          {% if displayImage.caption %}
+            <figcaption>{{ displayImage.caption|e }}</figcaption>
+          {% endif %}
+        </figure>
+      {% endif %}
+      <div data-size="medium" data-align="center">
+        {% if post %}
+          <h2 class="underline">
+            {{ post.title }}
+          </h2>
+          <p>{{ post.post_excerpt ? post.post_excerpt|striptags|slice(0, 300) : post.content|striptags|slice(0, 300) }}{% if (post.post_excerpt ? post.post_excerpt|striptags : post.content|striptags)|length > 300 %}...{% endif %}</p>
+          <a class="button" href="{{ post.link|e('esc_url') }}">{{ buttonLabel }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</flynt-component>

@@ -1,0 +1,91 @@
+flynt-component[name='ProjectWidget'] {
+  //background: #ffffff;
+  //border-radius: 8px;
+  //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  //margin: 20px 0;
+  //overflow: hidden;
+
+  .projectWidget {
+    -webkit-box-shadow: 0px 3px 9px -4px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 3px 9px -4px rgba(66, 68, 90, 1);
+    box-shadow: 0px 3px 9px -4px rgba(66, 68, 90, 1);
+    border-radius: 8px;
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      color: #ffffff;
+      padding: 25px;
+    }
+
+    .project-id {
+      font-size: 20px;
+      font-weight: 700;
+
+      a {
+        color: #ffffff;
+      }
+    }
+
+    &-dates {
+      font-size: 20px;
+      font-weight: 400;
+      span {
+        font-size: 20px;
+        font-weight: 700;
+      }
+    }
+
+    &-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 10px;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      @media screen and (min-width: $breakpoint-tablet) {
+        padding: 10px 45px;
+      }
+    }
+
+    &-section {
+      & + & {
+        margin-top: 25px;
+      }
+
+      h3 {
+        color: #333;
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 10px;
+      }
+    }
+
+    &-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 5px 0;
+      }
+    }
+
+    &-logo {
+      margin-block-start: 0;
+      img {
+        max-height: 80px;
+        width: auto;
+      }
+    }
+  }
+}

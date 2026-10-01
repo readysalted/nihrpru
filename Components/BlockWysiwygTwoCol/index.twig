@@ -1,0 +1,12 @@
+<flynt-component name="BlockWysiwygTwoCol" class="componentSpacing" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <div class="container" data-flow="content">
+    {% if preContentHtml %}
+      <div data-size="medium" data-align="left">
+        {{ preContentHtml|e('wp_kses_post') }}
+      </div>
+    {% endif %}
+    <div class="content">
+      {{ contentHtml|e('wp_kses_post') }}
+    </div>
+  </div>
+</flynt-component>

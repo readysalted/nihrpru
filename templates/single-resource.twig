@@ -1,0 +1,27 @@
+{% extends 'templates/_document.twig' %}
+
+{% block content %}
+  <article>
+    {{ renderComponent('BlockHero', {
+      title: post.title,
+      contentHtml: heroContentHtml,
+      hideBreadcrumb: true
+    }) }}
+
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="{{ site.link|e('esc_url') }}">{{ function('__', 'Home', 'flynt') }}</a>
+        <span aria-hidden="true">&gt;</span>
+        <a href="{{ resourceLanding.url|e('esc_url') }}">{{ resourceLanding.title }}</a>
+        <span aria-hidden="true">&gt;</span>
+        <span class="current-item" aria-current="page">{{ post.title }}</span>
+      </nav>
+    </div>
+
+    {{ renderComponent('BlockResourceDetails', {resource: resource}) }}
+
+    {% for component in post.meta('pageComponents') %}
+      {{ renderComponent(component) }}
+    {% endfor %}
+  </article>
+{% endblock %}

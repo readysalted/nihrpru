@@ -1,0 +1,30 @@
+<article class="resourceCard">
+  <a
+    class="resourceCard-link"
+    href="{{ resource.cardLink.url|e('esc_url') }}"
+    target="{{ resource.cardLink.target|e('html_attr') }}"
+    {{ resource.cardLink.rel ? 'rel="' ~ resource.cardLink.rel|e('html_attr') ~ '"' }}
+    aria-label="{{ resource.post.title|e('html_attr') }}{{ resource.cardLink.target == '_blank' ? ' – ' ~ function('__', 'opens in a new tab', 'flynt') }}">
+    <figure class="resourceCard-figure">
+      {% if resource.post.thumbnail %}
+        <img
+          class="resourceCard-image lazyload"
+          src="{{ resource.post.thumbnail.src|resizeDynamic(768, 512, 'center') }}"
+          width="768"
+          height="512"
+          srcset="{{ placeholderImage(768, 512, 'rgba(28, 40, 94, 0.08)') }}"
+          data-srcset="
+            {{ resource.post.thumbnail.src|resizeDynamic(1200, 800, 'center') }} 1200w,
+            {{ resource.post.thumbnail.src|resizeDynamic(768, 512, 'center') }} 768w,
+            {{ resource.post.thumbnail.src|resizeDynamic(480, 320, 'center') }} 480w"
+          data-sizes="auto"
+          alt="{{ resource.post.thumbnail.alt|e ?: resource.post.title|e }}">
+      {% else %}
+        <span class="resourceCard-placeholder" aria-hidden="true">{{ function('__', 'Resource', 'flynt') }}</span>
+      {% endif %}
+    </figure>
+    <div class="resourceCard-content">
+      <h3 class="resourceCard-title">{{ resource.post.title }}</h3>
+    </div>
+  </a>
+</article>

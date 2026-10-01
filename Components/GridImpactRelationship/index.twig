@@ -1,0 +1,45 @@
+{% if data %}
+  <flynt-component name="GridImpactRelationship">
+    <div class="container">
+      <div class="grid-wrap">
+        {% for value in data.repeater %}
+          {% if value.link %}
+            <a class="grid-element"
+               href="{{ value.link.url }}" {{ value.link.target == '_blank' ? 'target="_blank" rel="noreferrer noopener"' }}>
+              {% if value.image.src %}
+                <div class="grid-element__image" style="background: url('{{ value.image.src }}')"></div>
+              {% endif %}
+              {% if value.link.title %}
+                <p class="grid-element__title">{{ value.link.title }}</p>
+              {% endif %}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </flynt-component>
+{% else %}
+  <flynt-component name="GridImpactRelationship">
+    <div class="container">
+      {% if text %}
+        <h2 class="grid-title">{{ text }}</h2>
+      {% endif %}
+      <div class="grid-wrap">
+        {% for value in relationship %}
+          {% if value.link %}
+            <a class="grid-element"
+               href="{{ value.link }}" {{ value.link.target == '_blank' ? 'target="_blank" rel="noreferrer noopener"' }}>
+              {% if value.thumbnail.src %}
+                <div class="grid-element__image" style="background: url('{{ value.thumbnail.src }}')"></div>
+              {% endif %}
+              {% if value.post_title %}
+                <p class="grid-element__title">{{ value.post_title }}</p>
+              {% endif %}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </flynt-component>
+{% endif %}
+

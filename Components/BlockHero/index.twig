@@ -1,0 +1,24 @@
+<flynt-component name="BlockHero">
+  <div class="container">
+    <div class="content">
+      <div class="text">
+        <h1>{{ title }}</h1>
+        {% if contentHtml %}
+          <div class="h5 excerpt">
+            {{ contentHtml|e('wp_kses_post') }}
+          </div>
+        {% endif %}
+      </div>
+      {% if image %}
+        <div class="image"><img src="{{ image.guid }}" alt="{{ title }}"></div>
+      {% endif %}
+    </div>
+  </div>
+</flynt-component>
+{% if not hideBreadcrumb and function('function_exists', 'bcn_display') %}
+  <div class="container">
+    <div class="breadcrumbs" aria-label="Breadcrumb" typeof="BreadcrumbList" vocab="https://schema.org/">
+      {{ function('bcn_display') }}
+    </div>
+  </div>
+{% endif %}

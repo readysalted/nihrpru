@@ -1,0 +1,55 @@
+flynt-component[name='BlockWysiwyg'] {
+    h1, h2, h3, h4, h5, h6,
+    .h1, .h2, .h3, .h4, .h5, .h6 {
+        color: var(--color-accent);
+    }
+}
+
+flynt-component[name='BlockWysiwyg'][data-display-style='homepageIntro'] {
+  margin: 0;
+  padding: 77px 0 28px;
+
+  .container {
+    max-inline-size: calc(920px + var(--container-spacing) * 2);
+  }
+
+  .content {
+    color: var(--nihr-slate-grey);
+    max-inline-size: none;
+    text-align: left;
+  }
+
+  h2 {
+    color: var(--nihr-navy);
+    font-family: var(--font-family-text);
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0 0 28px;
+  }
+
+  p {
+    font-family: var(--font-family-text);
+    font-size: 20px;
+    line-height: 1.8;
+    margin-top: 0;
+
+    + p {
+      margin-top: 20px;
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile-horizontal) {
+    padding-top: 56px;
+
+    h2 {
+      font-size: 32px;
+      line-height: 1.3;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.65;
+    }
+  }
+}
