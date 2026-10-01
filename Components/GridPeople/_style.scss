@@ -80,7 +80,7 @@ flynt-component[name='GridPeople'] {
   .peopleGrid-items {
     display: grid;
     gap: 24px;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .peopleGrid-card {
@@ -143,6 +143,12 @@ flynt-component[name='GridPeople'] {
     text-align: center;
   }
 
+  @media (max-width: 1023px) {
+    .peopleGrid-items {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 767px) {
     .peopleGrid-directory {
       padding-block: 20px;
@@ -159,6 +165,16 @@ flynt-component[name='GridPeople'] {
 
     .peopleGrid-filterSelect {
       display: block;
+    }
+
+    .peopleGrid-items {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 479px) {
+    .peopleGrid-items {
+      grid-template-columns: 1fr;
     }
   }
 }
