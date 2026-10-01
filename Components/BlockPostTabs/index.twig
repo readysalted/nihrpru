@@ -11,10 +11,6 @@
                 <div class="tab-image-wrap">
                   <img class="tab-image" src="{{ value.thumbnail.src }}" alt="Latest news and events"/>
                 </div>
-              {% elseif options.displayStyle == 'homepage' %}
-                <div class="tab-image-wrap">
-                  <img class="tab-image" src="{{ fallbackImage }}" alt="Latest news and events"/>
-                </div>
               {% endif %}
               <div class="tab-text-wrap">
                 {% if value.post_title %}

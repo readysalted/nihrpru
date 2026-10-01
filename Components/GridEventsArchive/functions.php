@@ -7,9 +7,9 @@ use Timber\Timber;
 
 add_filter('Flynt/addComponentData?name=GridEventsArchive', function (array $data): array {
     $data['uuid'] ??= wp_generate_uuid4();
-    
+
     $queriedObject = get_queried_object();
-    
+
     $data['title'] = get_the_archive_title();
     $data['description'] = get_the_archive_description();
 

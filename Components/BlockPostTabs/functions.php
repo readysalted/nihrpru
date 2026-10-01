@@ -8,7 +8,6 @@ use Timber\Timber;
 
 add_filter('Flynt/addComponentData?name=BlockPostTabs', function ($data) {
     $data['contentType'] = $data['contentType'] ?? 1;
-    $data['fallbackImage'] = Asset::requireUrl('assets/images/pru/news-feature.png');
     $data['homepageCtaIcon'] = Asset::requireUrl('assets/images/pru/news-link-art.png');
 
     if (

@@ -2,60 +2,6 @@
 
 namespace Flynt\Components\MeetTheTeam;
 
-use Flynt\Utils\Asset;
-
-function getCapacityDevelopmentItems(): array
-{
-    return [
-        ['title' => __('Emerging Leads', 'flynt'), 'image' => 'emerging-leads.webp'],
-        ['title' => __('Pre-application support fund awardees', 'flynt'), 'image' => 'pre-application-support.webp'],
-        ['title' => __('PhD studentships', 'flynt'), 'image' => 'phd-studentships.webp'],
-        ['title' => __('Doctoral fellowships', 'flynt'), 'image' => 'emerging-leads.webp'],
-        ['title' => __('Post-doctoral fellows', 'flynt'), 'image' => 'post-doctoral-fellows.webp'],
-        ['title' => __('Transdisciplinary placements', 'flynt'), 'image' => 'transdisciplinary-placements.webp'],
-        ['title' => __('Embedded researchers', 'flynt'), 'image' => 'emerging-leads.webp'],
-        ['title' => __('Community practitioner awards', 'flynt'), 'image' => 'community-practitioner-awards.webp'],
-    ];
-}
-
-add_filter('Flynt/addComponentData?name=MeetTheTeam', function (array $data): array {
-    if (($data['options']['displayStyle'] ?? 'default') !== 'capacityDevelopment') {
-        return $data;
-    }
-
-    $defaults = getCapacityDevelopmentItems();
-    $members = is_array($data['teamMembers'] ?? null) ? $data['teamMembers'] : [];
-
-    if (empty($members)) {
-        $members = array_fill(0, count($defaults), []);
-    }
-
-    foreach ($members as $index => &$member) {
-        $default = $defaults[$index] ?? null;
-        if (!$default) {
-            continue;
-        }
-
-        if (empty($member['title'])) {
-            $member['title'] = $default['title'];
-        }
-
-        if (empty($member['image'])) {
-            $member['image'] = [
-                'src' => Asset::requireUrl('assets/images/capacity-development/' . $default['image']),
-                'alt' => $member['title'],
-                'isThemeAsset' => true,
-            ];
-        }
-    }
-    unset($member);
-
-    $data['teamMembers'] = $members;
-    $data['backgroundColor'] = $data['backgroundColor'] ?: '#c7e9ff';
-
-    return $data;
-});
-
 function getACFLayout(): array
 {
     return [
@@ -95,7 +41,7 @@ function getACFLayout(): array
                         'preview_size' => 'thumbnail',
                         'library' => 'all',
                         'mime_types' => 'jpg,jpeg,png,svg,webp',
-                        'required' => 0,
+                        'required' => 1,
                     ],
                     [
                         'label' => __('Name', 'flynt'),

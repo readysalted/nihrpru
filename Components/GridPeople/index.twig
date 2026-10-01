@@ -1,0 +1,29 @@
+<flynt-component name="GridPeople" class="componentSpacing" data-theme="{{ options.theme ?: 'white' }}">
+  <div class="container" data-size="wide">
+    {% if preContentHtml %}
+      <div class="peopleGrid-intro">{{ preContentHtml|e('wp_kses_post') }}</div>
+    {% endif %}
+    {% if people|length %}
+      <div class="peopleGrid-items">
+        {% for person in people %}
+          <article class="peopleGrid-card">
+            <a href="{{ person.link|e('esc_url') }}">
+              {% if person.thumbnail %}
+                <div class="peopleGrid-image">
+                  <img src="{{ person.thumbnail.src('medium_large')|e('esc_url') }}" alt="{{ person.thumbnail.alt ?: person.title }}">
+                </div>
+              {% endif %}
+              <div class="peopleGrid-content">
+                <h2>{{ person.title }}</h2>
+                {% if person.meta('personRole') %}<p>{{ person.meta('personRole') }}</p>{% endif %}
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>{{ function('__', 'No people were found.', 'flynt') }}</p>
+    {% endif %}
+  </div>
+</flynt-component>
+

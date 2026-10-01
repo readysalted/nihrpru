@@ -13,6 +13,11 @@
       </div>
     </div>
     {% endif %}
+    {% if post.publication_url %}
+      <div class="container" data-size="medium">
+        <p><a class="button" href="{{ post.publication_url|e('esc_url') }}" target="_blank" rel="noopener noreferrer">View publication</a></p>
+      </div>
+    {% endif %}
     {% for component in post.meta('pageComponents') %}
       {{ renderComponent(component) }}
     {% endfor %}

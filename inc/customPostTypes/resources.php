@@ -7,6 +7,7 @@ use Timber\Post;
 
 const RESOURCE_POST_TYPE = 'resource';
 const RESOURCE_TAXONOMY = 'research_area';
+const RESOURCE_TYPE_TAXONOMY = 'resource_type';
 
 function registerResourcePostType(): void
 {
@@ -43,7 +44,7 @@ function registerResourcePostType(): void
         'label'               => __('Resources', 'flynt'),
         'description'         => __('Downloadable files and externally hosted resources.', 'flynt'),
         'labels'              => $labels,
-        'supports'            => ['title', 'revisions', 'thumbnail', 'excerpt', 'custom-fields'],
+        'supports'            => ['title', 'revisions', 'thumbnail', 'excerpt', 'custom-fields', 'page-attributes'],
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
@@ -59,12 +60,28 @@ function registerResourcePostType(): void
         'publicly_queryable'  => true,
         'capability_type'     => 'post',
         'rewrite'             => [
-            'slug'       => 'resources/resource',
+            'slug'       => 'outputs/resource',
             'with_front' => false,
         ],
     ]);
 
     register_taxonomy_for_object_type(RESOURCE_TAXONOMY, RESOURCE_POST_TYPE);
+    register_taxonomy(RESOURCE_TYPE_TAXONOMY, [RESOURCE_POST_TYPE], [
+        'labels' => [
+            'name' => __('Resource Types', 'flynt'),
+            'singular_name' => __('Resource Type', 'flynt'),
+            'menu_name' => __('Resource Types', 'flynt'),
+            'all_items' => __('All Resource Types', 'flynt'),
+            'edit_item' => __('Edit Resource Type', 'flynt'),
+            'add_new_item' => __('Add Resource Type', 'flynt'),
+        ],
+        'hierarchical' => true,
+        'show_ui' => true,
+        'show_admin_column' => true,
+        'show_in_rest' => true,
+        'query_var' => true,
+        'rewrite' => false,
+    ]);
 }
 
 add_action('init', __NAMESPACE__ . '\\registerResourcePostType', 11);
@@ -128,6 +145,7 @@ function getResourceViewData(Post $resource): array
     $destination = getResourceDestination($postId);
     $cardUsesSingle = $cardBehavior === 'single' || empty($destination['url']);
     $terms = get_the_terms($postId, RESOURCE_TAXONOMY);
+    $resourceTypes = get_the_terms($postId, RESOURCE_TYPE_TAXONOMY);
 
     return [
         'post' => $resource,
@@ -139,6 +157,7 @@ function getResourceViewData(Post $resource): array
             'rel' => $cardUsesSingle ? '' : $destination['rel'],
         ],
         'researchAreas' => is_array($terms) ? $terms : [],
+        'resourceTypes' => is_array($resourceTypes) ? $resourceTypes : [],
         'descriptionHtml' => (string) get_field('resourceDescription', $postId),
     ];
 }

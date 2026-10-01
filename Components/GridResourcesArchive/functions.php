@@ -34,16 +34,22 @@ add_filter('Flynt/addComponentData?name=GridResourcesArchive', function (array $
         'post_status' => 'publish',
         'posts_per_page' => $postsPerPage,
         'paged' => $currentPage,
-        'orderby' => 'date',
-        'order' => 'DESC',
+        'orderby' => ['menu_order' => 'ASC', 'title' => 'ASC'],
+        'order' => 'ASC',
         'ignore_sticky_posts' => true,
     ];
 
     if ($activeSlug) {
         $queryArgs['tax_query'] = [[
-            'taxonomy' => CustomPostTypes\RESOURCE_TAXONOMY,
+            'taxonomy' => CustomPostTypes\RESOURCE_TYPE_TAXONOMY,
             'field' => 'slug',
             'terms' => [$activeSlug],
+        ]];
+    } elseif ($configuredTerms && $selectedTerms) {
+        $queryArgs['tax_query'] = [[
+            'taxonomy' => CustomPostTypes\RESOURCE_TYPE_TAXONOMY,
+            'field' => 'term_id',
+            'terms' => wp_list_pluck($selectedTerms, 'term_id'),
         ]];
     }
 
@@ -83,7 +89,7 @@ function getSelectedTerms(array $configuredTerms): array
         return [];
     }
 
-    $usedTerms = wp_get_object_terms($allResourceIds, CustomPostTypes\RESOURCE_TAXONOMY, [
+    $usedTerms = wp_get_object_terms($allResourceIds, CustomPostTypes\RESOURCE_TYPE_TAXONOMY, [
         'orderby' => 'name',
         'order' => 'ASC',
     ]);
@@ -166,7 +172,7 @@ function getACFLayout(): array
                 'label' => __('Filter label', 'flynt'),
                 'name' => 'filterLabel',
                 'type' => 'text',
-                'default_value' => __('Research theme filter:', 'flynt'),
+                'default_value' => __('Resource type:', 'flynt'),
                 'required' => 1,
                 'wrapper' => ['width' => 50],
             ],
@@ -179,10 +185,10 @@ function getACFLayout(): array
                 'wrapper' => ['width' => 50],
             ],
             [
-                'label' => __('Research themes', 'flynt'),
+                'label' => __('Resource types', 'flynt'),
                 'name' => 'filterTerms',
                 'type' => 'taxonomy',
-                'taxonomy' => CustomPostTypes\RESOURCE_TAXONOMY,
+                'taxonomy' => CustomPostTypes\RESOURCE_TYPE_TAXONOMY,
                 'field_type' => 'multi_select',
                 'allow_null' => 1,
                 'multiple' => 1,
@@ -190,7 +196,7 @@ function getACFLayout(): array
                 'save_terms' => 0,
                 'load_terms' => 0,
                 'return_format' => 'object',
-                'instructions' => __('Optional. Leave empty to show every research theme currently used by published Resources.', 'flynt'),
+                'instructions' => __('Optional. Leave empty to show every resource type currently used by published Resources.', 'flynt'),
             ],
             [
                 'label' => __('Options', 'flynt'),

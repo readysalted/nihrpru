@@ -3,7 +3,6 @@
 namespace Flynt\Components\ListLogos;
 
 use Flynt\FieldVariables;
-use Flynt\Utils\Asset;
 
 add_filter('Flynt/addComponentData?name=ListLogos', function (array $data): array {
     if (($data['options']['displayStyle'] ?? '') !== 'homepagePartners' || empty($data['items'])) {
@@ -14,17 +13,6 @@ add_filter('Flynt/addComponentData?name=ListLogos', function (array $data): arra
         'partnerLogos' => __('Partner logos', 'flynt'),
         'scrollPartnerLogos' => __('Scroll partner logos', 'flynt'),
     ]);
-
-    foreach ($data['items'] as $index => &$item) {
-        if (empty($item['image']) && $index < 5) {
-            $item['image'] = [
-                'src' => Asset::requireUrl(sprintf('assets/images/home/partner-logo-%d.png', $index + 1)),
-                'alt' => sprintf(__('Partner logo %d', 'flynt'), $index + 1),
-                'isThemeAsset' => true,
-            ];
-        }
-    }
-    unset($item);
 
     return $data;
 });
@@ -80,7 +68,7 @@ function getACFLayout()
                         'preview_size' => 'small',
                         'library' => 'all',
                         'mime_types' => 'jpg,jpeg,png,svg,webp',
-                        'required' => 0,
+                        'required' => 1,
                         'wrapper' =>  [
                             'width' => '40',
                         ]

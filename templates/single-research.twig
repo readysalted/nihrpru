@@ -5,6 +5,26 @@
     <header>
       {{ renderComponent('BlockPostHeader', {type: 'custom' , title: post.title, subtitle: post.excerpt}) }}
     </header>
+    {% if post.thumbnail %}
+      {{ renderComponent('BlockImage', {image: post.thumbnail, options: {size: 'wide'}, noComponentSpacing: true}) }}
+    {% endif %}
+    {% if post.meta('projectLead') or post.meta('projectTeam') %}
+      <section class="container" data-size="medium">
+        {% if post.meta('projectLead') %}
+          <p><strong>{{ function('__', 'Lead researcher:', 'flynt') }}</strong> {{ post.meta('projectLead') }}</p>
+        {% endif %}
+        {% if post.meta('projectTeam') %}
+          <p><strong>{{ function('__', 'Research team:', 'flynt') }}</strong> {{ post.meta('projectTeam') }}</p>
+        {% endif %}
+      </section>
+    {% endif %}
+    {% if post.meta('projectSummary') %}
+      {{ renderComponent({
+        'acf_fc_layout': 'BlockWysiwyg',
+        'contentHtml': '<h2>' ~ function('__', 'Plain English summary', 'flynt') ~ '</h2>' ~ post.meta('projectSummary'),
+        'options': {'theme': 'putty'}
+      }) }}
+    {% endif %}
     {% for component in post.meta('pageComponents') %}
       {{ renderComponent(component) }}
     {% endfor %}

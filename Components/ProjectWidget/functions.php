@@ -52,21 +52,21 @@ function getACFLayout()
                 'label' => 'Project ID',
                 'name' => 'projectId',
                 'type' => 'text',
-                'wrapper' => array(
+                'wrapper' => [
                     'width' => '50',
                     'class' => '',
                     'id' => '',
-			    ),
+                ],
             ],
             [
                 'label' => 'Project Url',
                 'name' => 'projectIdUrl',
                 'type' => 'url',
-                'wrapper' => array(
+                'wrapper' => [
                     'width' => '50',
                     'class' => '',
                     'id' => '',
-			    ),
+                ],
             ],
             [
                 'label' => 'Start Date',

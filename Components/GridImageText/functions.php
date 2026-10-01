@@ -3,35 +3,12 @@
 namespace Flynt\Components\GridImageText;
 
 use Flynt\FieldVariables;
-use Flynt\Utils\Asset;
 
 add_filter('Flynt/addComponentData?name=GridImageText', function ($data) {
     if (isset($data['options']['maxColumns'])) {
         $data['maxColumns'] = (string) $data['options']['maxColumns'];
     } else {
         $data['maxColumns'] = '3';
-    }
-
-    if (($data['options']['displayStyle'] ?? '') === 'homepageFeatures' && !empty($data['items'])) {
-        $fallbacks = [
-            ['src' => Asset::requireUrl('assets/images/home/feature-capacity.jpg'), 'alt' => __('Capacity Development', 'flynt')],
-            ['src' => Asset::requireUrl('assets/images/home/feature-research.jpg'), 'alt' => __('Our Research', 'flynt')],
-        ];
-
-        foreach ($data['items'] as $index => &$item) {
-            if (empty($item['image']) && isset($fallbacks[$index])) {
-                $item['image'] = $fallbacks[$index];
-            }
-
-            if (empty($item['link']['url']) && $index < 2) {
-                $item['link'] = [
-                    'url' => home_url($index === 0 ? '/capacity-development/' : '/our-research/'),
-                    'title' => $fallbacks[$index]['alt'],
-                    'target' => '',
-                ];
-            }
-        }
-        unset($item);
     }
 
     return $data;

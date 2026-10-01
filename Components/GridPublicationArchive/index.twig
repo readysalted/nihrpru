@@ -2,9 +2,9 @@
   <script type="text/javascript" src="https://embed.altmetric.com/assets/embed.js"></script>
 
   <div class="container" data-flow="layout">
-    {% if intro_text_research %}
+    {% if preContentHtml %}
       <div class="intro">
-        {{ intro_text_research }}
+        {{ preContentHtml|e('wp_kses_post') }}
       </div>
     {% endif %}
 

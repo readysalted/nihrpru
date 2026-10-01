@@ -1,0 +1,33 @@
+{% extends 'templates/_document.twig' %}
+
+{% block content %}
+  <article class="personProfile">
+    {{ renderComponent('BlockPostHeader', {
+      type: 'custom',
+      title: post.title,
+      description: post.meta('personRole')
+    }) }}
+    <div class="container personProfile-layout" data-size="wide">
+      {% if post.thumbnail %}
+        <figure class="personProfile-portrait">
+          <img src="{{ post.thumbnail.src('large')|e('esc_url') }}" alt="{{ post.thumbnail.alt ?: post.title }}">
+        </figure>
+      {% endif %}
+      <div class="personProfile-content">
+        {% if post.meta('personInstitution') %}
+          <p class="personProfile-institution"><strong>{{ post.meta('personInstitution') }}</strong></p>
+        {% endif %}
+        {% if post.meta('personEmail') %}
+          <p><a href="mailto:{{ post.meta('personEmail')|e('html_attr') }}">{{ post.meta('personEmail') }}</a></p>
+        {% endif %}
+        {% if post.meta('personWebsite') %}
+          <p><a href="{{ post.meta('personWebsite')|e('esc_url') }}" target="_blank" rel="noopener noreferrer">{{ function('__', 'External profile', 'flynt') }}</a></p>
+        {% endif %}
+        <div class="personProfile-biography">
+          {{ post.content }}
+        </div>
+      </div>
+    </div>
+  </article>
+{% endblock %}
+

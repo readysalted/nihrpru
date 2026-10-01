@@ -1,8 +1,14 @@
 <?php
+
 namespace Flynt\CustomPostTypes;
 
 function registerImpactPostType(): void
 {
+    // This content type belongs to MDC and is disabled for PRU by default.
+    if (!apply_filters('Flynt/enableLegacyImpactPostType', false)) {
+        return;
+    }
+
     $labels = [
         'name'                  => _x('Impact', 'Post Type General Name', 'flynt'),
         'singular_name'         => _x('Impact', 'Post Type Singular Name', 'flynt'),
@@ -37,7 +43,7 @@ function registerImpactPostType(): void
         'label'               => __('Impact', 'flynt'),
         'description'         => __('Impact Description', 'flynt'),
         'labels'              => $labels,
-        'supports'            => ['title','thumbnail', 'excerpt', 'revisions', 'custom-fields'],
+        'supports'            => ['title', 'thumbnail', 'excerpt', 'revisions', 'custom-fields'],
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
@@ -50,9 +56,10 @@ function registerImpactPostType(): void
         'exclude_from_search' => false,
         'publicly_queryable'  => true,
         'capability_type'     => 'post',
-        'rewrite' => ['slug' => 'impact', 'with_front' => false], 
+        'rewrite' => ['slug' => 'impact', 'with_front' => false],
     ];
 
     register_post_type('impact', $args);
 }
+
 add_action('init', 'Flynt\CustomPostTypes\registerImpactPostType');

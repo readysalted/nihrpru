@@ -24,6 +24,9 @@ add_action('Flynt/afterRegisterComponents', function (): void {
         Components\GridHomepageResearch\getACFLayout(),
         Components\GridResourcesLatest\getACFLayout(),
         Components\GridResourcesArchive\getACFLayout(),
+        Components\GridPublicationArchive\getACFLayout(),
+        Components\GridProjects\getACFLayout(),
+        Components\GridPeople\getACFLayout(),
         Components\GridPostsLatest\getACFLayout(),
         Components\GridPostsRelationship\getACFLayout(),
         Components\ListComponents\getACFLayout(),
@@ -32,7 +35,6 @@ add_action('Flynt/afterRegisterComponents', function (): void {
         Components\SliderImagesCentered\getACFLayout(),
         Components\SliderImageGallery\getACFLayout(),
         Components\ReusableComponent\getACFLayout(),
-        Components\GridImpactRelationship\getACFLayout(),
         Components\MeetTheTeam\getACFLayout(),
         Components\BlockHero\getACFLayout(),
         Components\GridPostsRepeater\getACFLayout(),
@@ -179,36 +181,6 @@ add_action('Flynt/afterRegisterComponents', function (): void {
                     'value' => 'resource',
                 ],
             ],
-        ],
-    ]);
-    ACFComposer::registerFieldGroup([
-        'name' => 'impactComponents',
-        'title' => __('Impact Components', 'flynt'),
-        'style' => 'seamless',
-        'fields' => [
-            [
-                'name' => 'pageComponents',
-                'label' => __('Impact Components', 'flynt'),
-                'type' => 'flexible_content',
-                'button_label' => __('Add Component', 'flynt'),
-                'layouts' => $pageLayouts,
-            ],
-        ],
-        'location' => [
-            [
-                [
-                    'param' => 'post_type',
-                    'operator' => '==',
-                    'value' => 'impact'
-                ],
-            ],
-            [
-                [
-                    'param' => 'options_page',
-                    'operator' => '==',
-                    'value' => 'impact-options'
-                ],
-            ]
         ],
     ]);
     ACFComposer::registerFieldGroup([

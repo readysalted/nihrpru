@@ -2,50 +2,6 @@
 
 namespace Flynt\Components\GridHomepageResearch;
 
-use Flynt\Utils\Asset;
-
-add_filter('Flynt/addComponentData?name=GridHomepageResearch', function (array $data): array {
-    $fallbacks = [
-        'themes' => [
-            'research-theme-preconception.png',
-            'research-theme-pregnancy.png',
-            'research-theme-neonatal.png',
-        ],
-        'workstreams' => [
-            'workstream-access.jpg',
-            'workstream-racism.jpg',
-            'workstream-community.jpg',
-            'workstream-delta.jpg',
-        ],
-    ];
-
-    foreach ($fallbacks as $group => $files) {
-        if (empty($data[$group])) {
-            continue;
-        }
-
-        foreach ($data[$group] as $index => &$item) {
-            if (empty($item['image']) && isset($files[$index])) {
-                $item['image'] = [
-                    'src' => Asset::requireUrl('assets/images/home/' . $files[$index]),
-                    'alt' => $item['title'] ?? '',
-                ];
-            }
-
-            if (empty($item['link']['url'])) {
-                $item['link'] = [
-                    'url' => home_url('/our-research/'),
-                    'title' => $item['title'] ?? __('Our Research', 'flynt'),
-                    'target' => '',
-                ];
-            }
-        }
-        unset($item);
-    }
-
-    return $data;
-});
-
 function getACFLayout(): array
 {
     $cardFields = [
@@ -62,7 +18,7 @@ function getACFLayout(): array
             'return_format' => 'array',
             'preview_size' => 'medium',
             'mime_types' => 'jpg,jpeg,png,webp',
-            'required' => 0,
+            'required' => 1,
         ],
         [
             'label' => __('Link', 'flynt'),

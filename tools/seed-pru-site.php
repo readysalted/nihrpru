@@ -103,7 +103,7 @@ function pru_seed_page(string $title, string $slug, string $lead, string $body =
         ];
     }
 
-    update_field('pageComponents', $components, $pageId);
+    update_field('field_pageComponents_pageComponents', $components, $pageId);
 
     return $pageId;
 }
@@ -527,7 +527,7 @@ $homeComponents = [
     ],
 ];
 
-if (!update_field('pageComponents', $homeComponents, $homeId)) {
+if (!update_field('field_pageComponents_pageComponents', $homeComponents, $homeId)) {
     $savedComponents = get_field('pageComponents', $homeId);
     if (!is_array($savedComponents) || count($savedComponents) !== count($homeComponents)) {
         throw new RuntimeException('Unable to save the Home page component data.');

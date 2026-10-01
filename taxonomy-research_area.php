@@ -8,16 +8,15 @@ $term_id = get_queried_object_id();
 $term = get_term($term_id);
 $context['name'] = $term->name ?: '';
 $context['description'] = $term->description ?: '';
-$context['featured_posts'] = get_field('featured_posts_research', 'research_area_' . $term_id ) ?: [];
+$context['featured_posts'] = get_field('featured_posts_research', 'research_area_' . $term_id) ?: [];
 if (!empty($context['featured_posts'])) {
+    $featured_posts_ids = array_map(function ($post) {
+        return $post->ID;
+    }, $context['featured_posts']->to_array());
 
-$featured_posts_ids = array_map(function ($post) {
-    return $post->ID;
-}, $context['featured_posts']->to_array());
+    $context['featuredPostsId'] = $featured_posts_ids;
 
-$context['featuredPostsId'] = $featured_posts_ids;
-
-$context['posts'] = Timber::get_posts([
+    $context['posts'] = Timber::get_posts([
     'post_type'      => 'research',
     'post__not_in'   => $featured_posts_ids,
     'orderby'        => 'date',
@@ -26,11 +25,11 @@ $context['posts'] = Timber::get_posts([
     'tax_query'      => [
         [
             'taxonomy' => 'research_area',
-            'field'    => 'term_id',      
-            'terms'    => $term_id,      
+            'field'    => 'term_id',
+            'terms'    => $term_id,
         ]
     ],
-]);
+    ]);
 }
 
 $context['show_block'] = null;

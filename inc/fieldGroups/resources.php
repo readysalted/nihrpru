@@ -97,6 +97,20 @@ add_action('Flynt/afterRegisterComponents', function (): void {
                     ],
                 ],
             ],
+            [
+                'label' => __('Related projects', 'flynt'),
+                'name' => 'resourceProjects',
+                'type' => 'relationship',
+                'post_type' => ['research'],
+                'post_status' => ['publish'],
+                'return_format' => 'object',
+            ],
+            [
+                'label' => __('Original resource URL', 'flynt'),
+                'name' => 'legacyUrl',
+                'type' => 'url',
+                'readonly' => 1,
+            ],
         ],
         'location' => [
             [

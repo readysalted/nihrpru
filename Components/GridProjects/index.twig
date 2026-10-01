@@ -1,0 +1,44 @@
+<flynt-component name="GridProjects" class="componentSpacing" data-theme="{{ options.theme ?: 'white' }}">
+  <div class="container" data-size="wide">
+    {% if preContentHtml %}
+      <div class="projectsGrid-intro">{{ preContentHtml|e('wp_kses_post') }}</div>
+    {% endif %}
+
+    {% if showFilters and (statusTerms|length or topicTerms|length) %}
+      <nav class="projectsGrid-filters" aria-label="{{ function('__', 'Project filters', 'flynt') }}">
+        <a class="projectsGrid-filter{{ not activeStatus and not activeTopic ? ' is-active' }}" href="{{ allUrl|e('esc_url') }}">{{ function('__', 'All projects', 'flynt') }}</a>
+        {% for term in statusTerms %}
+          <a class="projectsGrid-filter{{ activeStatus == term.slug ? ' is-active' }}" href="{{ function('add_query_arg', {'project_status': term.slug}, allUrl)|e('esc_url') }}">{{ term.name }}</a>
+        {% endfor %}
+        {% for term in topicTerms %}
+          <a class="projectsGrid-filter{{ activeTopic == term.slug ? ' is-active' }}" href="{{ function('add_query_arg', {'project_topic': term.slug}, allUrl)|e('esc_url') }}">{{ term.name }}</a>
+        {% endfor %}
+      </nav>
+    {% endif %}
+
+    {% if projects|length %}
+      <div class="projectsGrid-items">
+        {% for project in projects %}
+          <article class="projectsGrid-card">
+            <a href="{{ project.link|e('esc_url') }}">
+              {% if project.thumbnail %}
+                <div class="projectsGrid-image">
+                  <img src="{{ project.thumbnail.src('medium_large')|e('esc_url') }}" alt="{{ project.thumbnail.alt ?: project.title }}">
+                </div>
+              {% endif %}
+              <div class="projectsGrid-content">
+                {% set statuses = project.terms('project_status') %}
+                {% if statuses|length %}<p class="projectsGrid-status">{{ statuses|map(term => term.name)|join(', ') }}</p>{% endif %}
+                <h2>{{ project.title }}</h2>
+                {% if project.excerpt %}<p>{{ project.excerpt.read_more(false) }}</p>{% endif %}
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>{{ function('__', 'No projects were found for this selection.', 'flynt') }}</p>
+    {% endif %}
+  </div>
+</flynt-component>
+

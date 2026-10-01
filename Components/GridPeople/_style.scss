@@ -1,0 +1,75 @@
+flynt-component[name='GridPeople'] {
+  .peopleGrid-intro {
+    margin-block-end: 40px;
+    max-inline-size: 800px;
+  }
+
+  .peopleGrid-items {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  }
+
+  .peopleGrid-card {
+    background: var(--color-background);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
+    overflow: hidden;
+  }
+
+  .peopleGrid-card > a {
+    block-size: 100%;
+    color: currentcolor;
+    display: block;
+    text-decoration: none;
+  }
+
+  .peopleGrid-image {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .peopleGrid-image img {
+    block-size: 100%;
+    inline-size: 100%;
+    object-fit: cover;
+    transition: transform 200ms ease;
+  }
+
+  .peopleGrid-card a:hover img {
+    transform: scale(1.03);
+  }
+
+  .peopleGrid-content {
+    padding-block: 20px;
+    padding-inline: 20px;
+  }
+
+  .peopleGrid-content h2 {
+    font-size: 22px;
+    margin-block: 0 8px;
+    margin-inline: 0;
+  }
+
+  .peopleGrid-content p {
+    margin-block: 0;
+    margin-inline: 0;
+  }
+}
+
+.personProfile-layout {
+  display: grid;
+  gap: 48px;
+  padding-block: 60px;
+}
+
+.personProfile-portrait img {
+  border-radius: 16px;
+  inline-size: 100%;
+}
+
+@media (min-width: 768px) {
+  .personProfile-layout {
+    grid-template-columns: minmax(240px, 360px) minmax(0, 1fr);
+  }
+}

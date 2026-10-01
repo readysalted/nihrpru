@@ -3,37 +3,10 @@
 namespace Flynt\Components\BlockMailingList;
 
 use Flynt\FieldVariables;
-use Flynt\Utils\Asset;
 use Flynt\Utils\Options;
 
 add_filter('Flynt/addComponentData?name=BlockMailingList', function (array $data): array {
-    if (($data['options']['displayStyle'] ?? '') === 'homepage' && empty($data['image'])) {
-        $data['image'] = [
-            'src' => Asset::requireUrl('assets/images/home/newsletter-phone.png'),
-            'alt' => __('NIHR Policy Research Unit newsletter shown on a mobile phone', 'flynt'),
-            'isThemeAsset' => true,
-        ];
-    }
-
     if (!empty($data['isGlobal'])) {
-        if (empty($data['image'])) {
-            $data['image'] = [
-                'src' => Asset::requireUrl('assets/images/home/newsletter-phone.png'),
-                'alt' => __('NIHR Policy Research Unit newsletter shown on a mobile phone', 'flynt'),
-                'isThemeAsset' => true,
-            ];
-        }
-
-        if (empty(trim(wp_strip_all_tags($data['contentHtml'] ?? '')))) {
-            $data['contentHtml'] = sprintf(
-                '<h2>%1$s</h2><p>%2$s</p><p><a class="button" href="%3$s">%4$s</a></p>',
-                esc_html__('Sign up to our newsletter', 'flynt'),
-                esc_html__('Sign up to receive updates, opportunities and news from the NIHR Policy Research Unit in Behavioural and Social Sciences.', 'flynt'),
-                esc_url(home_url('/contact/')),
-                esc_html__('Click here to sign up', 'flynt')
-            );
-        }
-
         if (empty($data['imagePosition'])) {
             $data['imagePosition'] = 'right';
         }

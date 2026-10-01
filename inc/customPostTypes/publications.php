@@ -46,6 +46,7 @@ function registerPublicationsPostType(): void
         'menu_position'      => 5,
         'show_in_admin_bar'  => true,
         'show_in_nav_menus'  => true,
+        'show_in_rest'       => true,
         'can_export'         => true,
         'has_archive'        => true,
         'exclude_from_search' => false,
@@ -172,7 +173,7 @@ add_filter('post_type_link', function ($post_link, $post) {
     return $post_link;
 }, 10, 2);
 
-add_filter('term_link', function($termlink, $term, $taxonomy) {
+add_filter('term_link', function ($termlink, $term, $taxonomy) {
     if ($taxonomy === 'publication_area') {
         return home_url("publications/{$term->slug}/");
     }

@@ -99,6 +99,28 @@ function buildPagination(int $currentPage, int $totalPages): array
     ];
 }
 
+function getACFLayout(): array
+{
+    return [
+        'name' => 'gridPublicationArchive',
+        'label' => __('Grid: Publications', 'flynt'),
+        'sub_fields' => [
+            [
+                'label' => __('Introduction', 'flynt'),
+                'name' => 'preContentHtml',
+                'type' => 'wysiwyg',
+                'media_upload' => 0,
+            ],
+            [
+                'label' => __('Options', 'flynt'),
+                'name' => 'options',
+                'type' => 'group',
+                'sub_fields' => [FieldVariables\getTheme('white')],
+            ],
+        ],
+    ];
+}
+
 Options::addGlobal('GridPublicationArchive', [
     [
         'label' => __('Load More Button?', 'flynt'),

@@ -80,44 +80,8 @@ function filterPageMenuItems($items): array
 }
 
 add_filter('Flynt/addComponentData?name=NavigationFooter', function (array $data): array {
-    if (empty($data['contentHtml']) || stripos(wp_strip_all_tags($data['contentHtml']), 'lorem ipsum') !== false) {
-        $data['contentHtml'] = sprintf(
-            '<h4>%1$s</h4><p>%2$s</p><p><a href="mailto:%3$s">%3$s</a></p>',
-            esc_html__('Contact us', 'flynt'),
-            esc_html__('Newcastle University, Baddiley-Clark Building, Richardson Road, Newcastle upon Tyne, NE2 4AX. Telephone: 0191 208 3463', 'flynt'),
-            antispambot('NIHRPRU.BehSocSci@newcastle.ac.uk')
-        );
-    }
-
-    if (empty($data['column_two_title']) || stripos($data['column_two_title'], 'lorem ipsum') !== false) {
-        $data['column_two_title'] = __('Explore', 'flynt');
-    }
-
     $data['column_two'] = filterPageMenuItems($data['column_two'] ?? []);
-    if (empty($data['column_two'])) {
-        $data['column_two'] = getPageMenuItems([
-            '/',
-            '/our-projects/',
-            '/outputs/',
-            '/for-policy-makers/',
-            '/for-researchers/',
-            '/for-the-public/',
-            '/about-us/',
-            '/our-collaborators/',
-        ]);
-    }
-
-    $data['column_three_title'] = $data['column_three_title'] ?: __('Information', 'flynt');
     $data['column_three'] = filterPageMenuItems($data['column_three'] ?? []);
-    if (empty($data['column_three'])) {
-        $data['column_three'] = getPageMenuItems([
-            '/site-map/',
-            '/privacy-policy/',
-            '/cookie-policy/',
-            '/terms/',
-            '/accessibility/',
-        ]);
-    }
 
     $data['column_social'] = array_values(array_filter(
         is_array($data['column_social'] ?? null) ? $data['column_social'] : [],
@@ -147,22 +111,6 @@ add_filter('Flynt/addComponentData?name=NavigationFooter', function (array $data
     }, $data['column_social']);
 
     $data['copyright_menu'] = filterPageMenuItems($data['copyright_menu'] ?? []);
-    if (empty($data['copyright_menu'])) {
-        $data['copyright_menu'] = getPageMenuItems([
-            '/site-map/',
-            '/privacy-policy/',
-            '/cookie-policy/',
-            '/terms/',
-            '/accessibility/',
-        ]);
-    }
-
-    if (empty($data['copyright_text']) || str_contains($data['copyright_text'], '|')) {
-        $data['copyright_text'] = sprintf(
-            __('NIHR PRU Behavioural and Social Sciences © %s', 'flynt'),
-            wp_date('Y')
-        );
-    }
 
     return $data;
 });

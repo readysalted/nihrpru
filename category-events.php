@@ -2,7 +2,7 @@
 
 /**
  * Events Archive Template
- * 
+ *
  * This template handles the Events category archive.
  * Posts are sorted by the ACF 'events_date' field from newest to oldest.
  */
@@ -43,7 +43,7 @@ foreach ($posts as $post) {
         'title' => $post->title(),
         'thumbnail' => $post->thumbnail(),
     ];
-    
+
     $eventDate = get_field('events_date', $post->ID);
     if ($eventDate) {
         // ACF returns format: F j, Y g:i a (e.g., "April 9, 2026 3:00 pm")
@@ -68,7 +68,7 @@ foreach ($posts as $post) {
             $postData['isPastEvent'] = ($endDateObj ? $endDateObj->getTimestamp() : $dateObj->getTimestamp()) < time();
         }
     }
-    
+
     $processedPosts[] = $postData;
 }
 

@@ -2,7 +2,6 @@
 
 namespace Flynt\Components\BlockTwoPages;
 
-
 function getACFLayout()
 {
     return [
