@@ -100,26 +100,6 @@ Options::addTranslatable('GridPostsArchive', [
                 ],
             ],
             [
-                'label' => __('Search placeholder', 'flynt'),
-                'name' => 'searchPlaceholder',
-                'type' => 'text',
-                'default_value' => __('Search news and events', 'flynt'),
-                'required' => 1,
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
-                'label' => __('Search button', 'flynt'),
-                'name' => 'search',
-                'type' => 'text',
-                'default_value' => __('Search', 'flynt'),
-                'required' => 1,
-                'wrapper' => [
-                    'width' => '50',
-                ],
-            ],
-            [
                 'label' => __('Previous', 'flynt'),
                 'name' => 'previous',
                 'type' => 'text',

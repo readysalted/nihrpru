@@ -7,18 +7,6 @@
     </div> #}
 
     <div class="archiveTools" data-theme="reset">
-      <form class="searchForm" role="search" method="get" action="{{ archiveLink|e('esc_url') }}">
-        <label class="visuallyHidden" for="news-search-{{ uuid }}">{{ labels.searchPlaceholder|default('Search news and events') }}</label>
-        <input
-          class="searchInput"
-          id="news-search-{{ uuid }}"
-          name="s"
-          type="search"
-          placeholder="{{ labels.searchPlaceholder|default('Search news and events') }}">
-        <input type="hidden" name="post_type" value="post">
-        <button class="button searchButton" type="submit">{{ labels.search|default('Search') }}</button>
-      </form>
-
       {% if terms %}
         <div class="filterGroup">
           <p class="filterLabel">{{ labels.filterBy|default('Filter by') }}:</p>
