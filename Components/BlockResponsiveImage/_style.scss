@@ -1,0 +1,15 @@
+flynt-component[name='BlockResponsiveImage'] {
+  .figure {
+    margin-block: 0;
+  }
+
+  picture,
+  .figure-image {
+    display: block;
+    inline-size: 100%;
+  }
+
+  .figure-image {
+    block-size: auto;
+  }
+}

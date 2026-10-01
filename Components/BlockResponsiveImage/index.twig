@@ -1,0 +1,35 @@
+<flynt-component name="BlockResponsiveImage" class="componentSpacing" {{ options.theme ? 'data-theme="' ~ options.theme ~ '"' }}>
+  <div class="container">
+    {% if desktopImage and mobileImage %}
+      <figure class="figure" data-size="{{ options.size }}" data-align="center">
+        <picture>
+          <source
+            media="(max-width: 576px)"
+            srcset="{{ placeholderImage(mobileImage.width, mobileImage.height, 'rgba(125, 125, 125, 0.1)') }}"
+            data-srcset="
+              {{ mobileImage.src|resizeDynamic(768) }} 768w,
+              {{ mobileImage.src|resizeDynamic(640) }} 640w,
+              {{ mobileImage.src|resizeDynamic(480) }} 480w,
+              {{ mobileImage.src|resizeDynamic(375) }} 375w"
+            data-sizes="auto">
+          <img
+            class="figure-image lazyload"
+            src="{{ desktopImage.src|resizeDynamic(768) }}"
+            width="{{ desktopImage.width }}"
+            height="{{ desktopImage.height }}"
+            srcset="{{ placeholderImage(desktopImage.width, desktopImage.height, 'rgba(125, 125, 125, 0.1)') }}"
+            data-srcset="
+              {{ desktopImage.src|resizeDynamic(768) }} 768w,
+              {{ desktopImage.src|resizeDynamic(640) }} 640w,
+              {{ desktopImage.src|resizeDynamic(480) }} 480w,
+              {{ desktopImage.src|resizeDynamic(375) }} 375w"
+            data-sizes="auto"
+            alt="{{ desktopImage.alt|e }}">
+        </picture>
+        {% if desktopImage.caption %}
+          <figcaption class="caption">{{ desktopImage.caption|e }}</figcaption>
+        {% endif %}
+      </figure>
+    {% endif %}
+  </div>
+</flynt-component>

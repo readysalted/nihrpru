@@ -7,6 +7,7 @@ add_action('Flynt/afterRegisterComponents', function (): void {
     $pageLayouts = [
         Components\BlockAnchor\getACFLayout(),
         Components\BlockImage\getACFLayout(),
+        Components\BlockResponsiveImage\getACFLayout(),
         Components\BlockMailingList\getACFLayout(),
         Components\BlockImageText\getACFLayout(),
         Components\BlockImageTextHero\getACFLayout(),

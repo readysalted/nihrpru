@@ -1,8 +1,23 @@
 flynt-component[name='BlockWysiwyg'] {
-    h1, h2, h3, h4, h5, h6,
-    .h1, .h2, .h3, .h4, .h5, .h6 {
-        color: var(--color-accent);
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--color-accent);
+  }
+
+  .wysiwygActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-block-start: clamp(1.5rem, 3vw, 2.5rem);
+
+    .button {
+      min-inline-size: min(100%, 318px);
     }
+
+    .button--outlined {
+      border-color: var(--nihr-navy);
+    }
+  }
 }
 
 flynt-component[name='BlockWysiwyg'][data-display-style='homepageIntro'] {

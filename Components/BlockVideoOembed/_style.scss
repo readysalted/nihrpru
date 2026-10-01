@@ -1,4 +1,9 @@
 flynt-component[name='BlockVideoOembed'] {
+  .video-heading {
+    color: var(--color-accent);
+    margin-block: 0 clamp(1.5rem, 3vw, 2.5rem);
+  }
+
   .video {
     position: relative;
 

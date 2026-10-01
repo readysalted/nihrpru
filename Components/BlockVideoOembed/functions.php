@@ -31,6 +31,12 @@ function getACFLayout(): array
                 'endpoint' => 0
             ],
             [
+                'label' => __('Heading', 'flynt'),
+                'name' => 'heading',
+                'type' => 'text',
+                'instructions' => __('Optional heading displayed above the video.', 'flynt'),
+            ],
+            [
                 'label' => __('Poster Image', 'flynt'),
                 'instructions' => __('Image-Format: JPG, PNG, SVG, WebP. Aspect Ratio: 16:9. Recommended Size: 1920px × 1080px.', 'flynt'),
                 'name' => 'posterImage',
