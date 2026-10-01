@@ -12,7 +12,8 @@ add_filter('Flynt/addComponentData?name=GridPostsLatest', function (array $data)
     $data['uuid'] ??= wp_generate_uuid4();
     $data['taxonomies'] = $data['taxonomies'] ?: [];
     $data['options']['maxColumns'] = 3;
-    $postsPerPage = $data['options']['maxPosts'] ?? 3;
+    $maxPosts = isset($data['options']['maxPosts']) ? (int) $data['options']['maxPosts'] : 3;
+    $postsPerPage = $maxPosts === 0 ? -1 : max(1, $maxPosts);
 
     $postType = $data['options']['postType'] ?? DEFAULT_POST_TYPE;
     $taxonomyType = $postType === 'research' ? 'research_area' : 'category';
@@ -31,13 +32,17 @@ add_filter('Flynt/addComponentData?name=GridPostsLatest', function (array $data)
         'post_status' => 'publish',
         'post_type' => $postType,
         'tax_query' => $taxQuery,
-        'posts_per_page' => $postsPerPage + 1,
+        'posts_per_page' => $postsPerPage === -1 ? -1 : $postsPerPage + 1,
         'ignore_sticky_posts' => 1,
     ]);
 
-    $data['posts'] = array_slice(array_filter($posts->to_array(), function ($post): bool {
+    $filteredPosts = array_values(array_filter($posts->to_array(), function ($post): bool {
         return $post->ID !== get_the_ID();
-    }), 0, $postsPerPage);
+    }));
+
+    $data['posts'] = $maxPosts === 0
+        ? $filteredPosts
+        : array_slice($filteredPosts, 0, $maxPosts);
 
     $isEventsLayout = $postType === DEFAULT_POST_TYPE && !empty($data['taxonomies']) && !empty(array_filter($data['taxonomies'], function ($taxonomy): bool {
         return isset($taxonomy->slug) && $taxonomy->slug === 'events';
@@ -169,8 +174,9 @@ function getACFLayout(): array
                         'label' => __('Max Posts', 'flynt'),
                         'name' => 'maxPosts',
                         'type' => 'number',
+                        'instructions' => __('Enter 0 to show all matching posts.', 'flynt'),
                         'default_value' => 3,
-                        'min' => 1,
+                        'min' => 0,
                         'step' => 1
                     ]
                 ]

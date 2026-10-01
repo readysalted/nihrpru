@@ -1159,6 +1159,7 @@ function pruMigratePages(array $rows, array $peopleGroups, array $projectData, a
             'policy-briefings',
             'reports',
             'project-posters',
+            'ppie-activities',
         ];
         if ($content !== '' && !in_array($slug, $gridOnlySlugs, true)) {
             $portraitSlugs = ['our-objectives', 'our-research'];
@@ -1205,6 +1206,18 @@ function pruMigratePages(array $rows, array $peopleGroups, array $projectData, a
                 'defaultTopic' => '',
                 'options' => ['theme' => 'white'],
             ];
+        } elseif ($slug === 'ppie-activities') {
+            $ppieActivities = get_term_by('slug', 'ppie-activities', 'category');
+            if ($ppieActivities instanceof WP_Term) {
+                $components[] = [
+                    'acf_fc_layout' => 'gridPostsLatest',
+                    'preContentHtml' => '<h2>Latest PPIE activities</h2>',
+                    'postType' => 'post',
+                    'button' => null,
+                    'taxonomies' => [(int) $ppieActivities->term_id],
+                    'options' => ['theme' => 'white', 'maxPosts' => 0],
+                ];
+            }
         } elseif (isset($resourceData['terms'][$slug])) {
             $components[] = [
                 'acf_fc_layout' => 'gridResourcesArchive',

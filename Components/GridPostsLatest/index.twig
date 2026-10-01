@@ -12,7 +12,7 @@
         {{ not isEventsLayout and options.maxPosts ? 'data-max-posts="' ~ options.maxPosts ~ '"' }}>
         {% for post in posts %}
           {% set aria_labelledby_id = uuid ~ '-' ~ loop.index %}
-          <li class="{{ isEventsLayout ? 'event' : 'post' }} boxCard {{ isEventsLayout and post.isPastEvent ? 'event--past' }}" id="{{ aria_labelledby_id }}" data-theme="reset">
+          <li class="{{ isEventsLayout ? 'event' : 'post' }} boxCard {{ isEventsLayout and post.isPastEvent ? 'event--past' }}" data-theme="reset">
             <a class="link" href="{{ post.link|e('esc_url') }}" aria-labelledby="{{ aria_labelledby_id }}">
               <figure class="figure">
                 {% if isEventsLayout and post.eventDate %}
@@ -28,7 +28,7 @@
                     class="{{ isEventsLayout ? 'event-image' : 'post-image' }} figure-image"
                     src="{{ post.thumbnail.src }}"
                     loading="lazy"
-                    alt="{{ post.thumbnail.alt|e ?: post.title }}">
+                    alt="{{ post.thumbnail.alt|e }}">
                 {% elseif isEventsLayout %}
                   <div class="event-placeholder-image">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -45,7 +45,7 @@
                 {% endif %}
               </figure>
               <div class="content boxPadding">
-                <h2 class="h5">{{ post.title }}</h2>
+                <h2 class="h5" id="{{ aria_labelledby_id }}">{{ post.title }}</h2>
                 {% if isEventsLayout and post.eventDate %}
                   <p class="event-time">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
