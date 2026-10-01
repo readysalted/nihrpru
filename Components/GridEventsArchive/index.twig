@@ -4,7 +4,7 @@
       <ul data-ref="events" class="events">
         {% for event in events %}
           {% set aria_labelledby_id = uuid ~ '-' ~ loop.index %}
-          <li class="event boxCard {{ event.isPastEvent ? 'event--past' }}" id="{{ aria_labelledby_id }}" data-theme="reset">
+          <li class="event boxCard {{ event.isPastEvent ? 'event--past' }}" data-theme="reset">
             <a class="link" href="{{ event.link|e('esc_url') }}" aria-labelledby="{{ aria_labelledby_id }}">
               <figure class="figure">
                 {% if event.eventDate %}
@@ -31,7 +31,7 @@
                       {{ event.thumbnail.src|resizeDynamic(768, (768 / 3 * 2)|round, 'center') }} 768w,
                       {{ event.thumbnail.src|resizeDynamic(640, (640 / 3 * 2)|round, 'center') }} 640w"
                     data-sizes="auto"
-                    alt="{{ event.thumbnail.alt|e ?: event.title }}">
+                    alt="{{ event.thumbnail.alt|e }}">
                 {% else %}
                   <div class="event-placeholder-image">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -48,7 +48,7 @@
                 {% endif %}
               </figure>
               <div class="content boxPadding">
-                <h2 class="h5">{{ event.title }}</h2>
+                <h2 class="h5" id="{{ aria_labelledby_id }}">{{ event.title }}</h2>
                 {% if event.eventDate %}
                   <p class="event-time">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

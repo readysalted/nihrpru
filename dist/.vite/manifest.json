@@ -21,7 +21,7 @@
     "isDynamicEntry": true
   },
   "Components/BlockTwoPages/script.js": {
-    "file": "assets/script-CZHEGtyi.js",
+    "file": "assets/script-BRWonjcF.js",
     "name": "script",
     "src": "Components/BlockTwoPages/script.js",
     "isDynamicEntry": true,
@@ -46,7 +46,7 @@
     "isDynamicEntry": true
   },
   "Components/GridPostsArchive/script.js": {
-    "file": "assets/script-BRWonjcF.js",
+    "file": "assets/script-CZHEGtyi.js",
     "name": "script",
     "src": "Components/GridPostsArchive/script.js",
     "isDynamicEntry": true,
@@ -416,7 +416,7 @@
     ]
   },
   "assets/main.scss": {
-    "file": "assets/main-BiPEVVyR.css",
+    "file": "assets/main-DaKeBKL-.css",
     "src": "assets/main.scss",
     "isEntry": true
   },

@@ -1402,6 +1402,7 @@ function pruLink(string $title, int $postId): array
 function pruUpdateThemeOptions(array $pages): void
 {
     pruLog('Theme options');
+    update_option('posts_per_page', 9);
     $explore = [];
     foreach (['home', 'about', 'our-projects', 'outputs', 'for-policy-makers', 'for-researchers', 'for-the-public', 'news-and-events', 'contact'] as $slug) {
         $id = $slug === 'home' ? (int) get_option('page_on_front') : pruMenuPageId($pages, $slug);

@@ -6,15 +6,32 @@
       {{ html|e('wp_kses_post') }}
     </div> #}
 
-    {# {% if terms %}
-      {% include 'Partials/_filter.twig' %}
-    {% endif %} #}
+    <div class="archiveTools" data-theme="reset">
+      <form class="searchForm" role="search" method="get" action="{{ archiveLink|e('esc_url') }}">
+        <label class="visuallyHidden" for="news-search-{{ uuid }}">{{ labels.searchPlaceholder|default('Search news and events') }}</label>
+        <input
+          class="searchInput"
+          id="news-search-{{ uuid }}"
+          name="s"
+          type="search"
+          placeholder="{{ labels.searchPlaceholder|default('Search news and events') }}">
+        <input type="hidden" name="post_type" value="post">
+        <button class="button searchButton" type="submit">{{ labels.search|default('Search') }}</button>
+      </form>
+
+      {% if terms %}
+        <div class="filterGroup">
+          <p class="filterLabel">{{ labels.filterBy|default('Filter by') }}:</p>
+          {% include 'Partials/_filter.twig' %}
+        </div>
+      {% endif %}
+    </div>
 
     {% if posts|length > 0 %}
       <ul data-ref="posts" class="posts">
         {% for post in posts %}
           {% set aria_labelledby_id = uuid ~ '-' ~ loop.index %}
-          <li class="post boxCard" id="{{ aria_labelledby_id }}" data-theme="reset">
+          <li class="post boxCard" data-theme="reset">
             <a class="link" href="{{ post.link|e('esc_url') }}" aria-labelledby="{{ aria_labelledby_id }}">
               {% if post.thumbnail %}
                 <figure class="figure">
@@ -22,11 +39,11 @@
                     class="post-image figure-image"
                     src="{{ post.thumbnail.src|e('esc_url') }}"
                     loading="lazy"
-                    alt="{{ post.thumbnail.alt|e ?: post.title }}">
+                    alt="{{ post.thumbnail.alt|e }}">
                 </figure>
               {% endif %}
               <div class="content boxPadding">
-                <h2 class="h5">{{ post.title }}</h2>
+                <h2 class="h5" id="{{ aria_labelledby_id }}">{{ post.title }}</h2>
                 <p>{{ post.excerpt.read_more(false) }}</p>
               </div>
               {# <footer class="footer">

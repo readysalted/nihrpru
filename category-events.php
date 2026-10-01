@@ -4,7 +4,9 @@
  * Events Archive Template
  *
  * This template handles the Events category archive.
- * Posts are sorted by the ACF 'events_date' field from newest to oldest.
+ * The imported site stores event articles as regular posts in the Events
+ * category. Most historical posts do not have an ACF event date, so the
+ * archive must not require that field in order to display them.
  */
 
 use Timber\Timber;
@@ -14,10 +16,11 @@ $context = Timber::context();
 $category = get_queried_object();
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 
-// Query events sorted by ACF date field (newest first)
+// Keep the archive useful for both imported articles (post date only) and
+// future events that may also have an ACF event date.
 $args = [
     'post_type' => 'post',
-    'posts_per_page' => get_option('posts_per_page'),
+    'posts_per_page' => 9,
     'paged' => $paged,
     'tax_query' => [
         [
@@ -27,8 +30,7 @@ $args = [
             'include_children' => true,
         ],
     ],
-    'meta_key' => 'events_date',
-    'orderby' => 'meta_value',
+    'orderby' => 'date',
     'order' => 'DESC',
 ];
 

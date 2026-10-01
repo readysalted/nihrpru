@@ -1,10 +1,53 @@
 .pagination {
   align-items: center;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: var(--flow-space);
-  justify-content: space-between;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   margin-block-start: calc(var(--component-spacing) / 2);
+
+  @media (max-width: $breakpoint-mobile-horizontal) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &--loadMore {
+    display: flex;
+  }
+
+  &-pages {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    grid-column: 2;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: $breakpoint-mobile-horizontal) {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+  }
+
+  &-page {
+    align-items: center;
+    block-size: 44px;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    color: var(--color-text);
+    display: inline-flex;
+    inline-size: 44px;
+    justify-content: center;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible,
+    &.is-current {
+      background-color: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-background);
+    }
+  }
 
   .button {
     margin-block-start: 0;
@@ -14,7 +57,7 @@
     }
 
     &-next {
-      margin-inline-start: auto;
+      justify-self: end;
 
       &::after {
         block-size: 0.5rem;
@@ -31,6 +74,8 @@
     }
 
     &-previous {
+      justify-self: start;
+
       &::before {
         block-size: 0.5rem;
         border-block-start: 2px solid currentColor;

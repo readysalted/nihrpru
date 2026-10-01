@@ -1,8 +1,59 @@
+.archiveTools {
+  background-color: var(--color-background-secondary, #f2f3f7);
+  border-radius: 16px;
+  padding: clamp(20px, 3vw, 32px);
+}
+
+.searchForm {
+  align-items: stretch;
+  display: flex;
+  gap: 12px;
+  margin-inline: auto;
+  max-inline-size: 840px;
+
+  @media (max-width: $breakpoint-mobile-horizontal) {
+    flex-direction: column;
+  }
+}
+
+.searchInput {
+  background-color: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  flex: 1 1 auto;
+  min-block-size: 52px;
+  min-inline-size: 0;
+  padding-block: 12px;
+  padding-inline: 16px;
+}
+
+.searchButton {
+  margin: 0;
+}
+
+.filterGroup {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  justify-content: center;
+  margin-block-start: 20px;
+}
+
+.filterLabel {
+  font-weight: 700;
+  margin: 0;
+}
+
 .filter {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--flow-space);
+  gap: 10px;
   justify-content: center;
   list-style: none;
   padding: 0;
+
+  .button {
+    margin: 0;
+  }
 }

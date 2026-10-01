@@ -18,6 +18,9 @@ add_filter('Flynt/addComponentData?name=GridPostsArchive', function (array $data
         'hide_empty' => true,
     ]);
     $queriedObject = get_queried_object();
+    $postsPageId = (int) get_option('page_for_posts');
+    $archiveLink = $postsPageId ? get_permalink($postsPageId) : home_url('/');
+    $data['archiveLink'] = $archiveLink;
     if (count($terms) > 1) {
         $data['terms'] = array_map(function ($term) use ($queriedObject) {
             $timberTerm = Timber::get_term($term);
@@ -30,7 +33,7 @@ add_filter('Flynt/addComponentData?name=GridPostsArchive', function (array $data
 
         // Add item for all posts
         array_unshift($data['terms'], [
-            'link' => get_post_type_archive_link($postType),
+            'link' => $archiveLink,
             'title' => $data['labels']['allPosts'],
             'isActive' => is_home() || is_post_type_archive($postType),
         ]);
@@ -91,6 +94,26 @@ Options::addTranslatable('GridPostsArchive', [
                 'name' => 'filterBy',
                 'type' => 'text',
                 'default_value' => __('Filter by', 'flynt'),
+                'required' => 1,
+                'wrapper' => [
+                    'width' => '50',
+                ],
+            ],
+            [
+                'label' => __('Search placeholder', 'flynt'),
+                'name' => 'searchPlaceholder',
+                'type' => 'text',
+                'default_value' => __('Search news and events', 'flynt'),
+                'required' => 1,
+                'wrapper' => [
+                    'width' => '50',
+                ],
+            ],
+            [
+                'label' => __('Search button', 'flynt'),
+                'name' => 'search',
+                'type' => 'text',
+                'default_value' => __('Search', 'flynt'),
                 'required' => 1,
                 'wrapper' => [
                     'width' => '50',
