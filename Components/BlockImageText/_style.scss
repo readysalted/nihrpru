@@ -5,26 +5,26 @@ flynt-component[name='BlockImageText'] {
     }
   }
 
- ul {
+  ul {
     list-style: none;
 
     li {
-    position: relative;
+      position: relative;
 
-    &::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: -1.5rem;
-      width: 15px;
-      height: 15px;
-      transform: translateY(-50%);
-      background-image: url("data:image/svg+xml,%3Csvg width='25' height='25' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 4.21569L9.09091 20L0 11.0784L4.24901 6.76471L9.09091 11.5686L20.751 0L25 4.21569Z' fill='%235B5CA0'/%3E%3C/svg%3E%0A");
-      background-size: contain;
-      background-repeat: no-repeat;
+      &::after {
+        background-image: url("data:image/svg+xml,%3Csvg width='25' height='25' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 4.21569L9.09091 20L0 11.0784L4.24901 6.76471L9.09091 11.5686L20.751 0L25 4.21569Z' fill='%235B5CA0'/%3E%3C/svg%3E%0A");
+        background-repeat: no-repeat;
+        background-size: contain;
+        block-size: 15px;
+        content: "";
+        inline-size: 15px;
+        inset-block-start: 50%;
+        inset-inline-start: -1.5rem;
+        position: absolute;
+        transform: translateY(-50%);
+      }
     }
   }
- } 
 
   @media (min-width: $breakpoint-tablet-horizontal) {
     .wrapper {
@@ -50,7 +50,8 @@ flynt-component[name='BlockImageText'] {
 
   figure {
     img {
-      margin: 0 auto;
+      margin-block: 0;
+      margin-inline: auto;
     }
   }
 
@@ -58,8 +59,8 @@ flynt-component[name='BlockImageText'] {
     .wrapper {
       border: 1px solid var(--color-border-secondary);
       border-radius: 8px;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
       padding: 40px;
-      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2); 
     }
   }
 }
@@ -247,6 +248,116 @@ flynt-component[name='BlockImageText'][data-display-style='homepageFeature'] {
     &[data-theme='blue-flame'] .wrapper {
       padding-block: 32px;
       padding-inline: 24px;
+    }
+  }
+}
+
+flynt-component[name='BlockImageText'][data-display-style='portraitFeature'] {
+  margin-block: clamp(48px, 6vw, 88px);
+
+  .container {
+    max-inline-size: calc(1120px + var(--container-spacing) * 2);
+  }
+
+  .wrapper,
+  .wrapper[data-image-position='left'],
+  .wrapper[data-image-position='right'] {
+    align-items: start;
+    display: grid;
+    gap: clamp(40px, 6vw, 80px);
+    grid-template-columns: minmax(220px, 270px) minmax(0, 1fr);
+    justify-content: normal;
+  }
+
+  .wrapper[data-image-position='right'] {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 270px);
+
+    .figure {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    > div {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+
+  .figure {
+    inline-size: 100%;
+    margin: 0;
+
+    img {
+      block-size: auto;
+      display: block;
+      inline-size: 100%;
+      margin: 0;
+      max-inline-size: 270px;
+    }
+  }
+
+  .content,
+  .wrapper > div {
+    min-inline-size: 0;
+  }
+
+  .wrapper > div > :first-child {
+    margin-block-start: 0;
+  }
+
+  .blue-bold-text {
+    color: var(--nihr-navy);
+    display: block;
+    font-size: 22px;
+    line-height: 1.5;
+  }
+
+  li + li {
+    margin-block-start: 14px;
+  }
+
+  @media (max-width: $breakpoint-tablet-horizontal) {
+    .wrapper,
+    .wrapper[data-image-position='left'],
+    .wrapper[data-image-position='right'] {
+      align-items: start;
+      display: grid;
+      gap: 48px;
+      grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
+
+      .figure,
+      > div {
+        inline-size: 100%;
+      }
+    }
+
+    .wrapper[data-image-position='right'] {
+      grid-template-columns: minmax(0, 1fr) minmax(200px, 240px);
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile-horizontal) {
+    margin-block: 40px 56px;
+
+    .wrapper,
+    .wrapper[data-image-position='left'],
+    .wrapper[data-image-position='right'] {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .figure {
+      display: flex;
+      justify-content: center;
+
+      img {
+        max-inline-size: min(240px, 100%);
+      }
+    }
+
+    .blue-bold-text {
+      font-size: 20px;
     }
   }
 }

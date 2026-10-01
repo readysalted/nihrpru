@@ -3,7 +3,7 @@
     <div class="wrapper" {{ imagePosition ? 'data-image-position="' ~ imagePosition ~ '"' }}>
       {% if image %}
         <figure class="figure" data-size="medium" data-align="center">
-          {% if image.post_mime_type == 'image/svg+xml' %}
+          {% if image.post_mime_type in ['image/svg+xml', 'image/gif'] %}
             <img
               class="figure-image-svg lazyload"
               src="{{ placeholderImage(image.width, image.height, 'rgba(125, 125, 125, 0.1)') }}"

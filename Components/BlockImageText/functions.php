@@ -28,12 +28,12 @@ function getACFLayout(): array
             ],
             [
                 'label' => __('Image', 'flynt'),
-                'instructions' => __('Image-Format: JPG, PNG, SVG, WebP.', 'flynt'),
+                'instructions' => __('Image-Format: JPG, PNG, GIF, SVG, WebP.', 'flynt'),
                 'name' => 'image',
                 'type' => 'image',
                 'preview_size' => 'medium',
                 'required' => 1,
-                'mime_types' => 'jpg,jpeg,png,svg,webp',
+                'mime_types' => 'jpg,jpeg,png,gif,svg,webp',
             ],
             [
                 'label' => __('Text', 'flynt'),
@@ -72,9 +72,10 @@ function getACFLayout(): array
                         'choices' => [
                             'default' => __('Default', 'flynt'),
                             'homepageFeature' => __('Homepage Feature', 'flynt'),
+                            'portraitFeature' => __('Portrait Feature', 'flynt'),
                         ],
                         'default_value' => 'default',
-                        'instructions' => __('Use Homepage Feature for the large image-and-copy rows on Home.', 'flynt'),
+                        'instructions' => __('Use Homepage Feature for the large image-and-copy rows on Home, or Portrait Feature for narrow illustrations beside longer copy.', 'flynt'),
                     ]
                 ]
             ]

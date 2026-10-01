@@ -1018,6 +1018,50 @@ function pruHero(string $title): array
     ];
 }
 
+function pruPortraitImageText(string $html): ?array
+{
+    if ($html === '') {
+        return null;
+    }
+
+    $dom = pruDom($html);
+    $xpath = new DOMXPath($dom);
+    $image = $xpath->query('//img[@src][1]')->item(0);
+    if (!$image instanceof DOMElement) {
+        return null;
+    }
+
+    $attachmentId = 0;
+    if (preg_match('/(?:^|\s)wp-image-(\d+)(?:\s|$)/', $image->getAttribute('class'), $matches)) {
+        $attachmentId = (int) $matches[1];
+    }
+    if (!$attachmentId) {
+        $attachmentId = (int) attachment_url_to_postid($image->getAttribute('src'));
+    }
+    if (!$attachmentId || get_post_type($attachmentId) !== 'attachment') {
+        return null;
+    }
+
+    $image->parentNode?->removeChild($image);
+    $body = $dom->getElementsByTagName('body')->item(0);
+    $contentHtml = $body ? trim(pruInnerHtml($body)) : '';
+    if ($contentHtml === '') {
+        return null;
+    }
+
+    return [
+        'acf_fc_layout' => 'blockImageText',
+        'imagePosition' => 'left',
+        'image' => $attachmentId,
+        'contentHtml' => $contentHtml,
+        'options' => [
+            'theme' => 'white',
+            'withoutPadding' => 0,
+            'displayStyle' => 'portraitFeature',
+        ],
+    ];
+}
+
 function pruMigratePages(array $rows, array $peopleGroups, array $projectData, array $resourceData): array
 {
     pruLog('Pages');
@@ -1117,7 +1161,8 @@ function pruMigratePages(array $rows, array $peopleGroups, array $projectData, a
             'project-posters',
         ];
         if ($content !== '' && !in_array($slug, $gridOnlySlugs, true)) {
-            $components[] = pruWysiwyg($content);
+            $portraitComponent = $slug === 'our-objectives' ? pruPortraitImageText($content) : null;
+            $components[] = $portraitComponent ?? pruWysiwyg($content);
         }
 
         if ($slug === 'staff') {
