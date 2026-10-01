@@ -1160,6 +1160,7 @@ function pruMigratePages(array $rows, array $peopleGroups, array $projectData, a
             'reports',
             'project-posters',
             'ppie-activities',
+            'news-and-events',
         ];
         if ($content !== '' && !in_array($slug, $gridOnlySlugs, true)) {
             $portraitSlugs = ['our-objectives', 'our-research', 'ppie-strategic-group-training'];
