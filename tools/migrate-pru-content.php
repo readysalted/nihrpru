@@ -1161,7 +1161,8 @@ function pruMigratePages(array $rows, array $peopleGroups, array $projectData, a
             'project-posters',
         ];
         if ($content !== '' && !in_array($slug, $gridOnlySlugs, true)) {
-            $portraitComponent = $slug === 'our-objectives' ? pruPortraitImageText($content) : null;
+            $portraitSlugs = ['our-objectives', 'our-research'];
+            $portraitComponent = in_array($slug, $portraitSlugs, true) ? pruPortraitImageText($content) : null;
             $components[] = $portraitComponent ?? pruWysiwyg($content);
         }
 
