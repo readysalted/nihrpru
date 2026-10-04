@@ -1,6 +1,6 @@
 # NIHR PRU — living project context
 
-Last verified: 2026-10-01
+Last verified: 2026-10-05 (local migration snapshot; UAT deployment not yet completed)
 
 This is the maintained source of truth for the NIHR Policy Research Unit in Behavioural and Social Sciences WordPress theme. Update it after meaningful changes to code, content structures, dependencies, build configuration, or design decisions. Never store passwords, tokens or database credentials here.
 
@@ -20,7 +20,8 @@ This is the maintained source of truth for the NIHR Policy Research Unit in Beha
 | Architecture | Flynt 2.1.1 component theme, Timber 2, Twig 3, ACF Pro |
 | Build | Vite 5; Node >=20; source assets compile to tracked `dist` output |
 | WordPress | 7.1.2 locally |
-| Active plugins | Advanced Custom Fields Pro 6.8.10, Breadcrumb NavXT 7.5.2, WP Sitemap Page 1.9.6 |
+| Runtime plugins | Advanced Custom Fields Pro 6.8.10, Breadcrumb NavXT 7.5.2, WP Accessibility, WP Sitemap Page 1.9.6 |
+| Temporary migration plugin | User-supplied All-in-One WP Migration With Import 6.77; disable after transfer |
 
 ## Current implementation
 
@@ -31,7 +32,7 @@ This is the maintained source of truth for the NIHR Policy Research Unit in Beha
 - The footer contains real page links, Newcastle University contact details, social links and NIHR funding information.
 - `/wp-login.php` uses the PRU navy palette, approved hero image and the two-part NIHR Policy Research Unit identity.
 - Four project users supplied through the Asana task exist locally as WordPress administrators. Credentials are intentionally not stored in the repository.
-- 18 pages are published locally, including Home, audience pages, About, Collaborators, Team, Contact and required information pages.
+- 37 pages are published locally, including Home, audience pages, About, Collaborators, Team, Contact and required information pages (migration snapshot on 2026-10-05).
 
 ## Homepage design system
 
@@ -118,10 +119,15 @@ wp eval-file app/public/wp-content/themes/pru/tools/seed-pru-site.php --path=app
 ## Deployment notes
 
 - The repository contains the theme and repeatable migration/seed scripts, not the database or user credentials.
-- Run the two WP-CLI scripts against the target environment after installing/activating the required plugins and activating the `pru` theme.
+- The initial local-to-UAT transfer uses a complete All-in-One WP Migration `.wpress` export, including database, plugins, uploads and the PRU theme. It is not a theme-only deployment.
+- Do **not** rerun migration/seed scripts after importing the complete database: the current database already contains the edited pages, menus, ACF values and user accounts. Later UAT content edits must not be overwritten by another local database import without an explicit content-freeze agreement.
+- The export excludes `themes/pru/.git`, `node_modules`, development caches/editor settings and `tools`. It retains Composer `vendor` and compiled `dist`, including `dist/.vite/manifest.json`.
+- The `.wpress` archive and SQL backups contain private account/license information; they must stay outside Git and must not be published as theme assets.
+- See [UAT_MIGRATION.md](UAT_MIGRATION.md) for the transfer baseline and remaining deployment steps.
 - Keep search-engine visibility disabled on local/UAT. Confirm the launch URL, legal copy, analytics/cookie configuration and privacy setting before production launch.
 - A pre-work database snapshot exists locally at `/private/tmp/nihrpru-initial-2026-10-01.sql`; it is intentionally outside Git.
 
 ## Change log
 
+- 2026-10-05: Installed the user-provided migration ZIP locally, saved a pre-plugin SQL backup, generated a verified 347 MiB `.wpress` export without Git/development dependencies, and recorded the content/media/user baseline. UAT import is pending plugin-installation confirmation and a target backup.
 - 2026-10-01: Created NIHR PRU theme identity from the NIHR MDC base; implemented the Figma Home design and new component variants; imported approved assets as real Media Library records; migrated all 45 legacy posts with featured/inline media; created pages, menus, options and users; branded the login; added reproducible migration and seed scripts; completed build and browser QA.
