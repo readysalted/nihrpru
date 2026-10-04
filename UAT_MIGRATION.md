@@ -2,6 +2,8 @@
 
 Status on 2026-10-05: local export ready; UAT import **not yet performed**.
 
+The pre-import target backup is confirmed in SiteGround Site Tools: manual backup **NIHR PRU before local import 2026-10-05**, displayed creation time 05/10/2026 00:31. It contains the target state before installing the migration ZIP or importing local data.
+
 Source: `http://nihrpru.local/`.
 Target: `https://pru.readysalteddev.co.uk/`.
 The live legacy website is not a deployment target.

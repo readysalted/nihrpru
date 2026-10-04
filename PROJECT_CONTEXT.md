@@ -129,5 +129,5 @@ wp eval-file app/public/wp-content/themes/pru/tools/seed-pru-site.php --path=app
 
 ## Change log
 
-- 2026-10-05: Installed the user-provided migration ZIP locally, saved a pre-plugin SQL backup, generated a verified 347 MiB `.wpress` export without Git/development dependencies, and recorded the content/media/user baseline. UAT import is pending plugin-installation confirmation and a target backup.
+- 2026-10-05: Installed the user-provided migration ZIP locally, saved a pre-plugin SQL backup, generated a verified 347 MiB `.wpress` export without Git/development dependencies, and recorded the content/media/user baseline. Created the SiteGround manual backup `NIHR PRU before local import 2026-10-05` on UAT. UAT import is pending plugin-installation confirmation.
 - 2026-10-01: Created NIHR PRU theme identity from the NIHR MDC base; implemented the Figma Home design and new component variants; imported approved assets as real Media Library records; migrated all 45 legacy posts with featured/inline media; created pages, menus, options and users; branded the login; added reproducible migration and seed scripts; completed build and browser QA.
