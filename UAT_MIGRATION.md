@@ -63,3 +63,13 @@ The user supplied the ZIP `All-In-One-WP-Migration-With-Import-master.zip`. Its 
 10. Record actual deployment completion and verification results here before treating UAT as deployed.
 
 No seed/import script rerun is necessary after a full database import. Future theme-only deployments should preserve the UAT database and Media Library.
+
+## Theme-only update: homepage team CTA (2026-10-05)
+
+- Figma homepage node `944:273` specifies a 318 px-wide team button. The old `display: flex` block with only `min-inline-size: 318px` expanded to the full 1192 px container. Set `inline-size: 318px`, `max-inline-size: 100%` and `min-inline-size: 0`, preserving the existing centered alignment and mobile full-width rule.
+- Uploaded only `Components/MeetTheTeam/_style.scss`, `dist/assets/main-1KMNVcJC.css` and `dist/.vite/manifest.json`. Existing UAT files matched the Git baseline before replacement; deployed file SHA-256 hashes match the local files. The manifest switch was atomic and the old CSS file remains available for cached pages/rollback.
+- Private remote backup: `/home/customer/nihrpru-team-button-20261005.iex6xX/`, outside the public website root. `style-before.scss`, `manifest-before.json` and `main-before.css` preserve the replaced baseline. For rollback, restore the first two to their original theme paths; the old `main-Do2OrDnm.css` asset is still present, then purge the SiteGround cache.
+- `npm run build:production` and stylelint of the changed homepage component variant passed. The full component still has 20 inherited lint violations outside that variant. Unrelated duplicate-entry JavaScript build/manifest ordering churn was excluded. The CSS rebuild also includes an already-committed, equivalent logical-padding declaration for the accessibility widget; no new accessibility source changes were made.
+- SiteGround asset and dynamic caches purged successfully; file cache was not enabled. Browser measurements on local and UAT confirm a centered 318 px desktop CTA; at a 390 px UAT viewport it uses the available 358 px width without horizontal overflow.
+- Screenshot: `migration/uat-2026-10-05/uat-team-button-fixed.jpg` (private local artifact).
+- Database, ACF content, Media Library, users and the live legacy website were untouched.

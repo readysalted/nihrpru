@@ -256,11 +256,13 @@ flynt-component[name='MeetTheTeam'][data-display-style='homepageTeam'] {
     display: flex;
     font-size: 18px;
     font-weight: 700;
+    inline-size: 318px;
     justify-content: center;
     margin-block: 42px 0;
     margin-inline: auto;
+    max-inline-size: 100%;
     min-block-size: 54px;
-    min-inline-size: 318px;
+    min-inline-size: 0;
     text-decoration: none;
   }
 

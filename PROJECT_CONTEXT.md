@@ -1,6 +1,6 @@
 # NIHR PRU — living project context
 
-Last verified: 2026-10-05 (initial UAT deployment completed and verified)
+Last verified: 2026-10-05 (UAT deployed; homepage team button width corrected)
 
 This is the maintained source of truth for the NIHR Policy Research Unit in Behavioural and Social Sciences WordPress theme. Update it after meaningful changes to code, content structures, dependencies, build configuration, or design decisions. Never store passwords, tokens or database credentials here.
 
@@ -132,5 +132,6 @@ wp eval-file app/public/wp-content/themes/pru/tools/seed-pru-site.php --path=app
 
 ## Change log
 
+- 2026-10-05: Constrained the homepage `MeetTheTeam` CTA to the approved Figma desktop width of 318 px instead of allowing its block-level flex layout to fill the 1192 px container. It remains centered and responsive on mobile. Deployed only the component SCSS, rebuilt main CSS and Vite manifest over SSH to UAT; retained a private file backup and the previous CSS asset, purged SiteGround caches and verified the actual desktop/mobile button geometry. No database, content, Media Library or user changes.
 - 2026-10-05: Installed the user-provided migration ZIP after confirmation, exported and imported the verified 347 MiB snapshot into UAT, kept pre-import and post-import SiteGround backups, fixed target HTTPS URLs, restored host security/cache plugins and disabled the temporary migrator on both environments. Verified matching content/user/media counts, real ACF image previews, Events pagination and fixed-size filtered team cards. The legacy live site was not modified.
 - 2026-10-01: Created NIHR PRU theme identity from the NIHR MDC base; implemented the Figma Home design and new component variants; imported approved assets as real Media Library records; migrated all 45 legacy posts with featured/inline media; created pages, menus, options and users; branded the login; added reproducible migration and seed scripts; completed build and browser QA.
