@@ -156,8 +156,8 @@ flynt-component[name='BlockImageText'][data-display-style='homepageFeature'] {
   }
 
   .button {
+    --button-background-color-default: var(--nihr-twilight);
     align-items: center;
-    background: var(--nihr-twilight);
     border-radius: 50px;
     display: inline-flex;
     font-size: 18px;
@@ -177,8 +177,9 @@ flynt-component[name='BlockImageText'][data-display-style='homepageFeature'] {
     }
 
     .button {
-      background: var(--color-white);
-      color: var(--nihr-slate-grey) !important;
+      --button-background-color-default: var(--color-white);
+      --button-background-color-hover: var(--nihr-lilac);
+      --button-text-color-default: var(--nihr-slate-grey);
     }
   }
 

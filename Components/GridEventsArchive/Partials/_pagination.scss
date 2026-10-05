@@ -39,9 +39,9 @@
     &:hover,
     &:focus-visible,
     &.is-current {
-      background-color: var(--color-accent);
-      border-color: var(--color-accent);
-      color: var(--color-background);
+      background-color: var(--nihr-navy);
+      border-color: var(--nihr-navy);
+      color: var(--color-white);
     }
   }
 

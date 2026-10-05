@@ -201,22 +201,22 @@ flynt-component[name='GridPostsLatest'] {
     }
   }
   .button {
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: 500;
-    color: #ffffff!important;
-    background-color: #1c285e;
+    --button-background-color-hover: var(--nihr-brand-blue);
+    --button-text-color-hover: var(--color-white);
     border: none;
     border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
     overflow: hidden;
+    padding: 12px 24px;
+    position: relative;
+    transition: all 0.3s ease;
   }
 
-  .button:hover {
-    background-color: rgb(227, 83, 73);
+  .button:hover,
+  .button:focus-visible {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }

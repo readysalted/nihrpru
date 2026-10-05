@@ -45,7 +45,10 @@ flynt-component[name='ListLogos'] {
         display: none;
       }
     }
-    &:hover {
+    &:hover,
+    &:focus-visible {
+      color: var(--nihr-navy);
+
       &:before {
         animation: arrowMove 1s ease-in-out infinite;
       }

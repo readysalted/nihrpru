@@ -250,8 +250,8 @@ flynt-component[name='MeetTheTeam'][data-display-style='homepageTeam'] {
   }
 
   .team-button {
+    --button-background-color-default: var(--nihr-twilight);
     align-items: center;
-    background: var(--nihr-twilight);
     border-radius: 50px;
     display: flex;
     font-size: 18px;

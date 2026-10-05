@@ -235,12 +235,12 @@ table {
 
 .button,
 .wp-block-button > .wp-block-button__link {
-  --button-background-color: var(--nihr-navy);
+  --button-background-color: var(--button-background-color-default, var(--nihr-navy));
   --button-border-color: var(--nihr-navy);
   --button-border-width: 2px;
   --button-border-radius: 30px;
   --button-font-weight: 400;
-  --button-text-color: #fff;
+  --button-text-color: var(--button-text-color-default, #fff);
   // --button-padding-inline: 35px;
   // --button-padding-block: 13px;
 
@@ -269,10 +269,11 @@ table {
       width: 100%;
   }
 
-  &:hover {
-      border-color: var(--nihr-navy);
-      --button-background-color: var(--color-white);
-      --button-text-color: var(--dark-blue);
+  &:hover,
+  &:focus-visible {
+    --button-background-color: var(--button-background-color-hover, var(--color-white));
+    --button-text-color: var(--button-text-color-hover, var(--nihr-navy));
+    border-color: var(--nihr-navy);
   }
 
   &:disabled,
@@ -285,6 +286,12 @@ table {
   &--outlined {
     --button-background-color: var(--color-white);
     --button-text-color: var(--dark-blue);
+
+    &:hover,
+    &:focus-visible {
+      --button-background-color: var(--nihr-navy);
+      --button-text-color: var(--color-white);
+    }
   }
 
   &--text {
@@ -309,8 +316,11 @@ table {
     padding-inline: 100px;
     font-size: 14px;
     transition: background-color 0.25s ease-in-out;
-    &:hover {
+    &:hover,
+    &:focus-visible {
       --button-background-color: #141437FF;
+      --button-text-color: var(--color-white);
+      border-color: #141437FF;
     }
   }
 
@@ -318,7 +328,8 @@ table {
     --button-background-color: #fc5d5d;
     --button-text-color: var(--color-white);
 
-    &:hover {
+    &:hover,
+    &:focus-visible {
       --button-background-color: var(--color-white);
       --button-text-color: var(--dark-blue);
     }
@@ -327,7 +338,8 @@ table {
   &--blue {
     --button-background-color: #1c285e;
     --button-text-color: var(--color-white);
-    &:hover {
+    &:hover,
+    &:focus-visible {
       border-color: #1c285e;
       --button-text-color: #1c285e;
       --button-background-color: var(--color-white);
@@ -339,12 +351,12 @@ table {
   color: var(--button-text-color);
 
   &.is-style-outline {
-    --button-text-color: var(--color-accent);
-
     .wp-block-button__link {
-      --button-text-color: var(--color-accent);
-      border: solid var(--button-border-width) var(--color-accent);
-      color: var(--button-text-color);
+      --button-background-color-default: var(--color-white);
+      --button-background-color-hover: var(--nihr-navy);
+      --button-text-color-default: var(--nihr-navy);
+      --button-text-color-hover: var(--color-white);
+      border: solid var(--button-border-width) var(--nihr-navy);
       padding-block: var(--button-padding-block);
       padding-inline: var(--button-padding-inline);
     }

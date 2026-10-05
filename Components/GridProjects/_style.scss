@@ -19,9 +19,11 @@ flynt-component[name='GridProjects'] {
     text-decoration: none;
   }
 
+  .projectsGrid-filter:hover,
+  .projectsGrid-filter:focus-visible,
   .projectsGrid-filter.is-active {
     background: var(--color-accent);
-    color: var(--color-background);
+    color: var(--nihr-navy);
   }
 
   .projectsGrid-items {
